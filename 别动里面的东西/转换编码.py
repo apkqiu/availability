@@ -1,5 +1,6 @@
 import os
-
+import bs4
+os.system("git pull")
 for dirpath, dirs, files in os.walk('.'):
     for file in files:
         if file.endswith('.html'):
@@ -11,3 +12,10 @@ for dirpath, dirs, files in os.walk('.'):
                 print(f'{file} 转换成功')
             except:
                 pass
+if os.system("npx prettier -l . --color>NUL ") == 2:
+    exit()
+os.system("npx prettier --write . --color --tab-width 4")
+print('转换完成')
+os.system("git add .")
+os.system("git commit -m '转换编码，美化代码'")
+os.system("git push")
