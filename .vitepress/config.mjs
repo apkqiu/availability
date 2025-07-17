@@ -96,7 +96,7 @@ export default withMermaid({
     lang: "zh-Hans",
     title: "",
     description: "",
-    cleanUrls: false,
+    base: "/availability/",
     sitemap: {
         hostname: "https://apkqiu.oc.com.ar/availability/"
     },
