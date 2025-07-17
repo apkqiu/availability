@@ -11,14 +11,5 @@ for dirpath, dirs, files in os.walk('.'):
                 with open(os.path.join(dirpath, file), 'r', encoding='utf-8') as f:
                     content = f.read()
             with open(os.path.join(dirpath, file), 'w', encoding='utf-8', newline="\r\n" ) as f: # CRLF
-                if not content.lower().startswith("<!doctype html>"):
-                    content = "<!DOCTYPE html>\n" + content
                 f.write(content)
             print(f'{file} 转换成功')
-if os.system("npx prettier -l . --color>NUL ") == 2:
-    exit()
-os.system("npx prettier --write . --color --tab-width 4")
-print('转换完成')
-os.system("git add .")
-os.system(f"git commit -m '{input('请输入提交信息：')}'")
-os.system("git push")

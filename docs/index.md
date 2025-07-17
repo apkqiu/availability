@@ -1,3 +1,15 @@
----
-layout: home
----
+
+<html>
+    <head>
+        <title>网页无法打开</title>
+    </head>
+    <body>
+        <img src="/resource/Android.jpg" width="100" height="100" />
+        <div>
+            无法打开页面<br />
+            错误信息(
+        </div>
+        <a href="zhuye.html">-2,net::ERR_NAME_NOT_RESOLVED</a>)
+        <div><br />轻触屏幕重新加载</div>
+    </body>
+</html>

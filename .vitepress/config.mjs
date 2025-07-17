@@ -94,10 +94,10 @@ const customElements = [
 export default withMermaid({
     srcDir: "docs",
     lang: "zh-Hans",
-    title: "惠阴校园",
-    description: "描述",
+    title: "半糖一班",
+    description: "",
     sitemap: {
-        hostname: "https://apkqiu.github.io"
+        hostname: "https://apkqiu.oc.com.ar/availability/"
     },
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
@@ -142,8 +142,8 @@ export default withMermaid({
             }
         },
         footer: {
-            message: "没意思的网站",
-            copyright: "Copyright © 2025-present apkqiu"
+            message: "",
+            copyright: ""
         },
         externalLinkIcon: true,
     },
