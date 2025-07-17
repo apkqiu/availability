@@ -17,5 +17,5 @@ if os.system("npx prettier -l . --color>NUL ") == 2:
 os.system("npx prettier --write . --color --tab-width 4")
 print('转换完成')
 os.system("git add .")
-os.system("git commit -m '转换编码，美化代码'")
+os.system(f"git commit -m '{input('请输入提交信息：')}'")
 os.system("git push")
