@@ -1,0 +1,37 @@
+name: 内容问题
+description: 提交内容问题
+labels: ["content"]
+body:
+  - type: dropdown
+    attributes:
+      label: 问题类型
+      description: 请选择您遇到的问题类型
+      options:
+        - 色情暴力
+        - 谩骂他人
+        - 网络暴力
+        - 负能量
+        - 错别字
+        - 过时信息
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 原文链接
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 问题描述
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: 提交声明
+      options:
+        - label: 我确认以上信息是真实有效的
+          required: true
+  - type: markdown
+    attributes:
+      value: "**非常感谢您为净化网络环境做出的贡献！**"
+      

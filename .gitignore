@@ -1,0 +1,7 @@
+node_modules
+.vitepress/cache/
+.vitepress/dist/
+.vscode/
+
+# 防止出现镜像不一致的情况
+.package-lock.json 
