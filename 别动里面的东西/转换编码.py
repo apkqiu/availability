@@ -11,7 +11,7 @@ for dirpath, dirs, files in os.walk('.'):
                 with open(os.path.join(dirpath, file), 'r', encoding='utf-8') as f:
                     content = f.read()
             with open(os.path.join(dirpath, file), 'w', encoding='utf-8') as f:
-                if not content.startswith("<!DOCTYPE html>"):
+                if not content.lower().startswith("<!DOCTYPE html>"):
                     content = "<!DOCTYPE html>\n" + content
                 f.write(content)
             print(f'{file} 转换成功')
