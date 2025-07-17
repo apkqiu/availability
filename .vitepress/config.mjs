@@ -94,7 +94,7 @@ const customElements = [
 export default withMermaid({
     srcDir: "docs",
     lang: "zh-Hans",
-    title: "半糖一班",
+    title: "",
     description: "",
     sitemap: {
         hostname: "https://apkqiu.oc.com.ar/availability/"
@@ -103,48 +103,48 @@ export default withMermaid({
         // https://vitepress.dev/reference/default-theme-config
         nav: [],
         sidebar: [],
-        editLink: {
-            pattern: "https://github.com/apkqiu/apkqiu.github.io/edit/main/src/:path",
-            text: "编辑此页面"
-        },
-        lastUpdated: {
-            text: "最后更新",
-            formatOptions: {
-                dateStyle: "medium",
-                timeStyle: "short"
-            }
-        },
-        docFooter: {
-            prev: "上一页",
-            next: "下一页"
-        },
-        search: {
-            provider: 'local',
-            options: {
-                locales: {
-                    root: {
-                        translations: {
-                            button: {
-                                buttonText: '搜索文档',
-                                buttonAriaLabel: '搜索文档'
-                            },
-                            modal: {
-                                noResultsText: '无法找到相关结果',
-                                resetButtonTitle: '清除查询条件',
-                                footer: {
-                                    selectText: '选择',
-                                    navigateText: '切换'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        footer: {
-            message: "",
-            copyright: ""
-        },
+        //editLink: {
+        //    pattern: "https://github.com/apkqiu/apkqiu.github.io/edit/main/src/:path",
+        //    text: "编辑此页面"
+        //},
+        //lastUpdated: {
+        //    text: "最后更新",
+        //    formatOptions: {
+        //        dateStyle: "medium",
+        //        timeStyle: "short"
+        //    }
+        //},
+        //docFooter: {
+        //    prev: "上一页",
+        //    next: "下一页"
+        //},
+        //search: {
+        //    provider: 'local',
+        //    options: {
+        //        locales: {
+        //            root: {
+        //                translations: {
+        //                    button: {
+        //                        buttonText: '搜索文档',
+        //                        buttonAriaLabel: '搜索文档'
+        //                    },
+        //                    modal: {
+        //                        noResultsText: '无法找到相关结果',
+        //                        resetButtonTitle: '清除查询条件',
+        //                        footer: {
+        //                            selectText: '选择',
+        //                            navigateText: '切换'
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //},
+        //footer: {
+        //    message: "",
+        //    copyright: ""
+        //},
         externalLinkIcon: true,
     },
     markdown: {

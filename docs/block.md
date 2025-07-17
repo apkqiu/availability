@@ -1,6 +1,6 @@
 
 <html lang="en">
-    <head>
+    
         <link
             rel="stylesheet"
             href="https://res.wx.qq.com/t/wx_fed/weui-source/res/2.6.21/weui.min.css"
@@ -51,11 +51,11 @@
             href="https://res.wx.qq.com/t/wx_fed/wx110/wx110/res/css/banurl.69aede3b.css"
             rel="stylesheet"
         />
-    </head>
+    
 
     <body ontouchstart="">
         <div id="app"></div>
-    </body>
+    
 
     <footer>
         <script>
@@ -109,4 +109,4 @@
             src="https://res.wx.qq.com/t/wx_fed/wx110/wx110/res/js/banurl.5152d3ea9f23.js"
         ></script>
     </footer>
-</html>
+

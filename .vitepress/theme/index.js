@@ -26,7 +26,7 @@ export default {
         imageViewer(route);
 
         
-        giscusTalk(
+        /*giscusTalk(
             {
                 repo: 'apkqiu/apkqiu.github.io',
                 repoId: 'R_kgDOOQrolQ',
@@ -49,6 +49,6 @@ export default {
             // 如果为 false，表示不启用。
             // 可以在页面使用 `comment: true` 前言单独启用
             true
-        );
+        );*/
     }
 }; 
