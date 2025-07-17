@@ -7,13 +7,14 @@ for dirpath, dirs, files in os.walk('.'):
             try:
                 with open(os.path.join(dirpath, file), 'r', encoding='gbk') as f:
                     content = f.read()
-                with open(os.path.join(dirpath, file), 'w', encoding='utf-8') as f:
-                    if not content.startswith("<!DOCTYPE html>"):
-                        content = "<!DOCTYPE html>\n" + content
-                    f.write(content)
-                print(f'{file} 转换成功')
             except:
-                pass
+                with open(os.path.join(dirpath, file), 'r', encoding='utf-8') as f:
+                    content = f.read()
+            with open(os.path.join(dirpath, file), 'w', encoding='utf-8') as f:
+                if not content.startswith("<!DOCTYPE html>"):
+                    content = "<!DOCTYPE html>\n" + content
+                f.write(content)
+            print(f'{file} 转换成功')
 if os.system("npx prettier -l . --color>NUL ") == 2:
     exit()
 os.system("npx prettier --write . --color --tab-width 4")
