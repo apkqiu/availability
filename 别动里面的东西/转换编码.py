@@ -10,8 +10,8 @@ for dirpath, dirs, files in os.walk('.'):
             except:
                 with open(os.path.join(dirpath, file), 'r', encoding='utf-8') as f:
                     content = f.read()
-            with open(os.path.join(dirpath, file), 'w', encoding='utf-8') as f:
-                if not content.lower().startswith("<!DOCTYPE html>"):
+            with open(os.path.join(dirpath, file), 'w', encoding='utf-8', newline="\r\n" ) as f: # CRLF
+                if not content.lower().startswith("<!doctype html>"):
                     content = "<!DOCTYPE html>\n" + content
                 f.write(content)
             print(f'{file} 转换成功')
