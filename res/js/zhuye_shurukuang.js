@@ -25,6 +25,6 @@ srka.addEventListener('input', function () {
         window.location.href = 'zhuye.html';
         fka.style.backgroundColor = '#cce5ff';
     } else if (value.trim() !== '') {
-        fka.textContent = `你输入了: ${aa.value}`;
+        fka.textContent = `你输入了: ${srka.value}`;
     }
 });
