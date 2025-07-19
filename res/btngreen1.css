@@ -1,11 +1,11 @@
 ﻿.Gbtn {
-    display:inline-block;
-    padding:10px 20px;
-    background-color:green;
-    color:white;
-    text-decoration:none;
-    border-radius:25px;
-    font:bold 18px;
-    border:1px solid #ddd;
-    border-radius:30px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font: bold 18px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
 }
