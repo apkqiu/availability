@@ -97,9 +97,6 @@ export default withMermaid({
     title: "",
     description: "",
     base: "/availability/",
-    sitemap: {
-        hostname: "https://apkqiu.oc.com.ar/availability/"
-    },
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         nav: [],
