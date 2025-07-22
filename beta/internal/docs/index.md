@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: 回到正式版
-      link: ../zhuye.html
+      link: https://apkqiu.oc.com.ar/availability/zhuye.html
 
 features:
   - title: 周恩来周报
