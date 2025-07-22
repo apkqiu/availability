@@ -14,4 +14,5 @@ for dirpath, dirs, files in os.walk('.'):
         print(f'{file} 转换成功')
 
 os.system("git add .")
-os.system(f'git commit -m "{time.ctime()}"')
+os.system(f'git commit -m "转换文本编码 {time.ctime()}"')
+os.system("git push")
