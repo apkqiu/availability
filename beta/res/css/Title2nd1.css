@@ -1,0 +1,8 @@
+﻿h2 {  /*浅灰色背景二级标题*/
+    font-size:30px;
+    font-family:"SimHei";
+    background-color:#f9f9f9;
+    display:flex;
+    justify-content:center;
+    height:35px;
+}
