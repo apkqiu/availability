@@ -1,4 +1,5 @@
 import os
+import time
 for dirpath, dirs, files in os.walk('.'):
     for file in files:
         if file.split('.')[-1] not in ("js","css","html"): continue
@@ -11,3 +12,6 @@ for dirpath, dirs, files in os.walk('.'):
         with open(os.path.join(dirpath, file), 'w', encoding='utf-8', newline="\r\n") as f: # CRLF
             f.write(content)
         print(f'{file} 转换成功')
+
+os.system("git add .")
+os.system(f'git commit -m "{time.ctime()}"')
