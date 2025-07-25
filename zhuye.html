@@ -1,75 +1,66 @@
-﻿<!doctype html>
+﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>洽隐山房</title>
-        <link rel="stylesheet" href="res/css/TitleRed1.css" />
-        <link rel="stylesheet" href="res/css/zhuye input1.css" />
-        <link rel="stylesheet" href="res/css/BtnGreen1.css" />
-        <link rel="stylesheet" href="res/css/Title2nd1.css" />
-        <link rel="stylesheet" href="res/css/zhuye Menu.css" />
+  <head>
+    <title>洽隐山房&nbsp;主页</title>
+    <link rel="stylesheet" href="res/css/TitleRed1.css">
+    <link rel="stylesheet" href="res/css/zhuye input1.css">
+    <link rel="stylesheet" href="res/css/BtnGreen1.css">
+    <link rel="stylesheet" href="res/css/Title2nd1.css">
+    <link rel="stylesheet" href="res/css/MenuA.css">
 
-        <style>
-            p em {
-                color: gray;
-                font-size: 10px;
-            }
-            #ul1 {
-                list-style-type: none;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>洽隐山房</h1>
+    <style>
+      p em{
+        color:gray;
+        font-size:10px;
+      }
+      ul {list-style-type:none;}
 
-        <h2>惠荫八景</h2>
+    </style>
+  </head>
+  <body>
 
-        <!-- 输入框 -->
-        <div id="srk">
-            <input type="text" id="srka" placeholder="快速进入" />
-            <div id="fka"></div>
-        </div>
-        <script src="res/js/zhuye_shurukuang.js"></script>
+    <h1>洽隐山房</h1>
+      <!--搜索框-->
+    <div>
+      <script src="res/js/searchA.js"></script>
+      <input type="text" id="SearchText" placeholder="中文搜索..." />
+      <button type="button" id="SearchBtn" onclick="searchA()">搜索</button>
+      <ul id="SearchForm">
+      </ul>
+    </div>
 
-        <ul id="ul1">
-            <li>
-                <a href="yicaozhong/index.html" class="anniu"
-                    >柳荫系舫&nbsp;一草种</a
-                >
-            </li>
-            <li>
-                <a href="zhoubao/index.html" class="anniu"
-                    >屏山听瀑&nbsp;周报</a
-                >
-            </li>
-            <li><a href="res/index.html">林屋探奇&nbsp;资料</a></li>
-            <li>
-                <a href="more/soil grass/index.html">藤崖伫月&nbsp;草皮土壤</a>
-            </li>
-            <li><a href="more/game/game.html">荷岸观鱼&nbsp;游戏</a></li>
-        </ul>
+    <h2>惠荫八景</h2>
 
-        <h2>测试版</h2>
-        <a href="beta/zhuye.html">点击进入测试版主页</a>
+    <ul id="ul1">
+      <li><a href="yicaozhong/index.html" class="anniu">柳荫系舫&nbsp;一草种</a></li>
+      <li><a href="zhoubao/index.html"class="anniu">屏山听瀑&nbsp;周报</a></li>
+      <li><a href="res/index.html">林屋探奇&nbsp;资料</a></li>
+      <li><a href="more/soil grass/index.html">藤崖伫月&nbsp;草皮土壤</a></li>
+      <li><a href="more/game/game.html">荷岸观鱼&nbsp;游戏</a></li>
 
-        <!--菜单-->
-        <div id="MenuAPlace">
-            <button type="button" id="MenuABtn" onclick="openMenuA()">
-                菜单
-            </button>
-        </div>
-        <script src="res/js/zhuye_MenuA.js"></script>
-        <div id="MenuAArea"><!--编辑菜单见上面js文件--></div>
-    </body>
-    <footer>
-        <br />
-        <hr />
-        <p>
-            如果你要提供意见，请
-            <a href="lianxi.html">联系我们</a>
-            <em>
-                <br />电话：13270463238
-                <br />邮箱:Caixukun11451489@outlook.com</em
-            >
-        </p>
-    </footer>
+
+    </ul>
+
+    <h2>测试版</h2>
+    <a href="beta/zhuye.html">点击进入测试版主页</a>
+
+    <!--菜单-->
+    <div id="MenuAPlace"></div>
+    <script src="res/js/MenuA.js"></script>
+    <div id="MenuAArea">
+    </div>
+
+  </body>
+  <footer>
+    <br>
+    <hr>
+    <p>如果你要提供意见，请
+    <a href="lianxi.html">联系我们</a>
+    <em>
+      <br>电话：13270463238
+      <br>邮箱:Caixukun11451489@outlook.com</em>
+    </p>
+
+  </footer>
+  </body>
 </html>

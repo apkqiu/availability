@@ -1,22 +1,19 @@
-﻿a {
-    /* 实心中碧绿色白字圆弧按钮 */
-    display: inline-block;
-    padding: 8px 20px;
-    background-color: #66cdaa;
-    color: white;
-    text-decoration: none;
-    font: bold 16px;
-    border-radius: 30px;
-    height: 23px;
-    margin: 1px;
+﻿a { /* 实心中碧绿色白字圆弧按钮 */
+    display:inline-block;
+    padding:8px 20px;
+    background-color:#66cdaa;
+    color:white;
+    text-decoration:none;
+    font:bold 16px;
+    border-radius:30px;
+    height:23px;
+    margin:1px;
 }
-
 a:hover {
-    background-color: #60c0a0;
-    cursor: wait;
+    background-color:#60c0a0;
+    cursor:wait;
 }
-
 a:active {
-    position: relative;
-    top: 1px;
+    position:relative;
+    top:1px;
 }
