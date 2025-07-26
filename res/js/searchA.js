@@ -1,22 +1,32 @@
-﻿function searchA(){
+﻿document.getElementById('SearchArea').innerHTML="      <input type=\"text\" id=\"SearchText\" placeholder=\"中文搜索...\" \/>      <button type=\"button\" id=\"SearchBtn\" onclick=\"searchA()\">搜索<\/button>      <ul id=\"SearchForm\"><\/ul>";
+function searchA(){
   document.getElementById('SearchForm').innerHTML="";
   var InputValue=document.getElementById('SearchText').value;
   if (InputValue.includes('周')||InputValue.includes('恩')||InputValue.includes('来')||InputValue.includes('报')) {searchZhoubao();}
   if (InputValue.includes('一')||InputValue.includes('草')||InputValue.includes('种')||InputValue.includes('初')||InputValue.includes('中')) {searchYicaozhong();}
+  if (InputValue.includes('草')||InputValue.includes('皮')||InputValue.includes('土')||InputValue.includes('壤')) {searchSoilGrass();}
 }
 function searchZhoubao(){
-  var SearchFormLi1=document.createElement('li');
-  var SearchFormLi1Link1=document.createElement('a');
-  SearchFormLi1Link1.href="zhoubao/index.html";
-  SearchFormLi1Link1.textContent="周恩来周报";
-  SearchFormLi1.appendChild(SearchFormLi1Link1);
-  document.getElementById('SearchForm').appendChild(SearchFormLi1);
+  var SearchFormLi=document.createElement('li');
+  var SearchFormLi1Link=document.createElement('a');
+  SearchFormLi1Link.href="zhoubao/index.html";
+  SearchFormLi1Link.textContent="周恩来周报";
+  SearchFormLi.appendChild(SearchFormLi1Link);
+  document.getElementById('SearchForm').appendChild(SearchFormLi);
 }
 function searchYicaozhong(){
-  var SearchFormLi2=document.createElement('li');
-  var SearchFormLi1Link2=document.createElement('a');
-  SearchFormLi1Link2.href="yicaozhong/index.html";
-  SearchFormLi1Link2.textContent="一草种";
-  SearchFormLi2.appendChild(SearchFormLi1Link2);
-  document.getElementById('SearchForm').appendChild(SearchFormLi2);
+  var SearchFormLi=document.createElement('li');
+  var SearchFormLi1Link=document.createElement('a');
+  SearchFormLi1Link.href="yicaozhong/index.html";
+  SearchFormLi1Link.textContent="一草种";
+  SearchFormLi.appendChild(SearchFormLi1Link);
+  document.getElementById('SearchForm').appendChild(SearchFormLi);
+}
+function searchSoilGrass(){
+  var SearchFormLi=document.createElement('li');
+  var SearchFormLi1Link=document.createElement('a');
+  SearchFormLi1Link.href="more/soil grass/index.html";
+  SearchFormLi1Link.textContent="草皮土壤";
+  SearchFormLi.appendChild(SearchFormLi1Link);
+  document.getElementById('SearchForm').appendChild(SearchFormLi);
 }

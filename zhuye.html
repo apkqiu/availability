@@ -9,37 +9,32 @@
     <link rel="stylesheet" href="res/css/MenuA.css">
 
     <style>
-      p em{
-        color:gray;
-        font-size:10px;
-      }
-      ul {list-style-type:none;}
-
+    body {width:100%;}
+    p em {color:gray;font-size:10px;}
+    ul {list-style-type:none;}
+    table {margin:0 auto;width:100%;text-align:center;}
     </style>
   </head>
   <body>
 
     <h1>洽隐山房</h1>
-      <!--搜索框-->
-    <div>
-      <script src="res/js/searchA.js"></script>
-      <input type="text" id="SearchText" placeholder="中文搜索..." />
-      <button type="button" id="SearchBtn" onclick="searchA()">搜索</button>
-      <ul id="SearchForm">
-      </ul>
+    <!--搜索框-->
+    <div id="SearchArea">
+    <script src="res/js/searchA.js"></script>
     </div>
 
     <h2>惠荫八景</h2>
-
-    <ul id="ul1">
-      <li><a href="yicaozhong/index.html" class="anniu">柳荫系舫&nbsp;一草种</a></li>
-      <li><a href="zhoubao/index.html"class="anniu">屏山听瀑&nbsp;周报</a></li>
-      <li><a href="res/index.html">林屋探奇&nbsp;资料</a></li>
-      <li><a href="more/soil grass/index.html">藤崖伫月&nbsp;草皮土壤</a></li>
-      <li><a href="more/game/game.html">荷岸观鱼&nbsp;游戏</a></li>
-
-
-    </ul>
+    <table>
+    <tr>
+      <td><a href="zhoubao/index.html">屏山听瀑&nbsp;&nbsp;&nbsp;周报</a></td>
+      <td><a href="more/soil grass/index.html">藤崖伫月&nbsp;草皮土壤</a></td>
+      <td><a href="res/index.html">林屋探奇&nbsp;&nbsp;&nbsp;资料</a></td>
+    </tr>
+    <tr>
+      <td><a href="yicaozhong/index.html">柳荫系舫&nbsp;一草种</a></td>
+      <td>&nbsp;</td>
+      <td><a href="more/game/game.html">荷岸观鱼&nbsp;小游戏</a></td>
+    </table>
 
     <h2>测试版</h2>
     <a href="beta/zhuye.html">点击进入测试版主页</a>
@@ -50,15 +45,15 @@
     <div id="MenuAArea">
     </div>
 
-  </body>
   <footer>
     <br>
     <hr>
     <p>如果你要提供意见，请
     <a href="lianxi.html">联系我们</a>
     <em>
-      <br>电话：13270463238
-      <br>邮箱:Caixukun11451489@outlook.com</em>
+    <br>电话：13270463238
+    <br>邮箱:Caixukun11451489@outlook.com
+    </em>
     </p>
 
   </footer>
