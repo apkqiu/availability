@@ -32,9 +32,21 @@
     </tr>
     <tr>
       <td><a href="yicaozhong/index.html">柳荫系舫&nbsp;一草种</a></td>
-      <td>&nbsp;</td>
-      <td><a href="more/game/game.html">荷岸观鱼&nbsp;小游戏</a></td>
+      <td><a href="lit/index.html">石窦收云&nbsp;文学创作</a></td>
+      <td><a href="more/game/index.html">荷岸观鱼&nbsp;小游戏</a></td>
+    </tr>
     </table>
+
+    <h2>小工具</h2>
+    <h3>更改背景颜色</h3>
+    <div id="gaibeijingcolor">
+      在下方输入颜色（如“green”）或颜色值（如#f5f5f5）或transparent,再点击提交
+      <input type="text" value="yellow" id="changeBackgroundColorInput" /><br>
+      <button type="button" onclick="changeBackGroundColor()">提交</button>
+    </div>
+    <script>
+      function changeBackGroundColor(){document.body.style.backgroundColor=document.getElementById("changeBackgroundColorInput").value;}
+    </script>
 
     <h2>测试版</h2>
     <a href="beta/zhuye.html">点击进入测试版主页</a>

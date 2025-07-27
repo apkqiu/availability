@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>上课睡觉</title>
+    <link rel="stylesheet" href="../../res/css/BtnGreen1.css">
+    <link rel="stylesheet" href="../../res/css/TitleRed1.css">
+    <link rel="stylesheet" href="../../res/css/Title2nd1.css">
+    <style>
+    p,#condition{color:white;text-align:center;}
+    .loading{width:100px;height:100px;}
+    img{width:100%;}
+    #sit {width:49%;height:100px;background-color:white;float:left;text-align:center;}
+    #sleep {width:49%;height:100px;background-color:white;float:right;text-align:center;}
+    </style>
+  </head>
+  <body>
+    <div id="BA">
+    <h1>上课睡觉</h1>
+    <a href="../../zhuye.html">返回主页</a>
+    <button type="button" onclick="startGame()">开始</button>
+    </div>
+    <script>
+function startGame(){
+document.body.style.backgroundColor="black";
+document.getElementById("BA").innerHTML="<p>你很困。<br>加载后开始更流畅<\/p><img src=\"res\/loading.gif\" alt=\"loading\" class=\"loading\">";
+setTimeout(enterGame,2000);
+}
+function enterGame(){
+document.getElementById("BA").innerHTML="<p>你很困。<br>加载完成。即将开始<\/p>";
+setTimeout(beginPlay,2000);
+}
+function beginPlay(){
+document.getElementById("BA").innerHTML="<div id=\"sil\"><img src=\"res\/sit.jpeg\"><\/div><div id=\"condition\">状态<\/div><br><div id=\"sit\">端坐<\/div><div id=\"sleep\">睡眠<\/div>";
+}
+var sil=0;
+document.getElementById("sit").onmouseover=function(e){var sil=0;}
+if(sil == 0)document.getElementById("condition").innerHTML="端坐";
+
+    </script>
+  </body>
+</html>
