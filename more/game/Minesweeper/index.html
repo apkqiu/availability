@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../../res/css/TitleRed1.css">
+    <link rel="stylesheet" href="../../../res/css/BtnGreen1.css">
+    <title>扫雷</title>
+    <style>
+        .footer {
+            color: gray;
+            font-size: 10px;
+        }
+        .mask{
+            background: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            visibility: collapse;
+        }
+        .fade{
+            animation: fade 1s ease-in-out;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .go_white{
+            visibility: visible !important;
+            animation: go_white 1s ease-in-out;
+        }
+        @keyframes go_white {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        // check fade
+        location.search.indexOf("fade") != -1 ? document.body.classList.add("fade") : null;
+
+        function validate_and_return(){
+            var w = document.getElementById("w").value;
+            var h = document.getElementById("h").value;
+            var m = document.getElementById("m").value;
+            if(w*h < 4||w<1 || h<1){
+                alert("这么小还玩什么扫雷");
+            }
+            if(m > w*h){
+                alert("埋这么多雷，你确定你能赢？");
+            }
+            if(m < 0){
+                alert("不埋雷你玩什么扫雷");
+            }
+            return {w:w,h:h,m:m};
+        }
+        async function start(){
+            var {w,h,m} = validate_and_return();
+            document.getElementById("go").classList.add("go_white");
+            await sleep(1000);
+            window.location.href = "./game.html?w="+w+"&h="+h+"&m="+m;
+        }
+    </script>
+    <h1>扫雷</h1>
+    <a href="../../../zhuye.html">返回主页</a>
+    <br>
+    尺寸<input id="w" value="10" type="number" min="1">x<input id="h" value="10" type="number" min="1">
+    雷数<input id="m" value="10" type="number" min="1">
+    <button onclick="start()">开始</button>
+    <div class="footer">
+        <br>联系我们:
+        <br>电话：13270463238
+        <br>邮箱Caixukun11451489@outlook.com
+    </div>
+    <div id="go" class="mask"></div>
+</body>
+
+</html>
