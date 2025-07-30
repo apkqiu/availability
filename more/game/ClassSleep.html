@@ -20,7 +20,7 @@
 
         img {
             width: 50%;
-            margin:0 auto;
+            margin: 0 auto;
         }
 
         #sit {
@@ -68,7 +68,7 @@
             document.getElementById("sleep").onmouseover = function (e) { sil = 1; };
             var LetSleepTimeOnlyAddOnce = 0;
             async function update() {
-                                              /* 显示睡眠时间 */
+                /* 显示睡眠时间 */
                 if (sil == 0) {
                     if (startGameCondition == 0) {
                         sleepAlltime = 0;
@@ -83,37 +83,37 @@
                     }
                     document.getElementById("condition").innerHTML = "正在端坐";
                     sleepEndTime = performance.now();
-                    document.getElementById("sleeptimeprint").innerHTML = "统共睡眠时间：" + Math.round(sleepAlltime)/1000 + "秒";
+                    document.getElementById("sleeptimeprint").innerHTML = "统共睡眠时间：" + Math.round(sleepAlltime) / 1000 + "秒";
                 } else {
                     if (TeacherCondition == 0) {
-                        document.body.addEventListener("click",function(){
-                            window.location.reload();});
-                        document.getElementById("BA").innerHTML = "<p>游戏失败<br>我对你客气，你把我当福气是不是<\/p><p>成绩：" + Math.round(sleepAlltime)/1000 + "秒<\/p>";
+                        document.body.addEventListener("click", function () {
+                            window.location.reload();
+                        });
+                        document.getElementById("BA").innerHTML = "<p>游戏失败<br>我对你客气，你把我当福气是不是<\/p><p>成绩：" + Math.round(sleepAlltime) / 1000 + "秒<\/p>";
                     }
                     document.getElementById("condition").innerHTML = "正在睡眠";
                     sleepStartTime = performance.now();
                     sleepOnetime = sleepStartTime - sleepEndTime;
-                    document.getElementById("sleeptimeprint").innerHTML = "本次睡眠时间：" + Math.round(sleepOnetime)/1000 + "秒";
+                    document.getElementById("sleeptimeprint").innerHTML = "本次睡眠时间：" + Math.round(sleepOnetime) / 1000 + "秒";
                     LetSleepTimeOnlyAddOnce = 0;
                 }
-                                                    /* 老师回头 */
+                /* 老师回头 */
                 async function TeacherChange() {
-                    while(sil != 114514)
-                        { //while的开头。
+                    while (sil != 114514) { //while的开头。
                         TeacherCondition = 1;
                         document.getElementById("sil").innerHTML = "<img src=\"res\/sleep.jpeg\" alt=\"老师转头\">";
-                        await sleep(Math.random()*2000000);
+                        await sleep(Math.random() * 2000000);
                         document.getElementById("sil").innerHTML = "<img src=\"res\/sit.jpeg\" alt=\"老师看你\">";
                         await sleep(100);
                         TeacherCondition = 0;
-                        await sleep(Math.random()*2000000);
+                        await sleep(Math.random() * 2000000);
                     }//while的结尾。
                 }
                 TeacherChange();
             }
             setInterval(update, 1);
-                                               /* 讲话 */
-            async function speak(){
+            /* 讲话 */
+            async function speak() {
                 var YuLu = [
                     "我客气你当福气啊",//0
                     "Underline.",
@@ -132,7 +132,7 @@
                     '这题错的站起来',
                     '做一张基础卷',//15
                 ];
-                document.getElementById("YuLu").innerHTML=YuLu[Math.round(Math.random()*15)];
+                document.getElementById("YuLu").innerHTML = YuLu[Math.round(Math.random() * 15)];
             }
             setInterval(speak, 5000);
         }

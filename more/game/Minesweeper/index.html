@@ -10,7 +10,8 @@
             color: gray;
             font-size: 10px;
         }
-        .mask{
+
+        .mask {
             background: white;
             position: absolute;
             top: 0;
@@ -21,25 +22,31 @@
             height: 100%;
             visibility: collapse;
         }
-        .fade{
+
+        .fade {
             animation: fade 1s ease-in-out;
         }
+
         @keyframes fade {
             0% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
         }
-        .go_white{
+
+        .go_white {
             visibility: visible !important;
             animation: go_white 1s ease-in-out;
         }
+
         @keyframes go_white {
             0% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
@@ -53,26 +60,26 @@
         // check fade
         location.search.indexOf("fade") != -1 ? document.body.classList.add("fade") : null;
 
-        function validate_and_return(){
+        function validate_and_return() {
             var w = document.getElementById("w").value;
             var h = document.getElementById("h").value;
             var m = document.getElementById("m").value;
-            if(w*h < 4||w<1 || h<1){
+            if (w * h < 4 || w < 1 || h < 1) {
                 alert("这么小还玩什么扫雷");
             }
-            if(m > w*h){
+            if (m > w * h) {
                 alert("埋这么多雷，你确定你能赢？");
             }
-            if(m < 0){
+            if (m < 0) {
                 alert("不埋雷你玩什么扫雷");
             }
-            return {w:w,h:h,m:m};
+            return { w: w, h: h, m: m };
         }
-        async function start(){
-            var {w,h,m} = validate_and_return();
+        async function start() {
+            var { w, h, m } = validate_and_return();
             document.getElementById("go").classList.add("go_white");
             await sleep(1000);
-            window.location.href = "./game.html?w="+w+"&h="+h+"&m="+m;
+            window.location.href = "./game.html?w=" + w + "&h=" + h + "&m=" + m;
         }
     </script>
     <h1>扫雷</h1>

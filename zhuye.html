@@ -57,7 +57,10 @@
             var tillSchoolTime = schoolTime - nowTime;
             return tillSchoolTime;
         }
-        document.getElementById('goBackSchool').innerHTML="距离开学还有"+goBackSchool('2025-9-1 00:00:00')/1000/60/60/24+"天";
+        const update = ()=> {
+          document.getElementById('goBackSchool').innerHTML="距离开学还有"+goBackSchool('2025-9-1 00:00:00')/1000/60/60/24+"天";          
+        }
+        setInterval(update,1);
     </script>
     <h3>计算某一天是星期几</h3>
     <div>输入数字
@@ -70,28 +73,8 @@
             var year = document.getElementById('xiaogongju_jisuanweekday_year').value;
             var month = document.getElementById('xiaogongju_jisuanweekday_month').value;
             var day = document.getElementById('xiaogongju_jisuanweekday_day').value;
-            if (month == 1){
-                month = 13;
-            }else if (month == 2){
-                month = 14;
-            }
-            month++;
-            var month = 2.6 * month;
-            var year1 = year.charAt(0);
-            var year2 = year.charAt(1);
-            var year3 = year.charAt(2);
-            var year4 = year.charAt(3);
-            var yearqw = year1.concat(year2);
-            var yearer = year3.concat(year4);
-            var nd = yearer / 4;
-            var md = Math.floor(nd);
-            var yqw = 2 * yearqw;
-            var yqcr = yearqw / 4;
-            var mc = Math.floor(yqcr);
-            var f = Math.floor(month);
-            var w = yearer + md + mc - yqw + f + day - 1;
-            var theDay = w % 7;
-            alert ("星期"+theDay);
+            var date = new Date(year,month-1,day);
+            alert ("星期"+date.getDay());
         }
         </script>
     </div>

@@ -4,6 +4,6 @@
     background-color:#f5f5f5;
     display:flex;
     justify-content:center;
-    noshade:"noshade";
+    /*noshade:"noshade";*/ /* [Editor Error] 未知属性:“noshade” */
     height:35px;
 }
