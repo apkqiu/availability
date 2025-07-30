@@ -1,4 +1,4 @@
-﻿document.getElementById('SearchArea').innerHTML="      <input type=\"text\" id=\"SearchText\" placeholder=\"中文搜索...\" \/>      <button type=\"button\" id=\"SearchBtn\" onclick=\"searchA()\">搜索<\/button>      <ul id=\"SearchForm\"><\/ul>";
+﻿document.getElementById('SearchArea').innerHTML="      <input type=\"text\" id=\"SearchText\" placeholder=\"中文搜索...\" \/>      <a id=\"SearchBtn\" onclick=\"searchA()\">搜索<\/a>      <ul id=\"SearchForm\"><\/ul>";
 function searchA(){
   document.getElementById('SearchForm').innerHTML="";
   var InputValue=document.getElementById('SearchText').value;
