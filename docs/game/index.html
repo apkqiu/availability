@@ -161,6 +161,10 @@
                 </div>
                 <div class="modal-body">
                     更新：<br>
+                    v2.1.0<br>
+                    1. 添加搜索框<br>
+                    2. 高级背景<br>
+                    <hr>
                     v2.0.0<br>
                     1. 整体模板化+使用Bootstrap<br>
                     2. 整体美化<br>
@@ -175,7 +179,7 @@
 
 <body style="min-height: 100vh;">
 
-    <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden">
+    <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden;z-index: -10;">
         <ul id="scene">
             <li class="layer" data-depth="0.40">
                 <img src="../res/img/SchoolGate.jpg" style="height: 120vh;width: 120vw;object-fit:cover;">
@@ -226,16 +230,16 @@
         var scene = document.getElementById('scene');
         var parallax = new Parallax(scene);
     </script>
+    <div class="text-sm bg-light text-muted">
+        <small>
+            如果你要提供意见，请 <a href="../contact.html">联系我们</a>
+            <em>
+                <br>电话：13270463238
+                <br>邮箱:Caixukun11451489@outlook.com
+            </em>
+        </small>
+    </div>
 </body>
 
-<footer class="text-sm bg-light text-muted">
-    <small>
-        如果你要提供意见，请 <a href="../contact.html">联系我们</a>
-        <em>
-            <br>电话：13270463238
-            <br>邮箱:Caixukun11451489@outlook.com
-        </em>
-    </small>
-</footer>
 
 </html>
