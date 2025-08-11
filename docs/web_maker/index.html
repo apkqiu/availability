@@ -234,55 +234,61 @@
 <!--左半边代码编写，右半边iframe沙盒(bootstrap)式布局-->
 <div class="row">
     <div class="col-md-6">
-        <textarea id="area" style="width:100%;height:90vh;font-family: monospace;" class="form-control"
-            placeholder="请输入代码"></textarea>
+        <div id="element-tree">
+
+        </div>
     </div>
     <div class="col-md-6">
         <iframe src="sandbox.html" id="frame" style="width:100%;height:90vh"></iframe>
     </div>
 </div>
 <script>
-    var codearea = document.getElementById("area");
-    var frame = document.getElementById("frame");
-    codearea.addEventListener("input", update);
-    codearea.value = window.localStorage.getItem("code");
-    frame.src = "sandbox.html?"+Math.random();
-    function update(){
-        window.localStorage.setItem("code", codearea.value);
-        frame.src = "sandbox.html?"+Math.random();
+    var elementTree_area = document.getElementById('element-tree');
+    class VirtualElement {
+        constructor(type) {
+            this.real = document.createElement(type);
+            this.children = []
+            this.parent = null;
+        }
+        add_child(child) {
+            child.parent = this;
+            this.children.push(child);
+            this.real.appendChild(child.real);
+        }
+        remove_child(child) {
+            child.parent = null;
+            this.children.splice(this.children.indexOf(child), 1);
+            this.real.removeChild(child.real);
+        }
+        remove_self() {
+            this.parent.remove_child(this);
+
+        }
     }
-    function download() {
-        // Create an file with the content of the textarea
-        var file = new File([codearea.value], "code.html", { type: "text/html" });
-        // Create a temporary link element
-        var link = document.createElement("a");
-        // Set the href attribute to the file object
-        link.href = URL.createObjectURL(file);
-        // Set the download attribute to the desired filename
-        link.download = "code.html";
-        // Append the link to the document body
-        document.body.appendChild(link);
-        // Click the link to trigger the download
-        link.click();
-        // Remove the link from the document body
-        document.body.removeChild(link);
+    function pushto_elementtree(current, parent = elementTree_area) {
+        var details = document.createElement('details');
+        details.style.paddingLeft = '1em';
+        var summary = document.createElement('summary');
+        summary.innerText = current.real.tagName;
+        details.appendChild(summary);
+        parent.appendChild(details);
+        if (current.children.length > 0)
+            for (var child of current.children) {
+                pushto_elementtree(child, details);
+            }
+        else {
+            var node = document.createElement('span');
+            node.innerText = '没有子节点';
+            node.style.marginLeft = '1em';
+            details.appendChild(node);
+        }
     }
-    function upload() {
-        var input = document.createElement("input");
-        input.type = "file";
-        input.accept = ".html";
-        input.onchange = function (event) {
-            var file = event.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                codearea.value = event.target.result;
-                frame.src = "sandbox.html?"+Math.random();
-                update();
-            };
-            reader.readAsText(file);
-        };
-        input.click();
-    }
+    var html = new VirtualElement('html');
+    var head = new VirtualElement('head');
+    html.add_child(head);
+    var body = new VirtualElement('body');
+    html.add_child(body);
+    pushto_elementtree(html);
 </script>
 
 
