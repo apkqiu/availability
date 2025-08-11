@@ -2,6 +2,8 @@
 <html lang="en" style="min-height: 100vh;">
 
 <head>
+    <div id="script-mount-node"></div>
+
     <script>
         const root = "..";
     </script>
@@ -24,12 +26,13 @@
             document.body.style.background = localStorage.getItem('color') || 'white';
         })
     </script>
-    <style>
-        *{
-            transition: none!important;
-            animation: none!important;
+    <script>
+        if (localStorage.getItem('no-anim') == 'true') {
+            var style_noanim = document.createElement('style')
+            style_noanim.innerHTML = `*{transition: none !important;animation: none !important;}`
+            document.getElementById("script-mount-node").appendChild(style_noanim)
         }
-    </style>
+    </script>
 </head>
 
 <header>
@@ -61,15 +64,15 @@
     </nav>
 
     <!-- Offcanvas -->
-    <div class="offcanvas offcanvas-start"  tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <div class="mb-3">
-            <a href="../home.html" class="btn btn-secondary">返回首页</a>
-            <a href="../account/index.html" class="btn btn-secondary">账号管理</a>
+                <a href="../home.html" class="btn btn-secondary">返回首页</a>
+                <a href="../account/index.html" class="btn btn-secondary">账号管理</a>
             </div>
             <script>
                 function set_empty() {
@@ -87,9 +90,9 @@
                     var input = document.getElementById("searchInput").value;
                     var result = document.getElementById("searchResult");
                     var input2 = "";
-                    for( var i = 0; i < input.length; i++) {
+                    for (var i = 0; i < input.length; i++) {
                         input2 += input[i];
-                        input2+=" ";
+                        input2 += " ";
                     }
                     result.innerHTML = "";
                     if (input == "") {
@@ -206,7 +209,7 @@
 <hr>
 <h3>账号设置</h3>
 <h4 id="personalization">个性化</h4>
-<div class="input-group mb-3 w-25">
+<div class="input-group mb-1 w-25">
     <label class="input-group-text" for="color">背景颜色</label>
     <input type="color" id="color" name="color" value="#ffffff"  class="form-control form-control-color">
     <script>
@@ -216,6 +219,22 @@
         })
     </script>
     <button type="button" class="btn btn-primary" onclick="localStorage.setItem('color',document.getElementById('color').value);location.reload()">应用</button>
+
+</div>
+<div class="input-group mb-1 w-25">
+    <div class="form-control form-switch">
+        <input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input" >
+        去除动画
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var value = localStorage.getItem('no-anim');
+            if(value == 'true'){
+                document.getElementById('no-anim').checked = true;
+            }
+        })
+    </script>
+    <button type="button" class="btn btn-primary" onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
 
 </div>
 <hr>

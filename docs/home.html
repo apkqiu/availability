@@ -2,6 +2,8 @@
 <html lang="en" style="min-height: 100vh;">
 
 <head>
+    <div id="script-mount-node"></div>
+
     <script>
         const root = ".";
     </script>
@@ -24,12 +26,13 @@
             document.body.style.background = localStorage.getItem('color') || 'white';
         })
     </script>
-    <style>
-        *{
-            transition: none!important;
-            animation: none!important;
+    <script>
+        if (localStorage.getItem('no-anim') == 'true') {
+            var style_noanim = document.createElement('style')
+            style_noanim.innerHTML = `*{transition: none !important;animation: none !important;}`
+            document.getElementById("script-mount-node").appendChild(style_noanim)
         }
-    </style>
+    </script>
 </head>
 
 <header>
@@ -61,15 +64,15 @@
     </nav>
 
     <!-- Offcanvas -->
-    <div class="offcanvas offcanvas-start"  tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <div class="mb-3">
-            <a href="./home.html" class="btn btn-secondary">返回首页</a>
-            <a href="./account/index.html" class="btn btn-secondary">账号管理</a>
+                <a href="./home.html" class="btn btn-secondary">返回首页</a>
+                <a href="./account/index.html" class="btn btn-secondary">账号管理</a>
             </div>
             <script>
                 function set_empty() {
@@ -87,9 +90,9 @@
                     var input = document.getElementById("searchInput").value;
                     var result = document.getElementById("searchResult");
                     var input2 = "";
-                    for( var i = 0; i < input.length; i++) {
+                    for (var i = 0; i < input.length; i++) {
                         input2 += input[i];
-                        input2+=" ";
+                        input2 += " ";
                     }
                     result.innerHTML = "";
                     if (input == "") {
