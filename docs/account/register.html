@@ -41,7 +41,10 @@
                 return [r, g, b];
             }
             var color = localStorage.getItem('color') || '#ffffff';
-            document.getElementById("mainbody").style.background = "rgba(" + hex2rgb(color).join(",") + ",0.5)";
+            if (localStorage.getItem("adv_bg") == "false")
+                document.getElementById("mainbody").style.background = "rgba(" + hex2rgb(color).join(",") + ",1)";
+            else
+                document.getElementById("mainbody").style.background = "rgba(" + hex2rgb(color).join(",") + ",0.5)";
         })
     </script>
     <script>
@@ -184,7 +187,8 @@
 
         var parallax = new Parallax(scene);
     </script>
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;backdrop-filter: blur(20px); background:rgba(255,255,255,0.5);" id="mainbody">
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;backdrop-filter: blur(20px); background:rgba(255,255,255,0.5);"
+        id="mainbody">
         
 <h1>注册</h1>
 <div class="modal fade" data-bs-backdrop="static" id="Info" tabindex="-1" aria-labelledby="ErrorLabel"

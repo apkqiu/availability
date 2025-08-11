@@ -92,6 +92,22 @@
     <button type="button" class="btn btn-primary" onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
 
 </div>
+<div class="input-group mb-1 w-25">
+    <div class="form-control form-switch">
+        <input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input" >
+        高级的背景
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var value = localStorage.getItem('adv_bg') || 'true';
+            if(value == 'true'){
+                document.getElementById('adv_bg').checked = true;
+            }
+        })
+    </script>
+    <button type="button" class="btn btn-primary" onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
+
+</div>
 <hr>
 <button type="button" class="btn btn-danger m-1" onclick="document.getElementById('password').value='';$('#Ask').modal('show')">注销</button>
 <a class="btn btn-primary m-1" href="register.html">注册</a>
