@@ -1,0 +1,39 @@
+{%extends "parts/main.html"%}
+
+{%block title%}
+首页
+{%endblock%}
+
+{%block title_in%}
+洽隐山房
+{%endblock%}
+
+{%block body%}
+
+<div class="row bg-light mx-auto" style="width:100%;">
+    <div class="col-md-4">
+        <div style="margin-left: 45px;">
+            <h1>惠出众</h1>
+            <span>洽隐山房</span>
+        </div>
+        <div class="row mx-auto">
+            <div class="col-md-6">
+                <a class="btn m-1 w-100" href="{{root}}/soil_grass/index.html">藤崖伫月<br>草皮土壤</a>
+                <a class="btn m-1 w-100" href="{{root}}/text/index.html">石窦收云<br>文学创作</a>
+                <a class="btn m-1 w-100" href="{{root}}/web_maker/index.html">棕亭霁雪<br>自制网页</a>
+                <a class="btn m-1 w-100" href="{{root}}/account/index.html">柳荫眠琴<br>账号管理</a>
+            </div>
+            <div class="col-md-6">
+                <a class="btn m-1 w-100" href="{{root}}/news/index.html">屏山听瀑<br>周报</a>
+                <a class="btn m-1 w-100" href="{{root}}/school/index.html">柳荫系舫<br>一草种</a>
+                <a class="btn m-1 w-100" href="{{root}}/resource/index.html">林屋探奇<br>资料</a>
+                <a class="btn m-1 w-100" href="{{root}}/game/index.html">荷岸观鱼<br>小游戏</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <img src="{{root}}/res/img/SchoolGate.jpg" class="img-fluid" alt="Responsive image"
+            style="height:100%; object-fit:cover;">
+    </div>
+</div>
+{%endblock%}

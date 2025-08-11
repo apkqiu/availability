@@ -1,0 +1,87 @@
+{%extends "parts/main.html"%}
+
+{%block title%}
+柳荫眠琴 | 账号管理
+{%endblock%}
+
+{%block title_in%}
+柳荫眠琴 | 账号管理
+{%endblock%}
+
+{%block body%}
+<h1>账号管理</h1>
+<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1" aria-labelledby="ErrorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-body">
+                检测到您没有账号，将跳转创建
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary" href="register.html">前往</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1" aria-labelledby="ErrorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-body">
+                更新将清除所有用户数据，继续请输入密码
+                <br>
+                <input id="password" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1" aria-labelledby="ErrorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-body">
+                密码错误
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h3>当前账号</h3>
+<p id="nowAccount"></p>
+<script>
+    var usernameJSONValue = localStorage.getItem('username');
+    var usernameValue = JSON.parse(usernameJSONValue);
+    document.getElementById('nowAccount').innerHTML = '当前账号:' + usernameValue + '<br>密码：***';
+</script>
+<hr>
+
+<button type="button" class="btn btn-danger" onclick="document.getElementById('password').value='';$('#Ask').modal('show')">注销</button>
+<br><a class="btn btn-primary" href="register.html">注册</a>
+<script defer>
+    //没有账号创建账号
+    var accountBe = localStorage.getItem('accountBe');
+    if (!accountBe) {
+        document.addEventListener("DOMContentLoaded", () => {
+            $('#Error').modal('show');
+        })
+    }
+    function clear() {
+        var password = document.getElementById('password').value;
+        if (password == "密码") {
+            localStorage.clear();
+            location.href="../home.html";
+        } else {
+            $("#Ask").modal('hide');
+            $('#Error2').modal('show');
+        }
+    }
+</script>
+{%endblock%}

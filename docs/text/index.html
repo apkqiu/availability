@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en"  style="min-height: 100vh;">
+
+<head>
+    <script>
+        const root = "..";
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+石窦收云 | 文学创作
+</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"
+        defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../res/js/obj_index.js"></script>
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed;width:100%;z-index: 100;">
+        <div class="container-fluid">
+            <span>
+石窦收云 | 文学创作
+</span>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            公告
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">报错</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                        aria-controls="offcanvasExample">
+                        <span class="navbar-toggler-icon"></span>
+                    </a>
+                </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <a href="../home.html">返回首页</a>
+            <script>
+                function search(){
+                    var input = document.getElementById("searchInput").value;
+                    var result = document.getElementById("searchResult");
+                    var suggest = document.getElementById("searchSuggestion");
+                    result.innerHTML = "";
+                    suggest.innerHTML = "";
+                    miniSearch.search(input).forEach(res => {
+                        var a = document.createElement("a");
+                        a.href = root+res.url;
+                        a.innerText = res.title;
+                        a.classList.add("list-group-item");
+                        result.appendChild(a);
+                    });
+                    miniSearch.autoSuggest(input).forEach(res => {
+                        if(res.suggestion == input) return;
+                        var a = document.createElement("a");
+                        a.onclick = function(){document.getElementById("searchInput").value=res.suggestion;search()};
+                        a.href="javascript:void(0);";
+                        a.innerText = res.suggestion+"？";
+                        suggest.appendChild(a);
+                    });
+                }
+            </script>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="搜索" aria-label="搜索" id="searchInput" aria-describedby="button-addon2" oninput="search()">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
+            </div>
+            <div id="searchSuggestion"></div>
+            <ul class="list-group" id="searchResult">
+            </ul>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    更新：<br>
+                    v2.0.0<br>
+                    1. 整体模板化+使用Bootstrap<br>
+                    2. 整体美化<br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<body style="min-height: 100vh;">
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;" id="mainbody">
+        
+
+<h1>文学创作</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" id="h1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        诗
+                    </button>
+                </h2>
+                <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <a class="list-group-item" id="p1" href="?p=1&type=1">阳光侧平 （孙佳铭，笔名：拂柳）</a>
+                            <a class="list-group-item" id="p2" href="?p=2&type=1">护拦 （李军昊）</a>
+                            <a class="list-group-item" id="p3" href="?p=3&type=1">老师与学生 （李军昊）</a>
+                            <a class="list-group-item" id="p4" href="?p=4&type=1">房正 （李军昊）</a>
+                            <a class="list-group-item" id="p5" href="?p=5&type=1">美驴与野兽 （李军昊）</a>
+                            <a class="list-group-item" id="p6" href="?p=6&type=1">熬夜 （李军昊）</a>
+                            <a class="list-group-item" id="p7" href="?p=7&type=1">谢朱鑫磊 （李军昊）</a>
+                            <a class="list-group-item" id="p8" href="?p=8&type=1">一月十日池塘结冰 （李军昊）</a>
+                            <a class="list-group-item" id="p9" href="?p=9&type=1">作业论 （李军昊）</a>
+                            <a class="list-group-item" id="p10" href="?p=10&type=1">送朱鑫磊 （李军昊）</a>
+                            <a class="list-group-item" id="p11" href="?p=11&type=1">南宋北诗初中生 （李军昊）</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" id="h2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapseOne">
+                        词
+                    </button>
+                </h2>
+                <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <a class="list-group-item" id="p12" href="?p=12&type=2">渔家傲·开学 （李军昊）</a>
+                            <a class="list-group-item" id="p13" href="?p=13&type=2">如梦令·暑日课业 （霍沛霖，笔名：普霖）</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" id="h3" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapseOne">
+                        曲
+                    </button>
+                </h2>
+                <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <a class="list-group-item" id="p14" href="?p=14&type=3">天净沙·一初中（其一） （李军昊）</a>
+                            <a class="list-group-item" id="p15" href="?p=15&type=3">天净沙·一初中（其二） （李军昊）</a>
+                            <a class="list-group-item" id="p16" href="?p=16&type=3">天净沙·动点 （李军昊）</a>
+                            <a class="list-group-item" id="p17" href="?p=17&type=3">天净沙·暑假过半 （李军昊）</a>
+                            <a class="list-group-item" id="p18" href="?p=18&type=3">宋君曲 （侯天佑）</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <h3 id="title"></h3>
+        <iframe id="iframe" style="width:100%;height:90vh"></iframe>
+    </div>
+</div>
+<script>
+    function getarg(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    var p = getarg("p");
+    var type = getarg("type");
+    if (p == null) {
+        p = 1;
+    }
+    if (type == null) {
+        type = 1;
+    }
+    if (p != null) {
+        document.getElementById("iframe").src = p + ".html";
+        document.getElementById("title").innerText = document.getElementById("p" + p).innerText.split(" ")[0];
+        document.getElementById("p" + p).classList.add("active");
+        document.getElementById("h" + type).classList.remove("collapsed");
+        document.getElementById("collapse" + type).classList.add("show");
+    }
+</script>
+
+    </div>
+    <script>
+        document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
+
+        window.onresize = function () {
+            document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
+        }
+    </script>
+</body>
+
+<footer class="text-sm bg-light text-muted">
+    <small>
+        如果你要提供意见，请 <a href="../contact.html">联系我们</a>
+        <em>
+            <br>电话：13270463238
+            <br>邮箱:Caixukun11451489@outlook.com
+        </em>
+    </small>
+</footer>
+
+</html>

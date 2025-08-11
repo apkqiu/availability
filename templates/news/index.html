@@ -1,0 +1,65 @@
+{%extends "parts/main.html"%}
+
+{%block title%}
+屏山听瀑 | 周报
+{%endblock%}
+
+{%block title_in%}
+屏山听瀑 | 周报
+{%endblock%}
+
+{%block body%}
+<h1>周报</h1>
+<div class="row">
+    <div class="col-md-2">
+        <h3>热点新闻</h3>
+        <ul class="list-group">
+            <a class="list-group-item" id="news-wechat" href="?embed=wechat">微信公众号</a>
+            <a class="list-group-item" id="news-1" href="?embed=1">2025.7.27我学生胜利完成本周暑假作业</a>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <ul class="nav nav-tabs">
+            <li class="nav-item nav-link disabled">周报出版</li>
+            {% for i in (1,2,3,4,5,5.5,6,7,8,9)%}
+            <li class="nav-item">
+                <a class="nav-link" href="?p={{i}}" id="p{{i}}">第{{i}}期</a>
+            </li>
+            {% endfor %}
+
+        </ul>
+
+        <iframe style="width:100%;height: 80vh;" id="iframe"></iframe>
+    </div>
+</div>
+<br><br>
+<script>
+    function getarg(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    var p = getarg("p");
+    var embed = getarg("embed");
+    if (p == null && embed == null) {
+        p = 1;
+    }
+    var embed_mapping = {
+        "wechat1": "https://mp.weixin.qq.com/s/b04MS51oAVfy5r_Xvri6Ow",
+        "wechat2": "https://mp.weixin.qq.com/s/Fu5QpEoWWdqJ2xWGmptCyw",
+    }
+
+    if (embed != null) {
+        if (embed_mapping[embed] != null) {
+            document.getElementById("iframe").src = embed_mapping[embed];
+        } else {
+            document.getElementById("iframe").src = embed + ".html";
+        }
+        document.getElementById("news-" + embed).classList.add("active");
+    }
+    if (p != null) {
+        document.getElementById("p" + p).classList.add("active");
+        document.getElementById("iframe").src = "{{root}}/res/pdf/zhoubao" + p + ".pdf";
+    }
+</script>
+{%endblock%}

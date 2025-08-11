@@ -1,0 +1,108 @@
+{%extends "parts/main.html"%}
+
+{%block title%}
+石窦收云 | 文学创作
+{%endblock%}
+
+{%block title_in%}
+石窦收云 | 文学创作
+{%endblock%}
+
+{%block body%}
+
+<h1>文学创作</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" id="h1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        诗
+                    </button>
+                </h2>
+                <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <a class="list-group-item" id="p1" href="?p=1&type=1">阳光侧平 （孙佳铭，笔名：拂柳）</a>
+                            <a class="list-group-item" id="p2" href="?p=2&type=1">护拦 （李军昊）</a>
+                            <a class="list-group-item" id="p3" href="?p=3&type=1">老师与学生 （李军昊）</a>
+                            <a class="list-group-item" id="p4" href="?p=4&type=1">房正 （李军昊）</a>
+                            <a class="list-group-item" id="p5" href="?p=5&type=1">美驴与野兽 （李军昊）</a>
+                            <a class="list-group-item" id="p6" href="?p=6&type=1">熬夜 （李军昊）</a>
+                            <a class="list-group-item" id="p7" href="?p=7&type=1">谢朱鑫磊 （李军昊）</a>
+                            <a class="list-group-item" id="p8" href="?p=8&type=1">一月十日池塘结冰 （李军昊）</a>
+                            <a class="list-group-item" id="p9" href="?p=9&type=1">作业论 （李军昊）</a>
+                            <a class="list-group-item" id="p10" href="?p=10&type=1">送朱鑫磊 （李军昊）</a>
+                            <a class="list-group-item" id="p11" href="?p=11&type=1">南宋北诗初中生 （李军昊）</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" id="h2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapseOne">
+                        词
+                    </button>
+                </h2>
+                <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <a class="list-group-item" id="p12" href="?p=12&type=2">渔家傲·开学 （李军昊）</a>
+                            <a class="list-group-item" id="p13" href="?p=13&type=2">如梦令·暑日课业 （霍沛霖，笔名：普霖）</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" id="h3" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapseOne">
+                        曲
+                    </button>
+                </h2>
+                <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            <a class="list-group-item" id="p14" href="?p=14&type=3">天净沙·一初中（其一） （李军昊）</a>
+                            <a class="list-group-item" id="p15" href="?p=15&type=3">天净沙·一初中（其二） （李军昊）</a>
+                            <a class="list-group-item" id="p16" href="?p=16&type=3">天净沙·动点 （李军昊）</a>
+                            <a class="list-group-item" id="p17" href="?p=17&type=3">天净沙·暑假过半 （李军昊）</a>
+                            <a class="list-group-item" id="p18" href="?p=18&type=3">宋君曲 （侯天佑）</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <h3 id="title"></h3>
+        <iframe id="iframe" style="width:100%;height:90vh"></iframe>
+    </div>
+</div>
+<script>
+    function getarg(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    var p = getarg("p");
+    var type = getarg("type");
+    if (p == null) {
+        p = 1;
+    }
+    if (type == null) {
+        type = 1;
+    }
+    if (p != null) {
+        document.getElementById("iframe").src = p + ".html";
+        document.getElementById("title").innerText = document.getElementById("p" + p).innerText.split(" ")[0];
+        document.getElementById("p" + p).classList.add("active");
+        document.getElementById("h" + type).classList.remove("collapsed");
+        document.getElementById("collapse" + type).classList.add("show");
+    }
+</script>
+{%endblock%}

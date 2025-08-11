@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en"  style="min-height: 100vh;">
+
+<head>
+    <script>
+        const root = "..";
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+棕亭霁雪 | 自制网页
+</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"
+        defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../res/js/obj_index.js"></script>
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed;width:100%;z-index: 100;">
+        <div class="container-fluid">
+            <span>
+棕亭霁雪 | 自制网页
+</span>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../home.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            公告
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">报错</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                        aria-controls="offcanvasExample">
+                        <span class="navbar-toggler-icon"></span>
+                    </a>
+                </div>
+        </div>
+    </nav>
+
+    <!-- Offcanvas -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <a href="../home.html">返回首页</a>
+            <script>
+                function search(){
+                    var input = document.getElementById("searchInput").value;
+                    var result = document.getElementById("searchResult");
+                    var suggest = document.getElementById("searchSuggestion");
+                    result.innerHTML = "";
+                    suggest.innerHTML = "";
+                    miniSearch.search(input).forEach(res => {
+                        var a = document.createElement("a");
+                        a.href = root+res.url;
+                        a.innerText = res.title;
+                        a.classList.add("list-group-item");
+                        result.appendChild(a);
+                    });
+                    miniSearch.autoSuggest(input).forEach(res => {
+                        if(res.suggestion == input) return;
+                        var a = document.createElement("a");
+                        a.onclick = function(){document.getElementById("searchInput").value=res.suggestion;search()};
+                        a.href="javascript:void(0);";
+                        a.innerText = res.suggestion+"？";
+                        suggest.appendChild(a);
+                    });
+                }
+            </script>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="搜索" aria-label="搜索" id="searchInput" aria-describedby="button-addon2" oninput="search()">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
+            </div>
+            <div id="searchSuggestion"></div>
+            <ul class="list-group" id="searchResult">
+            </ul>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    更新：<br>
+                    v2.0.0<br>
+                    1. 整体模板化+使用Bootstrap<br>
+                    2. 整体美化<br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<body style="min-height: 100vh;">
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;" id="mainbody">
+        
+
+<button class="btn btn-primary m-1" onclick="window.open('sandbox.html', '_blank')">预览</button>
+<button class="btn btn-primary m-1" onclick="download()">保存</button>
+<button class="btn btn-primary m-1" onclick="upload()">打开</button>
+
+<!--左半边代码编写，右半边iframe沙盒(bootstrap)式布局-->
+<div class="row">
+    <div class="col-md-6">
+        <textarea id="area" style="width:100%;height:90vh;font-family: monospace;" class="form-control"
+            placeholder="请输入代码"></textarea>
+    </div>
+    <div class="col-md-6">
+        <iframe src="sandbox.html" id="frame" style="width:100%;height:90vh"></iframe>
+    </div>
+</div>
+<script>
+    var codearea = document.getElementById("area");
+    var frame = document.getElementById("frame");
+    codearea.addEventListener("input", update);
+    codearea.value = window.localStorage.getItem("code");
+    frame.src = "sandbox.html?"+Math.random();
+    function update(){
+        window.localStorage.setItem("code", codearea.value);
+        frame.src = "sandbox.html?"+Math.random();
+    }
+    function download() {
+        // Create an file with the content of the textarea
+        var file = new File([codearea.value], "code.html", { type: "text/html" });
+        // Create a temporary link element
+        var link = document.createElement("a");
+        // Set the href attribute to the file object
+        link.href = URL.createObjectURL(file);
+        // Set the download attribute to the desired filename
+        link.download = "code.html";
+        // Append the link to the document body
+        document.body.appendChild(link);
+        // Click the link to trigger the download
+        link.click();
+        // Remove the link from the document body
+        document.body.removeChild(link);
+    }
+    function upload() {
+        var input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".html";
+        input.onchange = function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                codearea.value = event.target.result;
+                frame.src = "sandbox.html?"+Math.random();
+                update();
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+</script>
+
+
+    </div>
+    <script>
+        document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
+
+        window.onresize = function () {
+            document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
+        }
+    </script>
+</body>
+
+<footer class="text-sm bg-light text-muted">
+    <small>
+        如果你要提供意见，请 <a href="../contact.html">联系我们</a>
+        <em>
+            <br>电话：13270463238
+            <br>邮箱:Caixukun11451489@outlook.com
+        </em>
+    </small>
+</footer>
+
+</html>

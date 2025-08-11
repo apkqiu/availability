@@ -1,9 +1,0 @@
-﻿h2 {  /*浅灰色背景二级标题*/
-    font-size:30px;
-    font-family:"SimHei";
-    background-color:#f5f5f5;
-    display:flex;
-    justify-content:center;
-    /*noshade:"noshade";*/ /* [Editor Error] 未知属性:“noshade” */
-    height:35px;
-}
