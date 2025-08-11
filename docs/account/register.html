@@ -20,11 +20,28 @@
     <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pinyin-pro"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
     <script src="../res/js/obj_index.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            document.body.style.background = localStorage.getItem('color') || 'white';
+            function hex2rgb(hex) {
+                let r = 0, g = 0, b = 0;
+                // 3 digits
+                if (hex.length == 4) {
+                    r = parseInt(hex[1] + hex[1], 16);
+                    g = parseInt(hex[2] + hex[2], 16);
+                    b = parseInt(hex[3] + hex[3], 16);
+                }
+                // 6 digits
+                else if (hex.length == 7) {
+                    r = parseInt(hex[1] + hex[2], 16);
+                    g = parseInt(hex[3] + hex[4], 16);
+                    b = parseInt(hex[5] + hex[6], 16);
+                }
+                return [r, g, b];
+            }
+            var color = localStorage.getItem('color') || '#ffffff';
+            document.getElementById("mainbody").style.background = "rgba(" + hex2rgb(color).join(",") + ",0.5)";
         })
     </script>
     <script>
@@ -154,7 +171,20 @@
 </header>
 
 <body style="min-height: 100vh;">
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;" id="mainbody">
+    <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden;z-index: -9;">
+        <ul id="scene">
+            <li class="layer" data-depth="0.40">
+                <img src="../res/img/SchoolGate.jpg" style="height: 120vh;width: 120vw;object-fit:cover;">
+            </li>
+
+        </ul>
+    </div>
+    <script>
+        var scene = document.getElementById('scene');
+
+        var parallax = new Parallax(scene);
+    </script>
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;backdrop-filter: blur(20px); background:rgba(255,255,255,0.5);" id="mainbody">
         
 <h1>注册</h1>
 <div class="modal fade" data-bs-backdrop="static" id="Info" tabindex="-1" aria-labelledby="ErrorLabel"
