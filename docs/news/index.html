@@ -24,6 +24,12 @@
             document.body.style.background = localStorage.getItem('color') || 'white';
         })
     </script>
+    <style>
+        *{
+            transition: none!important;
+            animation: none!important;
+        }
+    </style>
 </head>
 
 <header>
@@ -55,7 +61,7 @@
     </nav>
 
     <!-- Offcanvas -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start"  tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -80,12 +86,18 @@
                 function search() {
                     var input = document.getElementById("searchInput").value;
                     var result = document.getElementById("searchResult");
+                    var input2 = "";
+                    for( var i = 0; i < input.length; i++) {
+                        input2 += input[i];
+                        input2+=" ";
+                    }
                     result.innerHTML = "";
                     if (input == "") {
                         set_empty();
                         return;
                     }
-                    var res = miniSearch.search(input)
+                    //var res = miniSearch.search(input);
+                    var res = miniSearch.search(input2);
                     res.forEach(res => {
                         var a = document.createElement("a");
                         a.href = root + res.url;

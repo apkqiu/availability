@@ -71,4 +71,3 @@ let miniSearch = new MiniSearch({
 
 // Index all documents
 miniSearch.addAll(documents)
-
