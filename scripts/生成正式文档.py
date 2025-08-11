@@ -1,7 +1,9 @@
 import time
 import jinja2
 import os
+import json
 import concurrent.futures
+import bs4
 start = time.time()
 pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
 os.system("rd /s /q docs")
@@ -48,6 +50,39 @@ for dirpath, dirs, files in os.walk('templates'):
         else:
             copy(path, copy_path)
 pool.shutdown(True)
+obj_index = {}
+obj_index = json.load(open("scripts/base_index.json",encoding="utf-8"))
+# 使用爬虫方式建立索引
+bs = bs4.BeautifulSoup(open("docs/text/index.html",encoding="utf-8").read(), "html.parser")
+# 诗
+xpath = "#collapse1 > div > ul"
+for j in bs.select(xpath):
+    for k in j.select("a"):
+        obj_index.append({
+            "title": k.text,
+            "tag": "文学创作 · 诗",
+            "url": "/text/index.html"+k["href"]
+        })
+# 词
+xpath = "#collapse2 > div > ul"
+for j in bs.select(xpath):
+    for k in j.select("a"):
+        obj_index.append({
+            "title": k.text,
+            "tag": "文学创作 · 词",
+            "url": "/text/index.html"+k["href"]
+        })
+# 曲
+xpath = "#collapse3 > div > ul"
+for j in bs.select(xpath):
+    for k in j.select("a"):
+        obj_index.append({
+            "title": k.text,
+            "tag": "文学创作 · 曲",
+            "url": "/text/index.html"+k["href"]
+        })
+
+open("docs/res/js/obj_index.js","a",encoding="utf-8").write("var documents = " + json.dumps(obj_index) + ";")
 
 end = time.time()
 print("全部完成，耗时：", end - start,"s")

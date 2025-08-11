@@ -20,7 +20,6 @@
     <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pinyin-pro"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-levenshtein@1.1.6/index.min.js"></script>
 
     <script src="./res/js/obj_index.js" defer></script>
     <script>
@@ -106,7 +105,7 @@
                         var small = document.createElement("span");
                         small.style.float = "right";
                         small.style.color = "#aaa";
-                        small.innerText = "匹配度："+Math.round(res.score*100)+"%";
+                        small.innerText = res.tag;
                         a.appendChild(small);
                         a.classList.add("list-group-item");
                         result.appendChild(a);

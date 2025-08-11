@@ -116,40 +116,7 @@ const levenshetin = (function () {
 })();
 
 
-var documents = [
-    {
-        title: "藤崖伫月 · 草皮土壤",
-        url: "/soil_grass/index.html"
-    },
-    {
-        title: "石窦收云 · 文学创作",
-        url: "/text/index.html"
-    },
-    {
-        title: "棕亭霁雪 · 自制网页",
-        url: "/web_maker/index.html"
-    },
-    {
-        title: "柳荫眠琴 · 账号管理",
-        url: "/account/index.html"
-    },
-    {
-        title: "屏山听瀑 · 周报",
-        url: "/news/index.html"
-    },
-    {
-        title: "柳荫系舫 · 一草种",
-        url: "/school/index.html"
-    },
-    {
-        title: "林屋探奇 · 资料整理",
-        url: "/resource/index.html"
-    },
-    {
-        title: "荷岸观鱼 · 小游戏",
-        url: "/game/index.html"
-    }
-]
+
 function search_document(string) {
     var result = [];
     for (var i = 0; i < documents.length; i++) {
@@ -160,8 +127,9 @@ function search_document(string) {
             result.push(documents[i]);
         }
     }
-    result.sort((a,b) => b.score - a.score);
-    if(result[0].score > 0.2){
+    if (result.length == 0) return [];
+    result.sort((a, b) => b.score - a.score);
+    if (result[0].score > 0.2) {
         result = result.filter((a) => a.score > 0.2);
     }
     return result;
