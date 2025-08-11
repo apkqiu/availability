@@ -57,7 +57,7 @@
 </head>
 
 <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed;width:100%;z-index: 100;">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed;width:100%;z-index: 1001;">
         <div class="container-fluid">
             <span>
 隔岸观鱼 | 小游戏
@@ -174,7 +174,8 @@
 </header>
 
 <body style="min-height: 100vh;">
-    <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden;z-index: -9;">
+
+    <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden">
         <ul id="scene">
             <li class="layer" data-depth="0.40">
                 <img src="../res/img/SchoolGate.jpg" style="height: 120vh;width: 120vw;object-fit:cover;">
@@ -182,12 +183,9 @@
 
         </ul>
     </div>
-    <script>
-        var scene = document.getElementById('scene');
-
-        var parallax = new Parallax(scene);
-    </script>
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;backdrop-filter: blur(20px); background:rgba(255,255,255,0.5);"
+    
+    
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;backdrop-filter: blur(20px); background:rgba(255,255,255,0.5)"
         id="mainbody">
         
 <a class="btn" href="index.html">◀ 返回</a>
@@ -209,6 +207,10 @@
         window.onresize = function () {
             document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
         }
+    </script>
+    <script>
+        var scene = document.getElementById('scene');
+        var parallax = new Parallax(scene);
     </script>
 </body>
 

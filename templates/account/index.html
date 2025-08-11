@@ -7,9 +7,7 @@
 {%block title_in%}
 柳荫眠琴 | 账号管理
 {%endblock%}
-
-{%block body%}
-<h1>账号管理</h1>
+{%block outbody%}
 <div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1" aria-labelledby="ErrorLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -53,6 +51,10 @@
     </div>
 </div>
 
+{%endblock%}
+{%block body%}
+<h1>账号管理</h1>
+
 
 <h3>当前账号</h3>
 <p id="nowAccount"></p>
@@ -66,50 +68,54 @@
 <h4 id="personalization">个性化</h4>
 <div class="input-group mb-1 w-25">
     <label class="input-group-text" for="color">背景颜色</label>
-    <input type="color" id="color" name="color" value="#ffffff"  class="form-control form-control-color">
+    <input type="color" id="color" name="color" value="#ffffff" class="form-control form-control-color">
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var colorValue = localStorage.getItem('color') || '#ffffff';
             document.getElementById('color').value = colorValue;
         })
     </script>
-    <button type="button" class="btn btn-primary" onclick="localStorage.setItem('color',document.getElementById('color').value);location.reload()">应用</button>
+    <button type="button" class="btn btn-primary"
+        onclick="localStorage.setItem('color',document.getElementById('color').value);location.reload()">应用</button>
 
 </div>
 <div class="input-group mb-1 w-25">
     <div class="form-control form-switch">
-        <input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input" >
+        <input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input">
         去除动画
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var value = localStorage.getItem('no-anim') || 'false';
-            if(value == 'true'){
+            if (value == 'true') {
                 document.getElementById('no-anim').checked = true;
             }
         })
     </script>
-    <button type="button" class="btn btn-primary" onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
+    <button type="button" class="btn btn-primary"
+        onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
 
 </div>
 <div class="input-group mb-1 w-25">
     <div class="form-control form-switch">
-        <input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input" >
+        <input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input">
         高级的背景
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var value = localStorage.getItem('adv_bg') || 'true';
-            if(value == 'true'){
+            if (value == 'true') {
                 document.getElementById('adv_bg').checked = true;
             }
         })
     </script>
-    <button type="button" class="btn btn-primary" onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
+    <button type="button" class="btn btn-primary"
+        onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
 
 </div>
 <hr>
-<button type="button" class="btn btn-danger m-1" onclick="document.getElementById('password').value='';$('#Ask').modal('show')">注销</button>
+<button type="button" class="btn btn-danger m-1"
+    onclick="document.getElementById('password').value='';$('#Ask').modal('show')">注销</button>
 <a class="btn btn-primary m-1" href="register.html">注册</a>
 <script defer>
     //没有账号创建账号
@@ -123,7 +129,7 @@
         var password = document.getElementById('password').value;
         if (password == "密码") {
             localStorage.clear();
-            location.href="../home.html";
+            location.href = "../home.html";
         } else {
             $("#Ask").modal('hide');
             $('#Error2').modal('show');
