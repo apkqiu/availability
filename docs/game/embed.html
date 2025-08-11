@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"  style="min-height: 100vh;">
+<html lang="en" style="min-height: 100vh;">
 
 <head>
     <script>
@@ -17,7 +17,13 @@
         defer></script>
     <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../res/js/obj_index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pinyin-pro"></script>
+    <script src="../res/js/obj_index.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.background = localStorage.getItem('color') || 'white';
+        })
+    </script>
 </head>
 
 <header>
@@ -26,25 +32,25 @@
             <span>
 隔岸观鱼 | 小游戏
 </span>
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../home.html">首页</a>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            公告
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">报错</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                        aria-controls="offcanvasExample">
-                        <span class="navbar-toggler-icon"></span>
-                    </a>
-                </div>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../home.html">首页</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        公告
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">报错</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                    aria-controls="offcanvasExample">
+                    <span class="navbar-toggler-icon"></span>
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -55,37 +61,56 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <a href="../home.html">返回首页</a>
+            <div class="mb-3">
+            <a href="../home.html" class="btn btn-secondary">返回首页</a>
+            <a href="../account/index.html" class="btn btn-secondary">账号管理</a>
+            </div>
             <script>
-                function search(){
+                function set_empty() {
+                    var result = document.getElementById("searchResult");
+                    var a = document.createElement("a");
+                    a.href = "#";
+                    a.innerText = "开始搜索吧";
+                    a.classList.add("list-group-item");
+                    result.appendChild(a);
+                }
+                document.addEventListener("DOMContentLoaded", function () {
+                    set_empty();
+                });
+                function search() {
                     var input = document.getElementById("searchInput").value;
                     var result = document.getElementById("searchResult");
-                    var suggest = document.getElementById("searchSuggestion");
                     result.innerHTML = "";
-                    suggest.innerHTML = "";
-                    miniSearch.search(input).forEach(res => {
+                    if (input == "") {
+                        set_empty();
+                        return;
+                    }
+                    var res = miniSearch.search(input)
+                    res.forEach(res => {
                         var a = document.createElement("a");
-                        a.href = root+res.url;
+                        a.href = root + res.url;
                         a.innerText = res.title;
                         a.classList.add("list-group-item");
                         result.appendChild(a);
                     });
-                    miniSearch.autoSuggest(input).forEach(res => {
-                        if(res.suggestion == input) return;
+                    if (res.length == 0) {
                         var a = document.createElement("a");
-                        a.onclick = function(){document.getElementById("searchInput").value=res.suggestion;search()};
-                        a.href="javascript:void(0);";
-                        a.innerText = res.suggestion+"？";
-                        suggest.appendChild(a);
-                    });
+                        a.href = "#";
+                        a.innerText = "没有找到关于“" + input + "”的结果";
+                        a.classList.add("list-group-item");
+                        result.appendChild(a);
+                    }
                 }
             </script>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="搜索" aria-label="搜索" id="searchInput" aria-describedby="button-addon2" oninput="search()">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
-            </div>
-            <div id="searchSuggestion"></div>
-            <ul class="list-group" id="searchResult">
+
+            <ul class="list-group">
+                <li class="input-group clearfix">
+                    <input type="text" class="form-control" placeholder="搜索" aria-label="搜索" id="searchInput"
+                        aria-describedby="button-addon2" oninput="search()">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                        onclick="search()">搜索</button>
+                </li>
+                <div id="searchResult"></div>
             </ul>
         </div>
     </div>

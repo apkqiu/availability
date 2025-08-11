@@ -13,7 +13,8 @@
     <a class="btn m-1 w-100" href="{{root}}/game/index.html">荷岸观鱼<br>小游戏</a>
 </div>
 */
-const documents = [
+var { pinyin } = pinyinPro;
+var documents = [
     {
         title: "藤崖伫月 · 草皮土壤",
         url: "/soil_grass/index.html"
@@ -49,13 +50,21 @@ const documents = [
 ]
 for (var i = 0; i < documents.length; i++) {
     documents[i].id = i;
+    documents[i].title_split = "";
+    for (var j = 0; j < documents[i].title.length; j++) {
+        documents[i].title_split += documents[i].title[j];
+        documents[i].title_split += " ";
+    }
+    documents[i].title_pinyin = pinyin(documents[i].title, { toneType: "none"})
+    documents[i].title_pinyin_initial = pinyin(documents[i].title, { pattern:"initial"})
 }
 
+
 let miniSearch = new MiniSearch({
-    fields: ['title'], // fields to index for full-text search
+    fields: ["title",'title_split', "title_pinyin", "title_pinyin_initial"], // fields to index for full-text search
     storeFields: ['title', 'url'], // fields to return with search results
     searchOptions: {
-        boost: { title: 2 },
+        boost: { title: 1 },
         fuzzy: 0.2
     }
 })
