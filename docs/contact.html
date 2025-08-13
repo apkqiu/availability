@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pinyin-pro"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="./res/js/obj_index.js"></script>
     <script src="./res/js/lzma-c.js"></script>
     <script>const LZMA_C = LZMA;</script>
@@ -105,12 +106,12 @@
 </head>
 
 <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="position:fixed;width:100%;z-index: 1001;">
+    <nav class="navbar navbar-expand-sm bg-body-tertiary" id="nav" style="position:fixed;width:100%;z-index: 1001;">
         <div class="container-fluid">
             <span>
 洽隐山房 | 联系我们
 </span>
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav me-auto" id="nav_left">
                 <li class="nav-item">
                     <a class="nav-link" href="./home.html">首页</a>
                 </li>
@@ -216,9 +217,7 @@
                     v2.0.0<br>
                     1. 整体模板化+使用Bootstrap<br>
                     2. 整体美化<br>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">关闭</button>
+                    <br>
                 </div>
             </div>
         </div>
@@ -248,7 +247,7 @@
     </div>
     
     
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden"
+    <div style="min-height: calc(100vh - 72px); padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden"
         id="mainbody">
         
 <h1>联系我们</h1>
