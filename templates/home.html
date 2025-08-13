@@ -40,14 +40,15 @@
 
 <div style="position: absolute;left: 50%; top: 40%; transform: translate(-50%, -50%);justify-content: center;">
     <center>
-        <h1 style="font-size:102px">惠出众</h1>
-        <p style="font-size:36px">洽隐山房</p>
+        <h1 style="font-size:15vmin">惠出众</h1>
+        <p style="font-size:5vmin">洽隐山房</p>
         <br>
-        <a class="btn btn-primary btn-lg m-2" href="news/index.html">
+        <button onclick="window.location.href='news/index.html'" class="btn btn-primary btn-lg m-2"
+            href="news/index.html" style="width: 10em; height:3em">
             <i class="bi bi-newspaper"></i>
             周报出版
-        </a>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#wechatModal"
+        </button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#wechatModal" style="width: 10em; height:3em"
             class="btn btn-outline-primary btn-lg m-2" href="news/index.html?embed=wechat">
             <i class="bi bi-wechat"></i>
             关注微信
@@ -75,11 +76,9 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("nav").classList.add("exit");
-        document.getElementById("nav_left").style.add("exit");
-        document.getElementById("mainbody").style.minHeight = "100vh";
-        document.getElementById("footer").style.visibility = "collapse";
-        document.getElementById("footer").style.height = "0px";
+        document.getElementById("nav_left").style.visibility = "hidden";
+        document.getElementById("nav").style.backdropFilter = "none";
+        document.getElementById("footer").style.height = "0";
         document.getElementById("footer").style.overflow = "hidden";
     });
 </script>

@@ -70,19 +70,19 @@
         }
     </script>
     <style>
-        @keyframes exit {
+        @keyframes exit_color {
             0% {
-                opacity: 1;
+                background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity));
             }
 
             100% {
-                opacity: 0;
+                background-color: transparent;
             }
         }
 
-        .exit {
+        .exit_color {
             opacity: 0;
-            animation: exit 0.3s ease-in-out;
+            animation: exit_color 0.3s ease-in-out;
         }
 
         @keyframes enter {
@@ -99,6 +99,16 @@
             opacity: 1;
             animation: enter 0.3s ease-in-out;
         }
+
+        @media screen and (max-width: 768px) {
+            .hide_on_mobile {
+                display: none;
+                visibility: collapse;
+                height: 0px;
+            }
+        }
+
+        .hide_on_mobile {}
     </style>
     <script>
 
@@ -106,12 +116,13 @@
 </head>
 
 <header>
-    <nav class="navbar navbar-expand-sm bg-body-tertiary" id="nav" style="position:fixed;width:100%;z-index: 1001;">
+    <nav class="navbar navbar-expand-sm" id="nav"
+        style="position:fixed;width:100%;z-index: 1001;backdrop-filter: blur(100px);">
         <div class="container-fluid">
             <span>
 柳荫眠琴 | 账号管理
 </span>
-            <ul class="navbar-nav me-auto" id="nav_left">
+            <ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
                 <li class="nav-item">
                     <a class="nav-link" href="../home.html">首页</a>
                 </li>
@@ -140,10 +151,21 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="mb-3">
-                <a href="../home.html" class="btn btn-secondary">返回首页</a>
-                <a href="../account/index.html" class="btn btn-secondary">账号管理</a>
+            <h3>导航</h3>
+            <div class="list-group">
+                <a class="list-group-item" href="../home.html">首页</a>
+                <a type="button" href="#" class="list-group-item" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">公告</a>
+                <a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
+                <a class="list-group-item" href="../text/index.html">文学创作</a>
+                <a class="list-group-item" href="../web_maker/index.html">自制网页</a>
+                <a class="list-group-item" href="../account/index.html">账号管理</a>
+                <a class="list-group-item" href="../news/index.html">周报</a>
+                <a class="list-group-item" href="../school/index.html">一草种</a>
+                <a class="list-group-item" href="../resource/index.html">资料</a>
+                <a class="list-group-item" href="../game/index.html">小游戏</a>
             </div>
+            <br>
             <script>
                 function set_empty() {
                     var result = document.getElementById("searchResult");
@@ -188,7 +210,7 @@
                     }
                 }
             </script>
-
+            <h3>搜索</h3>
             <ul class="list-group">
                 <li class="input-group clearfix">
                     <input type="text" class="form-control" placeholder="搜索" aria-label="搜索" id="searchInput"
@@ -301,7 +323,7 @@
 </div>
 
 
-    <div style="min-height: calc(100vh - 72px); padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden"
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden"
         id="mainbody">
         
 <h1>注册</h1>
