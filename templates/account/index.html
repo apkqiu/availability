@@ -111,6 +111,18 @@
     </script>
     <button type="button" class="btn btn-primary"
         onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
+</div>
+<div class="input-group mb-1 w-25">
+    <label class="input-group-text" for="color">自定义背景</label>
+    <input type="text" id="imgbg" name="color" value="" class="form-control form-control-color">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var colorValue = localStorage.getItem('color') || '';
+            document.getElementById('imgbg').value = colorValue;
+        })
+    </script>
+    <button type="button" class="btn btn-primary"
+        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);location.reload()">应用</button>
 
 </div>
 <hr>
