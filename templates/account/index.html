@@ -66,7 +66,7 @@
 <hr>
 <h3>账号设置</h3>
 <h4 id="personalization">个性化</h4>
-<div class="input-group mb-1 w-25">
+<div class="input-group mb-1">
     <label class="input-group-text" for="color">背景颜色</label>
     <input type="color" id="color" name="color" value="#ffffff" class="form-control form-control-color">
     <script>
@@ -79,7 +79,7 @@
         onclick="localStorage.setItem('color',document.getElementById('color').value);location.reload()">应用</button>
 
 </div>
-<div class="input-group mb-1 w-25">
+<div class="input-group mb-1">
     <div class="form-control form-switch">
         <input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input">
         去除动画
@@ -96,7 +96,7 @@
         onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
 
 </div>
-<div class="input-group mb-1 w-25">
+<div class="input-group mb-1">
     <div class="form-control form-switch">
         <input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input">
         高级的背景
@@ -112,12 +112,69 @@
     <button type="button" class="btn btn-primary"
         onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
 </div>
-<div class="input-group mb-1 w-25">
-    <label class="input-group-text" for="color">自定义背景</label>
-    <input type="text" id="imgbg" name="color" value="" class="form-control form-control-color">
+<div class="input-group mb-1">
+    <div class="form-control form-switch">
+        <input type="checkbox" id="dark" role="switch" name="adv_bg" class="form-check-input">
+        深色模式
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var colorValue = localStorage.getItem('color') || '';
+            var value = localStorage.getItem('dark') || 'false';
+            if (value == 'true') {
+                document.getElementById('dark').checked = true;
+            }
+        })
+    </script>
+    <button type="button" class="btn btn-primary"
+        onclick="localStorage.setItem('dark',document.getElementById('dark').checked);location.reload()">应用</button>
+</div>
+<div class="input-group mb-1">
+    <label class="input-group-text" for="color">自定义背景（需要开启高级背景）</label>
+    <select id="imgbg" name="color" value="" class="form-control form-select">
+        <option>SchoolGate.jpg</option>
+        <option>bg.jpg</option>
+        <option>bg-1.jpg</option>
+        <option>bg-2.jpg</option>
+        <option>bg-3.jpg</option>
+        <option>bg-4.jpg</option>
+        <option>bg-5.jpg</option>
+        <option>bg-6.jpg</option>
+        <option>bg-7.jpg</option>
+        <option>bg-8.jpg</option>
+        <option>bg-9.jpg</option>
+        <option>bg-10.jpg</option>
+        <option>bg-11.jpg</option>
+        <option>bg-12.jpg</option>
+        <option>bg-13.jpg</option>
+        <option>bg-14.jpg</option>
+        <option>bg-15.jpg</option>
+        <option>bg-16.jpg</option>
+        <option>bg-17.jpg</option>
+        <option>bg-18.jpg</option>
+        <option>bg-19.jpg</option>
+        <option>bg-20.jpg</option>
+        <option>bg-21.jpg</option>
+        <option>bg-22.jpg</option>
+        <option>bg-23.jpg</option>
+        <option>bg-24.jpg</option>
+        <option>bg-25.jpg</option>
+        <option>bg-26.jpg</option>
+        <option>bg-27.jpg</option>
+        <option>bg-28.jpg</option>
+        <option>bg-29.jpg</option>
+        <option>bg-30.jpg</option>
+        <option>bg-31.jpg</option>
+        <option>bg-32.jpg</option>
+        <option>bg-33.jpg</option>
+        <option>bg-34.jpg</option>
+        <option>bg-35.jpg</option>
+        <option>bg-36.jpg</option>
+        <option>bg-37.jpg</option>
+        <option>bg-38.jpg</option>
+    </select>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var colorValue = localStorage.getItem('imgbg') || '';
             document.getElementById('imgbg').value = colorValue;
         })
     </script>

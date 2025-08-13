@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" style="min-height: 100vh;">
+<html lang="en" style="min-height: 100vh;" id="html-root">
 
 <head>
     <div id="script-mount-node"></div>
@@ -55,6 +55,15 @@
             var style_noanim = document.createElement('style')
             style_noanim.innerHTML = `*{transition: none !important;animation: none !important;}`
             document.getElementById("script-mount-node").appendChild(style_noanim)
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('dark') == 'true') {
+            document.getElementById("html-root").setAttribute("data-bs-theme", "dark");
+            document.addEventListener("DOMContentLoaded",()=>{
+                document.getElementById("footer").classList.add("bg-dark")
+                document.getElementById("footer").classList.remove("bg-light")
+            })
         }
     </script>
     <style>
@@ -243,7 +252,7 @@
         var scene = document.getElementById('scene');
         var parallax = new Parallax(scene);
     </script>
-    <div class="text-sm bg-light text-muted">
+    <div class="text-sm bg-light text-muted" id="footer">
         <small>
             如果你要提供意见，请 <a href="{{root}}/contact.html">联系我们</a>
             <em>

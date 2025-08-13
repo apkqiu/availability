@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" style="min-height: 100vh;">
+<html lang="en" style="min-height: 100vh;" id="html-root">
 
 <head>
     <div id="script-mount-node"></div>
@@ -55,6 +55,15 @@
             var style_noanim = document.createElement('style')
             style_noanim.innerHTML = `*{transition: none !important;animation: none !important;}`
             document.getElementById("script-mount-node").appendChild(style_noanim)
+        }
+    </script>
+    <script>
+        if (localStorage.getItem('dark') == 'true') {
+            document.getElementById("html-root").setAttribute("data-bs-theme", "dark");
+            document.addEventListener("DOMContentLoaded",()=>{
+                document.getElementById("footer").classList.add("bg-dark")
+                document.getElementById("footer").classList.remove("bg-light")
+            })
         }
     </script>
     <style>
@@ -217,15 +226,19 @@
     <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden;z-index: -10;">
         <ul id="scene">
             <li class="layer" data-depth="0.4">
-                <img src="../res/img/bg.jpg"
-                    style="height: 120vh;width: 120vw;object-fit:cover;">
+                <img id="bg" style="height: 120vh;width: 120vw;object-fit:cover;">
+                <script>
+                    var img = localStorage.getItem('imgbg') || 'bg.jpg';
+                    document.getElementById('bg').src = '../res/img/' + img;
+                </script>
             </li>
 
         </ul>
     </div>
     
     
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden" id="mainbody">
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden"
+        id="mainbody">
         
     </div>
     <script>
@@ -239,7 +252,7 @@
         var scene = document.getElementById('scene');
         var parallax = new Parallax(scene);
     </script>
-    <div class="text-sm bg-light text-muted">
+    <div class="text-sm bg-light text-muted" id="footer">
         <small>
             如果你要提供意见，请 <a href="../contact.html">联系我们</a>
             <em>
