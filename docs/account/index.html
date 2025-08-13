@@ -62,7 +62,7 @@
     <script>
         if (localStorage.getItem('dark') == 'true') {
             document.getElementById("html-root").setAttribute("data-bs-theme", "dark");
-            document.addEventListener("DOMContentLoaded",()=>{
+            document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("footer").classList.add("bg-dark")
                 document.getElementById("footer").classList.remove("bg-light")
             })
@@ -233,7 +233,14 @@
                 <img id="bg" style="height: 120vh;width: 120vw;object-fit:cover;">
                 <script>
                     var img = localStorage.getItem('imgbg') || 'bg.jpg';
-                    document.getElementById('bg').src = '../res/img/' + img;
+                    if (img == "custom") {
+                        localforage.getItem("imgbg").then(function (value) {
+                            document.getElementById('bg').src = value;
+                        })
+                    }
+                    else {
+                        document.getElementById('bg').src = '../res/img/' + img;
+                    }
                 </script>
             </li>
 
@@ -365,6 +372,7 @@
 <div class="input-group mb-1">
     <label class="input-group-text" for="color">自定义背景（需要开启高级背景）</label>
     <select id="imgbg" name="color" value="" class="form-control form-select">
+        <option value="custom">自定义 →</option>
         <option>SchoolGate.jpg</option>
         <option>bg.jpg</option>
         <option>bg-1.jpg</option>
@@ -397,15 +405,26 @@
         <option>bg-28.jpg</option>
         <option>bg-29.jpg</option>
         <option>bg-30.jpg</option>
+        
     </select>
+    <input type="file" id="imgbg" class="form-control" accept="image/*" onchange="upload(this)">
     <script>
+        function upload(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    localforage.setItem('imgbg', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
         document.addEventListener('DOMContentLoaded', function () {
-            var colorValue = localStorage.getItem('imgbg') || '';
-            document.getElementById('imgbg').value = colorValue;
+            var value = localStorage.getItem('imgbg') || '';
+            document.getElementById('imgbg').value = value;
         })
     </script>
     <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);location.reload()">应用</button>
+        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);if(document.getElementById('imgbg').value!='custom')localforage.removeItem('imgbg');location.reload()">应用</button>
 
 </div>
 <hr>
