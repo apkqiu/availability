@@ -10,13 +10,11 @@
             background-color: black;
             animation: go_black 1s ease-in-out;
         }
-
         .go_white {
             background-color: white;
             opacity: 0;
             animation: go_white 1s ease-in-out;
         }
-
         @keyframes go_black {
             0% {
                 background-color: white;
@@ -28,7 +26,6 @@
                 opacity: 1;
             }
         }
-
         @keyframes go_white {
             0% {
                 background-color: black;
@@ -62,8 +59,7 @@
         .mine {
             background-color: red;
         }
-
-        .mine_nonclick {
+        .mine_nonclick{
             background-color: orange;
         }
 
@@ -109,7 +105,7 @@
     <center>
         <h1>扫雷</h1>
     </center>
-
+    
     <span>剩余雷数：</span>
     <span id="mineCount"></span>
 
@@ -128,9 +124,9 @@
         var purediry = [0, 1, 0, -1];
         var call_queue = [];
         var stopped = false;
-
+        
         function open_block(x, y) {
-            async function wrapper(human = true) {
+            async function wrapper(human=true) {
                 if (stopped) { return }
                 if (x < 0 || x >= w || y < 0 || y >= h) { return }
                 if (button[x][y].classList.contains("open")) { return }
@@ -146,16 +142,16 @@
 
                 } else if (stage[x][y] == 99) {
                     button[x][y].classList.add("mine");
-                    if (!human) return;
+                    if(!human) return;
                     alert("你输了");
                     // open every block
                     for (var i = 0; i < w; i++) {
                         for (var j = 0; j < h; j++) {
-                            if (stage[i][j] == 99) {
-                                if (i == x && j == y) continue;
+                            if(stage[i][j]==99){
+                                if(i==x && j==y) continue;
                                 button[i][j].classList.add("mine_nonclick");
-
-                            }
+                            
+                            }                            
                         }
                     }
                     stopped = true;
@@ -168,35 +164,35 @@
             }
             return wrapper;
         }
-        function check_no_more_or_less() {
-
+        function check_no_more_or_less(){
+            
             var hit = 0;
             var nonhit = 0;
-            for (var i = 0; i < w; i++) {
-                for (var j = 0; j < h; j++) {
-                    if (button[i][j].classList.contains("flag")) {
-                        if (stage[i][j] == 99) {
+            for(var i=0;i<w;i++){
+                for(var j=0;j<h;j++){
+                    if(button[i][j].classList.contains("flag")){
+                        if(stage[i][j]==99){
                             hit++;
                         }
-                        else {
+                        else{
                             nonhit++;
                         }
                     }
                 }
             }
-            if (hit == m && nonhit == 0) {
+            if(hit==m && nonhit==0){
                 alert("你赢了");
                 stopped = true;
             }
-            if (hit + nonhit < m || (hit == m && nonhit == 0))
-                document.getElementById("mineCount").innerText = m - hit - nonhit;
+            if(hit+nonhit<m||(hit==m&&nonhit==0))
+                document.getElementById("mineCount").innerText = m-hit-nonhit;
             else
                 document.getElementById("mineCount").innerText = "?";
         }
         document.getElementById("mineCount").innerText = m;
-        function set_flag(x, y) {
-            function wrapper(e) {
-                if (stopped) return;
+        function set_flag(x,y){
+            function wrapper(e){
+                if(stopped) return;
                 if (button[x][y].classList.contains("flag")) {
                     button[x][y].classList.remove("flag");
                 } else {
@@ -206,7 +202,7 @@
                 e.preventDefault();
             }
             return wrapper;
-
+        
         }
         function pop_queue() {
             if (call_queue.length > 0) {
@@ -236,7 +232,7 @@
         for (var i = 0; i < m; i++) {
             var x = rand_between(0, w - 1);
             var y = rand_between(0, h - 1);
-            if (stage[x][y] == 99) { i--; }
+            if(stage[x][y] == 99) {i--;}
             stage[x][y] = 99;
         }
         // pre-process stage

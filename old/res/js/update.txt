@@ -1,1 +1,1 @@
-All.js是MenuA.js的新版，等所有html都改为新版后删除旧版。
+All.js��MenuA.js���°棬������html����Ϊ�°��ɾ���ɰ档

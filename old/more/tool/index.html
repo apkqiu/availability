@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../res/css/All.css">
+    <title>洽隐山房主页|小工具</title>
+</head>
+<body>
+
+    <h2>转换</h2>
+      <textarea id="changeDocumentBefore" placeholder="转换前文本" value=""></textarea>
+      <a href="#" id="changeDocumentBtn" onclick="changeDocument()">开始转换</a>
+      <textarea id="changeDocumentAfter" placeholder="转换后文本"></textarea>
+      <script>
+        function changeDocument() {
+            // 获取输入文本
+            var before = document.getElementById('changeDocumentBefore').value;
+            var after = before; // 初始化替换结果
+ 
+            // 定义替换规则数组
+            var tagChange = [
+                /*
+                    注：^(shift+6)为转义符
+                       元素节点属性例如    ?id:dome
+                */
+                [/\[/gi,'^['],    [/\]/gi,'^]'],            //[]→^[^]
+                [/<!DOCTYPE html>/,'!QiaYinShanFang'],
+                [/<html>/,'`{{'],[/<\/html>/,'`}}'],
+                [/<head>/,'`h{'],[/<\/head>/,'`h}'],
+                [/<body>/,'`b{'],[/<\/body>/,'`b}'],
+                [/(?<=<\w+?\s)(.+?)="(.+?)"(?=(\s|>))/ig,'?$1:$2'],      //属性  id="qq"  → ?id:qq
+                [/<!--([^䵣]+?)-->/gi,'/`$1`/'],
+                [/<([a-zA-Z]+?)(.+?)>/gi, '[$1$2/'],                     // <tag ... > → [tag ... /
+                [/<\/([a-zA-Z]+)>/gi, '\\$1]'],                          // </tag> → \tag]
+                [/\n\s+/g, '`n+'],                                       //换行符加空格
+                [/\n/g, '`n'],                                           // 换行符 \n → `n
+                /*常用字符
+                               `A  :  &nbsp;
+                               `C  :  class
+                               `D  :  div
+                               `L  :  link
+                               `S  :  script
+                               `T  :  title
+                */
+                [/&nbsp;/gi,'`A'],
+                [/class/gi,'`C'],
+                [/div/gi,'`D'],
+                [/link/gi,'`L'],
+                [/script/ig,'`S'],
+                [/title/gi,'`T'],
+            ];
+
+            // 循环应用所有替换规则
+            for (var i = 0; i < tagChange.length; i++) {
+                after = after.replace(tagChange[i][0], tagChange[i][1]);
+                console.log(tagChange[i][0],tagChange[i][1],after);
+            }
+
+            // 将结果写回输出框
+            document.getElementById('changeDocumentAfter').value = after;
+            console.log('转换成功');
+
+            // 可选：返回替换后的文本
+            return after;
+        }
+    </script>
+
+
+    <script src="../../res/js/All.js"></script>
+    <script>
+        document.getElementById('nowPlace').innerHTML=`
+            <a class="anone" href="../../zhuye.html">洽隐山房主页</a>>小工具
+        `;
+    </script>
+</body>
+</html>

@@ -38,6 +38,7 @@ if(!localStorage.getItem("be")){
 var guideLineDiv = bodyCreateElement('div','guideLineDiv');
 guideLineDiv.innerHTML=`
     <h1 class="guideLineH1">洽隐山房</h1>
+    <p id="nowPlace" style="display:inline"></p>
     <a href="#" id="noticeboardBtn" onclick="openNoticeboard()">公告</a>
     <a href=\"#\" id=\"MenuABtn\" onclick=\"openMenuA()\">菜单<\/a>
     <a href="#" id="seeErrorBtn">报错</a>
