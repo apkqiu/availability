@@ -22,6 +22,11 @@
     <script src="https://cdn.jsdelivr.net/npm/pinyin-pro"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
     <script src="../res/js/obj_index.js"></script>
+    <script src="../res/js/lzma-c.js"></script>
+    <script>const LZMA_C = LZMA;</script>
+    <script src="../res/js/lzma-d.js"></script>
+    <script>const LZMA_D = LZMA;</script>
+    <script src="../res/js/localforage.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             function hex2rgb(hex) {
@@ -86,7 +91,7 @@
         }
     </style>
     <script>
-        
+
     </script>
 </head>
 
@@ -215,9 +220,9 @@
 
     <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden;z-index: -10;">
         <ul id="scene">
-            <li class="layer" data-depth="0.40">
-                <img src="../res/img/SchoolGate.jpg"
-                    style="height: 120vh;width: 120vw;object-fit:cover;filter:blur(15px)">
+            <li class="layer" data-depth="0.4">
+                <img src="../res/img/bg.jpg"
+                    style="height: 120vh;width: 120vw;object-fit:cover;">
             </li>
 
         </ul>
@@ -267,7 +272,7 @@
 </div>
 
 
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5)" id="mainbody">
+    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden" id="mainbody">
         
 <h1>账号管理</h1>
 

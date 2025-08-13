@@ -8,282 +8,88 @@
 棕亭霁雪 | 自制网页
 {%endblock%}
 
-{%block outbody%}
-<div class="modal fade" id="propModal" tabindex="-1">
-    <div class="modal-dialog  modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="header">属性</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h3>通用</h3>
-                <table class="w-100 table">
-                    <tr>
-                        <td>元素ID</td>
-                        <td><input type="text" id="id" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td>套用元素样式</td>
-                        <td><input type="text" id="class" class="form-control" placeholder="默认模板"></td>
-                    </tr>
-                </table>
-                <div id="prop-text">
-                    <h3>文本</h3>
-                    <table class="w-100 table">
-                        <tr>
-                            <td>文本内容</td>
-                            <td><input id="text" class="form-control"></input></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="prop-link">
-                    <h3>超链接</h3>
-                    <table class="w-100 table">
-                        <tr>
-                            <td>链接地址</td>
-                            <td><input id="href" class="form-control"></input></td>
-                        </tr>
-                        <tr>
-                            <td>链接文本</td>
-                            <td><input id="link_text" class="form-control"></input></td>
+{%block body%}
+<h1>自制网页</h1>
+<div class="list-group" id="files">
+</div>
+<script>
+    // 从localstorage获取文件数据
+    var files = JSON.parse(localStorage.getItem("web_editor_files") || "[]");
+    // 添加新文件按钮
+    var addFile = document.createElement("a");
+    addFile.className = "list-group-item btn btn-success";
+    addFile.style.borderRadius = "5px 5px 0px 0px ";
+    addFile.href = "{{root}}/web_maker/edit.html?id=null";
+    addFile.innerText = "新建文件";
+    document.getElementById("files").appendChild(addFile);
 
-                        </tr>
-                    </table>
-                </div>
-                <div id="prop-style">
-                    <h3>CSS样式</h3>
-                    <table class="w-100 table">
-                        <tr>
-                            <td>颜色</td>
-                            <td><input id="css-color" class="form-control" placeholder="与套用模板一致"></input></td>
-                        </tr>
-                        <tr>
-                            <td>字体大小</td>
-                            <td><input id="css-font-size" type="number" class="form-control" placeholder="与套用模板一致"></input></td>
-                        </tr>
-                        <tr>
-                            <td>字体</td>
-                            <td><input id="css-font-family" class="form-control" placeholder="与套用模板一致"></input></td>
-                        </tr>
-                        <tr>
-                            <td>背景颜色</td>
-                            <td><input id="css-background-color" class="form-control" placeholder="与套用模板一致"></input></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="saveProp()">保存</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    var currentShow = null;
-    const propText = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span"];
-    const hyperLink = ["a"];
-    function showPropModal(element) {
-        $("#propModal").modal("show");
-        $("#header").text(element.tagName + "标签");
-        $("#id").val(element.id);
-        $("#class").val(element.className);
-        // prop: text
-        if (propText.includes(element.tagName.toLowerCase())) {
-            $("#prop-text").show();
-            $("#text").val(element.innerText);
-        } else {
-            $("#prop-text").hide();
+    // 遍历文件数据，生成列表项
+    files.forEach(function (file) {
+        var item = document.createElement("div");
+        item.className = "list-group-item";
+        var span = document.createElement("span");
+        span.innerText = file.name;
+        item.appendChild(span);
+        item.appendChild(document.createElement("br"));
+        var del = document.createElement("button");
+        del.className = "btn btn-danger btn-sm m-1";
+        del.innerText = "删除";
+        del.onclick = function () {
+            var files =  JSON.parse(localStorage.getItem("web_editor_files") || "[]");
+            files = files.filter(function (f) {
+                return f.id !== file.id;
+            });
+            localStorage.setItem("web_editor_files", JSON.stringify(files));
+            localforage.removeItem(file.id);
+            item.remove();
         }
-        console.log(element.tagName.toLowerCase());
-        // prop: link
-        if (hyperLink.includes(element.tagName.toLowerCase())) {
-            $("#prop-link").show();
-            $("#href").val(element.href);
-            $("#link_text").val(element.innerText);
-        } else {
-            $("#prop-link").hide();
+        item.appendChild(del);
+        var edit = document.createElement("a");
+        edit.className = "btn btn-primary btn-sm m-1";
+        edit.innerText = "编辑";
+        edit.href = "{{root}}/web_maker/edit.html?id=" + file.id;
+        item.appendChild(edit);
+        document.getElementById("files").appendChild(item);
+        var rename = document.createElement("button");
+        rename.className = "btn btn-warning btn-sm m-1";
+        rename.innerText = "重命名";
+        rename.onclick = function () {
+            var files = JSON.parse(localStorage.getItem("web_editor_files") || "[]");
+            // 找到当前的ID的索引
+            var index = files.findIndex(function (f) {
+                return f.id === file.id;
+            });
+            // 弹出重命名窗口
+            var new_name = prompt("请输入新的文件名", files[index].name);
+            if (new_name) {
+                files[index].name = new_name;
+                localStorage.setItem("web_editor_files", JSON.stringify(files));
+                location.reload();
+            }
         }
-        // prop: style
-        $("#css-color").val(element.style.color);
-        $("#css-font-size").val(element.style.fontSize);
-        $("#css-font-family").val(element.style.fontFamily);
-        $("#css-background-color").val(element.style.backgroundColor);
-        
-        currentShow = element;
-    }
-    function saveProp() {
-        currentShow.id = $("#id").val();
-        currentShow.className = $("#class").val();
-        if (propText.includes(currentShow.tagName.toLowerCase())) {
-            currentShow.innerText = $("#text").val();
+        item.appendChild(rename);
+        var copy = document.createElement("button");
+        copy.className = "btn btn-info btn-sm m-1";
+        copy.innerText = "复制";
+        copy.onclick = function () {
+            var files = JSON.parse(localStorage.getItem("web_editor_files") || "[]");
+            // 找到当前的ID的索引
+            var index = files.findIndex(function (f) {
+                return f.id === file.id;
+            });
+            // 复制文件
+            var new_file = {};
+            new_file.name = files[index].name + " - 副本";
+            new_file.id = new Date().getTime().toString(36);
+            files.push(new_file);
+            localStorage.setItem("web_editor_files", JSON.stringify(files));
+            localforage.getItem(files[index].id).then(function (value) {
+                localforage.setItem(new_file.id, value);
+            
+            })
+            location.reload();
         }
-        if (hyperLink.includes(currentShow.tagName.toLowerCase())) {
-            currentShow.href = $("#href").val();
-            currentShow.innerText = $("#link_text").val();
-        }
-        //style
-        currentShow.style.color = $("#css-color").val();
-        currentShow.style.fontSize = $("#css-font-size").val();
-        currentShow.style.fontFamily = $("#css-font-family").val();
-        currentShow.style.backgroundColor = $("#css-background-color").val();
-        
-        $("#propModal").modal("hide");
-        make_element_tree();
-    }
-</script>
-<div class="modal fade" id="addModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="header">添加</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="list-group">
-                    <span>文本</span>
-                    <a class="list-group-item" href="javascript:add_element('p', wait_to_add)">段落 (p)</a>
-                    <a class="list-group-item" href="javascript:add_element('span', wait_to_add)">文字 (span)</a>
-                    <a class="list-group-item" href="javascript:add_element('h1', wait_to_add)">大标题 (h1)</a>
-                    <a class="list-group-item" href="javascript:add_element('h2', wait_to_add)">中标题 (h2)</a>
-                    <a class="list-group-item" href="javascript:add_element('h3', wait_to_add)">小标题 (h3)</a>
-                    <span>布局</span>
-                    <a class="list-group-item" href="javascript:add_element('div', wait_to_add)">盒子 (div)</a>
-                    <span>交互</span>
-                    <a class="list-group-item" href="javascript:add_element('a', wait_to_add)">链接 (a)</a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    var wait_to_add = null
-    function showAddModal(tagName) {
-        $("#addModal").modal("show");
-        wait_to_add = tagName
-    }
+        item.appendChild(copy);
+    });
 </script>
 {%endblock%}
-
-{%block body%}
-
-<h1>自制网页</h1>
-<!--左半边代码编写，右半边iframe沙盒(bootstrap)式布局-->
-<div class="row">
-    <div class="col-md-6">
-        <h4>元素树</h4>
-        <div id="element-tree">
-
-        </div>
-    </div>
-    <div class="col-md-6">
-        <h4>预览</h4>
-        <div id="sandbox">
-
-        </div>
-    </div>
-    <script>
-        function add_element(element_name, parent) {
-            $("#addModal").modal("hide");
-            var element = document.createElement(element_name);
-            parent.appendChild(element);
-            make_element_tree();
-        }
-        function clear_element_tree() {
-            document.getElementById('element-tree').innerHTML = '';
-        }
-
-        function lock_local(args, func) {
-            return function (arg) {
-                func(arg, args);
-            }
-        }
-        function make_root_toolbar() {
-            var add = document.createElement('button');
-            add.className = 'btn btn-success btn-sm m-1';
-            add.innerHTML = '添加';
-            add.onclick = function () {
-                showAddModal(document.getElementById('sandbox'));
-                make_element_tree();
-            }
-            document.getElementById('element-tree').appendChild(add);
-
-
-        }
-        const addable = ["div"];
-        function make_element_tree(element = document.getElementById('sandbox'), tree = document.getElementById('element-tree'), deepth = 0) {
-            if (deepth == 0) {
-                clear_element_tree();
-                make_root_toolbar();
-                localStorage.setItem('element-tree', JSON.stringify(element.innerHTML));
-            }
-            // 根元素不创建
-            if (element.children.length > 0) {
-                var ul = document.createElement('ul');
-                ul.style.listStyleType = 'none';
-                for (var i = 0; i < element.children.length; i++) {
-                    var li = document.createElement('li');
-                    var details = document.createElement('details');
-                    var summary = document.createElement('summary');
-                    let bind_element = element.children[i];
-                    var toolbar = document.createElement('div');
-                    toolbar.style.display = "inline-block";
-                    var del = document.createElement('button');
-                    del.classList.add("btn", "btn-danger", "btn-sm", "m-1");
-                    del.innerText = "删除";
-                    del.addEventListener("click", function (event, data) {
-                        bind_element.parentElement.removeChild(bind_element);
-                        make_element_tree();
-                    });
-                    toolbar.appendChild(del);
-
-                    var prop = document.createElement('button');
-                    prop.classList.add("btn", "btn-info", "btn-sm", "m-1");
-                    prop.innerText = "属性";
-                    prop.addEventListener("click", function (event, data) {
-                        console.log(bind_element);
-                        showPropModal(bind_element);
-                    });
-                    if (addable.includes(bind_element.tagName.toLowerCase())) {
-                        var add = document.createElement('button');
-                        add.classList.add("btn", "btn-success", "btn-sm", "m-1");
-                        add.innerText = "添加";
-                        add.addEventListener("click", function (event, data) {
-                            console.log(bind_element);
-                            showAddModal(bind_element);
-                        });
-                        toolbar.appendChild(add);
-                    }
-
-
-                    toolbar.appendChild(prop);
-
-
-                    if (addable.includes(bind_element.tagName.toLowerCase())) {
-                        summary.innerText = element.children[i].nodeName;
-                    } else {
-                        summary.innerText = element.children[i].nodeName + " [" + element.children[i].innerText + "]";
-                    }
-                    summary.appendChild(toolbar);
-
-
-
-                    details.open = true;
-                    details.addEventListener("toggle", () => { details.open = true; })
-                    details.appendChild(summary);
-                    li.appendChild(details);
-                    ul.appendChild(li);
-                    make_element_tree(element.children[i], details, deepth + 1);
-                }
-                tree.appendChild(ul);
-            }
-        }
-        document.getElementById("sandbox").innerHTML = JSON.parse(localStorage.getItem("element-tree") || "\"\"");
-        make_element_tree(document.getElementById("sandbox"), document.getElementById('element-tree'));
-    </script>
-
-    {%endblock%}
