@@ -183,7 +183,7 @@
         })
     </script>
     <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);if(document.getElementById('imgbg').value!='custom')localforage.removeItem('imgbg');location.reload()">应用</button>
+        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);localStorage.setItem('adv_bg',true);if(document.getElementById('imgbg').value!='custom')localforage.removeItem('imgbg');location.reload()">应用</button>
 
 </div>
 <hr>
