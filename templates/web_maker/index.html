@@ -1,95 +1,84 @@
-{%extends "parts/main.html"%}
-
-{%block title%}
-棕亭霁雪 | 自制网页
-{%endblock%}
-
-{%block title_in%}
-棕亭霁雪 | 自制网页
-{%endblock%}
-
-{%block body%}
+{%extends "parts/main.html"%} {%block title%} 棕亭霁雪 | 自制网页 {%endblock%} {%block title_in%} 棕亭霁雪 | 自制网页 {%endblock%} {%block body%}
 <h1>自制网页</h1>
-<div class="list-group" id="files">
-</div>
+<div class="list-group" id="files"></div>
 <script>
-    // 从localstorage获取文件数据
-    var files = JSON.parse(localStorage.getItem("web_editor_files") || "[]");
-    // 添加新文件按钮
-    var addFile = document.createElement("a");
-    addFile.className = "list-group-item btn btn-success";
-    addFile.style.borderRadius = "5px 5px 0px 0px ";
-    addFile.href = "{{root}}/web_maker/edit.html?id=null";
-    addFile.innerText = "新建文件";
-    document.getElementById("files").appendChild(addFile);
+	// 从localstorage获取文件数据
+	var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+	$('<a></a>')
+		.addClass('list-group-item btn btn-success')
+		.css('border-radius', '5px 5px 0px 0px ')
+		.attr('href', '{{root}}/web_maker/edit.html?id=null')
+		.text('添加新文件')
+		.appendTo($('#files'));
 
-    // 遍历文件数据，生成列表项
-    files.forEach(function (file) {
-        var item = document.createElement("div");
-        item.className = "list-group-item";
-        var span = document.createElement("span");
-        span.innerText = file.name;
-        item.appendChild(span);
-        item.appendChild(document.createElement("br"));
-        var del = document.createElement("button");
-        del.className = "btn btn-danger btn-sm m-1";
-        del.innerText = "删除";
-        del.onclick = function () {
-            var files =  JSON.parse(localStorage.getItem("web_editor_files") || "[]");
-            files = files.filter(function (f) {
-                return f.id !== file.id;
-            });
-            localStorage.setItem("web_editor_files", JSON.stringify(files));
-            localforage.removeItem(file.id);
-            item.remove();
-        }
-        item.appendChild(del);
-        var edit = document.createElement("a");
-        edit.className = "btn btn-primary btn-sm m-1";
-        edit.innerText = "编辑";
-        edit.href = "{{root}}/web_maker/edit.html?id=" + file.id;
-        item.appendChild(edit);
-        document.getElementById("files").appendChild(item);
-        var rename = document.createElement("button");
-        rename.className = "btn btn-warning btn-sm m-1";
-        rename.innerText = "重命名";
-        rename.onclick = function () {
-            var files = JSON.parse(localStorage.getItem("web_editor_files") || "[]");
-            // 找到当前的ID的索引
-            var index = files.findIndex(function (f) {
-                return f.id === file.id;
-            });
-            // 弹出重命名窗口
-            var new_name = prompt("请输入新的文件名", files[index].name);
-            if (new_name) {
-                files[index].name = new_name;
-                localStorage.setItem("web_editor_files", JSON.stringify(files));
-                location.reload();
-            }
-        }
-        item.appendChild(rename);
-        var copy = document.createElement("button");
-        copy.className = "btn btn-info btn-sm m-1";
-        copy.innerText = "复制";
-        copy.onclick = function () {
-            var files = JSON.parse(localStorage.getItem("web_editor_files") || "[]");
-            // 找到当前的ID的索引
-            var index = files.findIndex(function (f) {
-                return f.id === file.id;
-            });
-            // 复制文件
-            var new_file = {};
-            new_file.name = files[index].name + " - 副本";
-            new_file.id = new Date().getTime().toString(36);
-            files.push(new_file);
-            localStorage.setItem("web_editor_files", JSON.stringify(files));
-            localforage.getItem(files[index].id).then(function (value) {
-                localforage.setItem(new_file.id, value);
-            
-            })
-            location.reload();
-        }
-        item.appendChild(copy);
-    });
+	// 遍历文件数据，生成列表项
+	files.forEach(function (file) {
+		$('<div></div>')
+			.addClass('list-group-item')
+			.append($('<span></span>').text(file.name))
+			.append($('<br>'))
+			.append(
+				$('<button></button>')
+					.addClass('btn btn-danger btn-sm m-1')
+					.text('删除')
+					.click(function () {
+						var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+						files = files.filter(function (f) {
+							return f.id !== file.id;
+						});
+						localStorage.setItem('web_editor_files', JSON.stringify(files));
+						localforage.removeItem(file.id);
+						location.reload();
+					})
+			)
+			.append(
+				$('<a></a>')
+					.addClass('btn btn-primary btn-sm m-1')
+					.attr('href', '{{root}}/web_maker/edit.html?id=' + file.id)
+					.text('编辑')
+			)
+			.append(
+				$('<button></button>')
+					.addClass('btn btn-warning btn-sm m-1')
+					.text('重命名')
+					.click(function () {
+						var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+						// 找到当前的ID的索引
+						var index = files.findIndex(function (f) {
+							return f.id === file.id;
+						});
+						// 弹出重命名窗口
+						var new_name = prompt('请输入新的文件名', files[index].name);
+						if (new_name) {
+							files[index].name = new_name;
+							localStorage.setItem('web_editor_files', JSON.stringify(files));
+							location.reload();
+						}
+					})
+			)
+			.append(
+				$('<button></button>')
+					.addClass('btn btn-info btn-sm m-1')
+					.text('复制')
+					.click(function () {
+						var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+						// 找到当前的ID的索引
+						var index = files.findIndex(function (f) {
+							return f.id === file.id;
+						});
+						// 复制文件
+						var new_file = {};
+						new_file.name = files[index].name + ' - 副本';
+						new_file.id = new Date().getTime().toString(36);
+						files.push(new_file);
+						localStorage.setItem('web_editor_files', JSON.stringify(files));
+						localforage.getItem(files[index].id).then(function (value) {
+							localforage.setItem(new_file.id, value);
+						});
+						location.reload();
+					})
+			)
+			.appendTo($('#files'));
+	});
 </script>
 {%endblock%}

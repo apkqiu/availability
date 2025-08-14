@@ -1,45 +1,45 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html>
-<head>
-    <link rel="stylesheet" href="../../res/css/BtnGreen1.css">
-    <link rel="stylesheet" href="../../res/css/MenuA.css">
-    <link rel="stylesheet" href="../../res/css/Titles.css">
-    <title>注册</title>
-</head>
-<body>
-    <h1>注册账号</h1>
-    <!-- 位置 -->
-    <div><a class="anone" href="../../zhuye.html">洽隐山房主页</a>><a href="index.html" class="anone">账号</a>>注册</div>
+	<head>
+		<link rel="stylesheet" href="../../res/css/BtnGreen1.css" />
+		<link rel="stylesheet" href="../../res/css/MenuA.css" />
+		<link rel="stylesheet" href="../../res/css/Titles.css" />
+		<title>注册</title>
+	</head>
+	<body>
+		<h1>注册账号</h1>
+		<!-- 位置 -->
+		<div><a class="anone" href="../../zhuye.html">洽隐山房主页</a>><a href="index.html" class="anone">账号</a>>注册</div>
 
-    <!--菜单-->
-    <div id="MenuAPlace"></div>
-    <script src="../../res/js/MenuA.js"></script>
-    <div id="MenuAArea"></div>
+		<!--菜单-->
+		<div id="MenuAPlace"></div>
+		<script src="../../res/js/MenuA.js"></script>
+		<div id="MenuAArea"></div>
 
-    <p>用户名<input type="text" id="username"></p>
-    <p>密码：<input type="password" id="password"></p>
-    <a id="tijiao">提交</a>
+		<p>用户名<input type="text" id="username" /></p>
+		<p>密码：<input type="password" id="password" /></p>
+		<a id="tijiao">提交</a>
 
-    <script>
-document.getElementById('tijiao').onclick=function(){
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    if(username&&password){
-        if(/\W/g.test(password)){
-            alert('密码只能包括数字，字母，下划线');
-        }else{
-            localStorage.setItem("username",JSON.stringify(username));
-            localStorage.setItem("password",JSON.stringify(password));
-            localStorage.setItem("accountBe","true");
-            alert('提交成功');
-            alert('注册信息会保存到浏览器用户数据中');
-            alert('即将返回');
-            window.location.href="index.html";
-        }
-    }else{
-        alert('输入值不能为空');
-    }
-}
-    </script>
-</body>
+		<script>
+			document.getElementById('tijiao').onclick = function () {
+				var username = document.getElementById('username').value;
+				var password = document.getElementById('password').value;
+				if (username && password) {
+					if (/\W/g.test(password)) {
+						alert('密码只能包括数字，字母，下划线');
+					} else {
+						localStorage.setItem('username', JSON.stringify(username));
+						localStorage.setItem('password', JSON.stringify(password));
+						localStorage.setItem('accountBe', 'true');
+						alert('提交成功');
+						alert('注册信息会保存到浏览器用户数据中');
+						alert('即将返回');
+						window.location.href = 'index.html';
+					}
+				} else {
+					alert('输入值不能为空');
+				}
+			};
+		</script>
+	</body>
 </html>

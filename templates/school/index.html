@@ -1,53 +1,35 @@
-{%extends "parts/main.html"%}
-
-{%block title%}
-柳荫系舫 | 一草种
-{%endblock%}
-
-{%block title_in%}
-柳荫系舫 | 一草种
-{%endblock%}
-
-{%block body%}
+{%extends "parts/main.html"%} {%block title%} 柳荫系舫 | 一草种 {%endblock%} {%block title_in%} 柳荫系舫 | 一草种 {%endblock%} {%block body%}
 <h1>一草种</h1>
 <a href="https://sz1cz.gusuedu.cn/index.htm">学校官网</a>
 <h3>热点资讯</h3>
 <ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link" href="?p=1" id="p1">学校攻防2025.9.1</a>
-    </li>
-
+	<li class="nav-item">
+		<a class="nav-link" href="?p=1" id="p1">学校攻防2025.9.1</a>
+	</li>
 </ul>
 
-<div style="width:100%;background-color: black;" id="iframe"></iframe>
-    <script>
-        function getarg(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if (r != null) return unescape(r[2]); return null;
-        }
-        var p = getarg("p");
-        p = {
-            1: "v,{{root}}/res/video/25.9.1xvexiaogongfang.mp4"
-        }[p]
-        if (p.startsWith("v,")) {
-            p = p.substring(2);
-            var video = document.createElement("video");
-            video.src = p;
-            video.controls = true;
-            video.style.width = "100%";
-            video.style.height = "90vh";
-            video.autoplay = true;
-            document.getElementById("iframe").appendChild(video);
-            var interval = setInterval(() => {
-                if (video.readyState == 4) {
-                    clearInterval(interval);
-                    video.pause();
-                    video.dispatchEvent(new Event("click"));
-                    video.play();
-                }
-            }, 10);
-        }
-        document.getElementById("p" + getarg("p")).classList.add("active");
-    </script>
-    {%endblock%}
+<div style="width: 100%; background-color: black" id="iframe"></div>
+<script>
+	function getarg(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]);
+		return null;
+	}
+	var p = getarg('p');
+	p = {
+		1: 'v,{{root}}/res/video/25.9.1xvexiaogongfang.mp4',
+	}[p];
+	if (p.startsWith('v,')) {
+		p = p.substring(2);
+		$('<video></video>')
+			.attr('src', p)
+			.attr('controls', true)
+			.attr('autoplay', true)
+			.css('width', '100%')
+			.css('height', '90vh')
+			.appendTo('#iframe');
+	}
+	$('#p' + getarg('p')).addClass('active');
+</script>
+{%endblock%}

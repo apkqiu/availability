@@ -1,23 +1,14 @@
-{%extends "parts/main.html"%}
-
-{%block title%}
-隔岸观鱼 | 小游戏
-{%endblock%}
-
-{%block title_in%}
-隔岸观鱼 | 小游戏
-{%endblock%}
-
-{%block body%}
+{%extends "parts/main.html"%} {%block title%} 隔岸观鱼 | 小游戏 {%endblock%} {%block title_in%} 隔岸观鱼 | 小游戏 {%endblock%} {%block body%}
 <a class="btn" href="index.html">◀ 返回</a>
-<iframe style="width:100%;height: 80vh;" id="iframe"></iframe>
+<iframe style="width: 100%; height: 80vh" id="iframe"></iframe>
 <script>
-    function getarg(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
-    var embed = getarg("embed");
-        document.getElementById("iframe").src = embed;
+	function getarg(name) {
+		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]);
+		return null;
+	}
+	var embed = getarg('embed');
+	document.getElementById('iframe').src = embed;
 </script>
 {%endblock%}

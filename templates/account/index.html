@@ -1,212 +1,157 @@
-{%extends "parts/main.html"%}
-
-{%block title%}
-柳荫眠琴 | 账号管理
-{%endblock%}
-
-{%block title_in%}
-柳荫眠琴 | 账号管理
-{%endblock%}
-{%block outbody%}
-<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1" aria-labelledby="ErrorLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                检测到您没有账号，将跳转创建
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary" href="register.html">前往</a>
-            </div>
-        </div>
-    </div>
+{%extends "parts/main.html"%} {%block title%} 柳荫眠琴 | 账号管理 {%endblock%} {%block title_in%} 柳荫眠琴 | 账号管理 {%endblock%} {%block outbody%}
+<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">检测到您没有账号，将跳转创建</div>
+			<div class="modal-footer">
+				<a type="button" class="btn btn-primary" href="register.html">前往</a>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1" aria-labelledby="ErrorLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                更新将清除所有用户数据，继续请输入密码
-                <br>
-                <input id="password" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">
+				更新将清除所有用户数据，继续请输入密码
+				<br />
+				<input id="password" class="form-control" />
+			</div>
+			<div class="modal-footer">
+				<a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
+			</div>
+		</div>
+	</div>
 </div>
-<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1" aria-labelledby="ErrorLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                密码错误
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">密码错误</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
 </div>
 
-{%endblock%}
-{%block body%}
+{%endblock%} {%block body%}
 <h1>账号管理</h1>
-
 
 <h3>当前账号</h3>
 <p id="nowAccount"></p>
-<script>
-    var usernameJSONValue = localStorage.getItem('username');
-    var usernameValue = JSON.parse(usernameJSONValue);
-    document.getElementById('nowAccount').innerHTML = '当前账号:' + usernameValue + '<br>密码：***';
-</script>
-<hr>
+
+<hr />
 <h3>账号设置</h3>
 <h4 id="personalization">个性化</h4>
 <div class="input-group mb-1">
-    <label class="input-group-text" for="color">背景颜色</label>
-    <input type="color" id="color" name="color" value="#ffffff" class="form-control form-control-color">
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var colorValue = localStorage.getItem('color') || '#ffffff';
-            document.getElementById('color').value = colorValue;
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('color',document.getElementById('color').value);location.reload()">应用</button>
+	<label class="input-group-text" for="color">背景颜色</label>
+	<input type="color" id="color" name="color" value="#ffffff" class="form-control form-control-color" />
+	<button type="button" class="btn btn-primary" onclick="save('color', $('#color').val())">应用</button>
+</div>
+<div class="input-group mb-1">
+	<div class="form-control form-switch">
+		<input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input" />
+		去除动画
+	</div>
+	<button type="button" class="btn btn-primary" onclick="save('no-anim', $('#no-anim').prop('checked'))">应用</button>
+</div>
+<div class="input-group mb-1">
+	<div class="form-control form-switch">
+		<input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input" />
+		高级的背景
+	</div>
 
+	<button type="button" class="btn btn-primary" onclick="save('adv_bg', $('#adv_bg').prop('checked'))">应用</button>
 </div>
 <div class="input-group mb-1">
-    <div class="form-control form-switch">
-        <input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input">
-        去除动画
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('no-anim') || 'false';
-            if (value == 'true') {
-                document.getElementById('no-anim').checked = true;
-            }
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
-
+	<div class="form-control form-switch">
+		<input type="checkbox" id="dark" role="switch" name="adv_bg" class="form-check-input" />
+		深色模式
+	</div>
+	<button type="button" class="btn btn-primary" onclick="save('dark', $('#dark').prop('checked'))">应用</button>
 </div>
 <div class="input-group mb-1">
-    <div class="form-control form-switch">
-        <input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input">
-        高级的背景
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('adv_bg') || 'true';
-            if (value == 'true') {
-                document.getElementById('adv_bg').checked = true;
-            }
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
+	<label class="input-group-text" for="color">自定义背景（需要开启高级背景）</label>
+	<select id="imgbg" name="color" value="" class="form-control form-select">
+		<option value="custom">自定义 →</option>
+		<option>SchoolGate.jpg</option>
+		<option>bg.jpg</option>
+		<option>bg-1.jpg</option>
+		<option>bg-2.jpg</option>
+		<option>bg-3.jpg</option>
+		<option>bg-4.jpg</option>
+		<option>bg-5.jpg</option>
+		<option>bg-6.jpg</option>
+		<option>bg-7.jpg</option>
+		<option>bg-8.jpg</option>
+		<option>bg-9.jpg</option>
+		<option>bg-10.jpg</option>
+		<option>bg-11.jpg</option>
+		<option>bg-12.jpg</option>
+		<option>bg-13.jpg</option>
+		<option>bg-14.jpg</option>
+		<option>bg-15.jpg</option>
+		<option>bg-16.jpg</option>
+		<option>bg-17.jpg</option>
+		<option>bg-18.jpg</option>
+		<option>bg-19.jpg</option>
+		<option>bg-20.jpg</option>
+		<option>bg-21.jpg</option>
+		<option>bg-22.jpg</option>
+		<option>bg-23.jpg</option>
+		<option>bg-24.jpg</option>
+		<option>bg-25.jpg</option>
+		<option>bg-26.jpg</option>
+		<option>bg-27.jpg</option>
+		<option>bg-28.jpg</option>
+		<option>bg-29.jpg</option>
+		<option>bg-30.jpg</option>
+	</select>
+	<input type="file" id="imgbg" class="form-control" accept="image/*" onchange="upload(this)" />
+	<button type="button" class="btn btn-primary" onclick="save('imgbg', $('#imgbg').val())">应用</button>
 </div>
-<div class="input-group mb-1">
-    <div class="form-control form-switch">
-        <input type="checkbox" id="dark" role="switch" name="adv_bg" class="form-check-input">
-        深色模式
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('dark') || 'false';
-            if (value == 'true') {
-                document.getElementById('dark').checked = true;
-            }
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('dark',document.getElementById('dark').checked);location.reload()">应用</button>
-</div>
-<div class="input-group mb-1">
-    <label class="input-group-text" for="color">自定义背景（需要开启高级背景）</label>
-    <select id="imgbg" name="color" value="" class="form-control form-select">
-        <option value="custom">自定义 →</option>
-        <option>SchoolGate.jpg</option>
-        <option>bg.jpg</option>
-        <option>bg-1.jpg</option>
-        <option>bg-2.jpg</option>
-        <option>bg-3.jpg</option>
-        <option>bg-4.jpg</option>
-        <option>bg-5.jpg</option>
-        <option>bg-6.jpg</option>
-        <option>bg-7.jpg</option>
-        <option>bg-8.jpg</option>
-        <option>bg-9.jpg</option>
-        <option>bg-10.jpg</option>
-        <option>bg-11.jpg</option>
-        <option>bg-12.jpg</option>
-        <option>bg-13.jpg</option>
-        <option>bg-14.jpg</option>
-        <option>bg-15.jpg</option>
-        <option>bg-16.jpg</option>
-        <option>bg-17.jpg</option>
-        <option>bg-18.jpg</option>
-        <option>bg-19.jpg</option>
-        <option>bg-20.jpg</option>
-        <option>bg-21.jpg</option>
-        <option>bg-22.jpg</option>
-        <option>bg-23.jpg</option>
-        <option>bg-24.jpg</option>
-        <option>bg-25.jpg</option>
-        <option>bg-26.jpg</option>
-        <option>bg-27.jpg</option>
-        <option>bg-28.jpg</option>
-        <option>bg-29.jpg</option>
-        <option>bg-30.jpg</option>
-        
-    </select>
-    <input type="file" id="imgbg" class="form-control" accept="image/*" onchange="upload(this)">
-    <script>
-        function upload(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    localforage.setItem('imgbg', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('imgbg') || '';
-            document.getElementById('imgbg').value = value;
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);localStorage.setItem('adv_bg',true);if(document.getElementById('imgbg').value!='custom')localforage.removeItem('imgbg');location.reload()">应用</button>
-
-</div>
-<hr>
-<button type="button" class="btn btn-danger m-1"
-    onclick="document.getElementById('password').value='';$('#Ask').modal('show')">注销</button>
+<hr />
+<button type="button" class="btn btn-danger m-1" onclick="$('#password').val('');$('#Ask').modal('show')">注销</button>
 <a class="btn btn-primary m-1" href="register.html">注册</a>
-<script defer>
-    //没有账号创建账号
-    var accountBe = localStorage.getItem('accountBe');
-    if (!accountBe) {
-        document.addEventListener("DOMContentLoaded", () => {
-            $('#Error').modal('show');
-        })
-    }
-    function clear() {
-        var password = document.getElementById('password').value;
-        if (password == "密码") {
-            localStorage.clear();
-            location.href = "../home.html";
-        } else {
-            $("#Ask").modal('hide');
-            $('#Error2').modal('show');
-        }
-    }
+
+<script>
+	var usernameJSONValue = localStorage.getItem('username');
+	var accountBe = localStorage.getItem('accountBe');
+	var usernameValue = JSON.parse(usernameJSONValue);
+	$('#nowAccount').html('当前账号:' + usernameValue + '<br>密码：***');
+	$(document).ready(function () {
+		if (!accountBe) {
+			$('#Error').modal('show');
+		}
+		$('#color').val(localStorage.getItem('color') || '#ffffff');
+		$('#no-anim').prop('checked', (localStorage.getItem('no-anim') || 'false') == 'true');
+		$('#adv_bg').prop('checked', (localStorage.getItem('adv_bg') || 'true') == 'true');
+		$('#dark').prop('checked', (localStorage.getItem('dark') || 'false') == 'true');
+		$('#imgbg').val(localStorage.getItem('imgbg') || '');
+	});
+	function save(name, value) {
+		localStorage.setItem(name, value);
+		location.reload();
+	}
+	function clear() {
+		var password = $('#password').val();
+		if (password == '密码') {
+			localStorage.clear();
+			location.href = '../home.html';
+		} else {
+			$('#Ask').modal('hide');
+			$('#Error2').modal('show');
+		}
+	}
+	function upload(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				localforage.setItem('imgbg', e.target.result);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>
 {%endblock%}

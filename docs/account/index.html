@@ -1,499 +1,366 @@
 <!doctype html>
-<html lang="en" style="min-height: 100vh;" id="html-root">
+<html lang="en" style="min-height: 100vh" id="html-root">
+	<head>
+		<div id="script-mount-node"></div>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>柳荫眠琴 | 账号管理</title>
+		<link href="../res/css/bootstrap.min.css" rel="stylesheet" />
+		<script src="../res/js/bootstrap.bundle.min.js" defer></script>
+		<script src="../res/js/index.min.js"></script>
+		<script src="../res/js/jquery-3.6.0.min.js"></script>
+		<script src="../res/js/pinyin-pro.js"></script>
+		<script src="../res/js/parallax.min.js"></script>
+		<link rel="stylesheet" href="../res/css/bootstrap-icons.min.css" />
+		<script src="../res/js/obj_index.js"></script>
+		<script src="../res/js/lzma-c.js"></script>
+		<script>
+			const LZMA_C = LZMA;
+		</script>
+		<script src="../res/js/lzma-d.js"></script>
+		<script>
+			const LZMA_D = LZMA;
+		</script>
+		<script src="../res/js/localforage.js"></script>
+		<script src="../res/js/pdf.mjs" type="module"></script>
+		<style>
+			@media screen and (max-width: 768px) {
+				.hide_on_mobile {
+					display: none;
+					visibility: collapse;
+					height: 0px;
+				}
+			}
+		</style>
+	</head>
 
-<head>
-    <div id="script-mount-node"></div>
+	<header>
+		<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
+			<div class="container-fluid">
+				<span> 柳荫眠琴 | 账号管理 </span>
+				<ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
+					<li class="nav-item">
+						<a class="nav-link" href="../home.html">首页</a>
+					</li>
+					<li class="nav-item">
+						<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">报错</a>
+					</li>
+				</ul>
+				<div class="d-flex">
+					<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
+						<span class="navbar-toggler-icon"></span>
+					</a>
+				</div>
+			</div>
+		</nav>
 
-    <script>
-        const root = "..";
-    </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-柳荫眠琴 | 账号管理
-</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"
-        defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.2/dist/umd/index.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pinyin-pro"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <script src="../res/js/obj_index.js"></script>
-    <script src="../res/js/lzma-c.js"></script>
-    <script>const LZMA_C = LZMA;</script>
-    <script src="../res/js/lzma-d.js"></script>
-    <script>const LZMA_D = LZMA;</script>
-    <script src="../res/js/localforage.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            function hex2rgb(hex) {
-                let r = 0, g = 0, b = 0;
-                // 3 digits
-                if (hex.length == 4) {
-                    r = parseInt(hex[1] + hex[1], 16);
-                    g = parseInt(hex[2] + hex[2], 16);
-                    b = parseInt(hex[3] + hex[3], 16);
-                }
-                // 6 digits
-                else if (hex.length == 7) {
-                    r = parseInt(hex[1] + hex[2], 16);
-                    g = parseInt(hex[3] + hex[4], 16);
-                    b = parseInt(hex[5] + hex[6], 16);
-                }
-                return [r, g, b];
-            }
-            var color = localStorage.getItem('color') || '#ffffff';
-            if (localStorage.getItem("adv_bg") == "false")
-                document.getElementById("mainbody").style.background = "rgba(" + hex2rgb(color).join(",") + ",1)";
-            else
-                document.getElementById("mainbody").style.background = "rgba(" + hex2rgb(color).join(",") + ",0.5)";
-        })
-    </script>
-    <script>
-        if (localStorage.getItem('no-anim') == 'true') {
-            var style_noanim = document.createElement('style')
-            style_noanim.innerHTML = `*{transition: none !important;animation: none !important;}`
-            document.getElementById("script-mount-node").appendChild(style_noanim)
-        }
-    </script>
-    <script>
-        if (localStorage.getItem('dark') == 'true') {
-            document.getElementById("html-root").setAttribute("data-bs-theme", "dark");
-            document.addEventListener("DOMContentLoaded", () => {
-                document.getElementById("footer").classList.add("bg-dark")
-                document.getElementById("footer").classList.remove("bg-light")
-            })
-        }
-    </script>
-    <style>
-        @keyframes exit_color {
-            0% {
-                background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity));
-            }
+		<!-- Offcanvas -->
+		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
+			<div class="offcanvas-header">
+				<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+			</div>
+			<div class="offcanvas-body">
+				<h3>导航</h3>
+				<div class="list-group">
+					<a class="list-group-item" href="../home.html">首页</a>
+					<a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a>
+					<a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
+					<a class="list-group-item" href="../text/index.html">文学创作</a>
+					<a class="list-group-item" href="../web_maker/index.html">自制网页</a>
+					<a class="list-group-item" href="../account/index.html">账号管理</a>
+					<a class="list-group-item" href="../news/index.html">周报</a>
+					<a class="list-group-item" href="../school/index.html">一草种</a>
+					<a class="list-group-item" href="../resource/index.html">资料</a>
+					<a class="list-group-item" href="../game/index.html">小游戏</a>
+				</div>
+				<br />
+				<h3>搜索</h3>
+				<ul class="list-group">
+					<li class="input-group clearfix">
+						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
+						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
+					</li>
+					<div id="searchResult"></div>
+				</ul>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						更新：<br />
+						v2.1.0<br />
+						1. 添加搜索框<br />
+						2. 高级背景<br />
+						<hr />
+						v2.0.0<br />
+						1. 整体模板化+使用Bootstrap<br />
+						2. 整体美化<br />
+						<br />
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
 
-            100% {
-                background-color: transparent;
-            }
-        }
+	<body style="min-height: 100vh">
+		<div style="position: fixed; left: -10vw; top: -10vh; right: -10vw; bottom: -10vh; overflow: hidden; z-index: -10">
+			<ul id="scene">
+				<li class="layer" data-depth="0.4">
+					<img id="bg" style="height: 120vh; width: 120vw; object-fit: cover" />
+				</li>
+			</ul>
+		</div>
 
-        .exit_color {
-            opacity: 0;
-            animation: exit_color 0.3s ease-in-out;
-        }
+		<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1">
+			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body">检测到您没有账号，将跳转创建</div>
+					<div class="modal-footer">
+						<a type="button" class="btn btn-primary" href="register.html">前往</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        @keyframes enter {
-            0% {
-                opacity: 0;
-            }
+		<div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1">
+			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body">
+						更新将清除所有用户数据，继续请输入密码
+						<br />
+						<input id="password" class="form-control" />
+					</div>
+					<div class="modal-footer">
+						<a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1">
+			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body">密码错误</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            100% {
-                opacity: 1;
-            }
-        }
+		<div style="min-height: 100vh; padding: 60px 0 0 0; background: rgba(255, 255, 255, 0.5); overflow-x: hidden" id="mainbody">
+			<div style="min-height: calc(100vh - 60px); margin: 0 10px">
+				<h1>账号管理</h1>
 
-        .enter {
-            opacity: 1;
-            animation: enter 0.3s ease-in-out;
-        }
+				<h3>当前账号</h3>
+				<p id="nowAccount"></p>
 
-        @media screen and (max-width: 768px) {
-            .hide_on_mobile {
-                display: none;
-                visibility: collapse;
-                height: 0px;
-            }
-        }
+				<hr />
+				<h3>账号设置</h3>
+				<h4 id="personalization">个性化</h4>
+				<div class="input-group mb-1">
+					<label class="input-group-text" for="color">背景颜色</label>
+					<input type="color" id="color" name="color" value="#ffffff" class="form-control form-control-color" />
+					<button type="button" class="btn btn-primary" onclick="save('color', $('#color').val())">应用</button>
+				</div>
+				<div class="input-group mb-1">
+					<div class="form-control form-switch">
+						<input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input" />
+						去除动画
+					</div>
+					<button type="button" class="btn btn-primary" onclick="save('no-anim', $('#no-anim').prop('checked'))">应用</button>
+				</div>
+				<div class="input-group mb-1">
+					<div class="form-control form-switch">
+						<input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input" />
+						高级的背景
+					</div>
 
-        .hide_on_mobile {}
-    </style>
-    <script>
+					<button type="button" class="btn btn-primary" onclick="save('adv_bg', $('#adv_bg').prop('checked'))">应用</button>
+				</div>
+				<div class="input-group mb-1">
+					<div class="form-control form-switch">
+						<input type="checkbox" id="dark" role="switch" name="adv_bg" class="form-check-input" />
+						深色模式
+					</div>
+					<button type="button" class="btn btn-primary" onclick="save('dark', $('#dark').prop('checked'))">应用</button>
+				</div>
+				<div class="input-group mb-1">
+					<label class="input-group-text" for="color">自定义背景（需要开启高级背景）</label>
+					<select id="imgbg" name="color" value="" class="form-control form-select">
+						<option value="custom">自定义 →</option>
+						<option>SchoolGate.jpg</option>
+						<option>bg.jpg</option>
+						<option>bg-1.jpg</option>
+						<option>bg-2.jpg</option>
+						<option>bg-3.jpg</option>
+						<option>bg-4.jpg</option>
+						<option>bg-5.jpg</option>
+						<option>bg-6.jpg</option>
+						<option>bg-7.jpg</option>
+						<option>bg-8.jpg</option>
+						<option>bg-9.jpg</option>
+						<option>bg-10.jpg</option>
+						<option>bg-11.jpg</option>
+						<option>bg-12.jpg</option>
+						<option>bg-13.jpg</option>
+						<option>bg-14.jpg</option>
+						<option>bg-15.jpg</option>
+						<option>bg-16.jpg</option>
+						<option>bg-17.jpg</option>
+						<option>bg-18.jpg</option>
+						<option>bg-19.jpg</option>
+						<option>bg-20.jpg</option>
+						<option>bg-21.jpg</option>
+						<option>bg-22.jpg</option>
+						<option>bg-23.jpg</option>
+						<option>bg-24.jpg</option>
+						<option>bg-25.jpg</option>
+						<option>bg-26.jpg</option>
+						<option>bg-27.jpg</option>
+						<option>bg-28.jpg</option>
+						<option>bg-29.jpg</option>
+						<option>bg-30.jpg</option>
+					</select>
+					<input type="file" id="imgbg" class="form-control" accept="image/*" onchange="upload(this)" />
+					<button type="button" class="btn btn-primary" onclick="save('imgbg', $('#imgbg').val())">应用</button>
+				</div>
+				<hr />
+				<button type="button" class="btn btn-danger m-1" onclick="$('#password').val('');$('#Ask').modal('show')">注销</button>
+				<a class="btn btn-primary m-1" href="register.html">注册</a>
 
-    </script>
-</head>
+				<script>
+					var usernameJSONValue = localStorage.getItem('username');
+					var accountBe = localStorage.getItem('accountBe');
+					var usernameValue = JSON.parse(usernameJSONValue);
+					$('#nowAccount').html('当前账号:' + usernameValue + '<br>密码：***');
+					$(document).ready(function () {
+						if (!accountBe) {
+							$('#Error').modal('show');
+						}
+						$('#color').val(localStorage.getItem('color') || '#ffffff');
+						$('#no-anim').prop('checked', (localStorage.getItem('no-anim') || 'false') == 'true');
+						$('#adv_bg').prop('checked', (localStorage.getItem('adv_bg') || 'true') == 'true');
+						$('#dark').prop('checked', (localStorage.getItem('dark') || 'false') == 'true');
+						$('#imgbg').val(localStorage.getItem('imgbg') || '');
+					});
+					function save(name, value) {
+						localStorage.setItem(name, value);
+						location.reload();
+					}
+					function clear() {
+						var password = $('#password').val();
+						if (password == '密码') {
+							localStorage.clear();
+							location.href = '../home.html';
+						} else {
+							$('#Ask').modal('hide');
+							$('#Error2').modal('show');
+						}
+					}
+					function upload(input) {
+						if (input.files && input.files[0]) {
+							var reader = new FileReader();
+							reader.onload = function (e) {
+								localforage.setItem('imgbg', e.target.result);
+							};
+							reader.readAsDataURL(input.files[0]);
+						}
+					}
+				</script>
+			</div>
+			<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
+				<small>
+					如果你要提供意见，请 <a href="../contact.html">联系我们</a>
+					<em> <br />电话：13270463238 <br />邮箱:Caixukun11451489@outlook.com </em>
+				</small>
+			</div>
+		</div>
+	</body>
+	<footer>
+		<script defer>
+			function hex2rgb(hex) {
+				let r = 0,
+					g = 0,
+					b = 0;
+				// 3 digits
+				if (hex.length == 4) {
+					r = parseInt(hex[1] + hex[1], 16);
+					g = parseInt(hex[2] + hex[2], 16);
+					b = parseInt(hex[3] + hex[3], 16);
+				}
+				// 6 digits
+				else if (hex.length == 7) {
+					r = parseInt(hex[1] + hex[2], 16);
+					g = parseInt(hex[3] + hex[4], 16);
+					b = parseInt(hex[5] + hex[6], 16);
+				}
+				return [r, g, b];
+			}
+			const root = '..';
 
-<header>
-    <nav class="navbar navbar-expand-sm" id="nav"
-        style="position:fixed;width:100%;z-index: 1001;backdrop-filter: blur(100px);">
-        <div class="container-fluid">
-            <span>
-柳荫眠琴 | 账号管理
-</span>
-            <ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
-                <li class="nav-item">
-                    <a class="nav-link" href="../home.html">首页</a>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        公告
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">报错</a>
-                </li>
-            </ul>
-            <div class="d-flex">
-                <a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                    aria-controls="offcanvasExample">
-                    <span class="navbar-toggler-icon"></span>
-                </a>
-            </div>
-        </div>
-    </nav>
+			// personalization
+			var color = localStorage.getItem('color') || '#ffffff';
+			if (localStorage.getItem('adv_bg') == 'false') $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
+			else $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',0.5)');
+			if (localStorage.getItem('no-anim') == 'true') {
+				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
+				$('#script-mount-node').append(style_noanim);
+			}
+			if (localStorage.getItem('dark') == 'true') {
+				$('#html-root').attr('data-bs-theme', 'dark');
+			}
+			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
+			if (img == 'custom') {
+				localforage.getItem('imgbg').then(function (value) {
+					$('#bg').attr('src', value);
+				});
+			} else {
+				$('#bg').attr('src', root + '/res/img/' + img);
+			}
+			// search
+			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+			// navbar fix
+			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+			$(window).resize(function () {
+				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+			});
+			// parallax
+			var scene = document.getElementById('scene');
+			var parallax = new Parallax(scene);
 
-    <!-- Offcanvas -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <h3>导航</h3>
-            <div class="list-group">
-                <a class="list-group-item" href="../home.html">首页</a>
-                <a type="button" href="#" class="list-group-item" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">公告</a>
-                <a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
-                <a class="list-group-item" href="../text/index.html">文学创作</a>
-                <a class="list-group-item" href="../web_maker/index.html">自制网页</a>
-                <a class="list-group-item" href="../account/index.html">账号管理</a>
-                <a class="list-group-item" href="../news/index.html">周报</a>
-                <a class="list-group-item" href="../school/index.html">一草种</a>
-                <a class="list-group-item" href="../resource/index.html">资料</a>
-                <a class="list-group-item" href="../game/index.html">小游戏</a>
-            </div>
-            <br>
-            <script>
-                function set_empty() {
-                    var result = document.getElementById("searchResult");
-                    var a = document.createElement("a");
-                    a.href = "#";
-                    a.innerText = "开始搜索吧";
-                    a.classList.add("list-group-item");
-                    result.appendChild(a);
-                }
-                document.addEventListener("DOMContentLoaded", function () {
-                    set_empty();
-                });
-                function search() {
-                    var input = document.getElementById("searchInput").value;
-                    var result = document.getElementById("searchResult");
-                    result.innerHTML = "";
-                    if (input == "") {
-                        set_empty();
-                        return;
-                    }
-                    var res = search_document(input);
-                    res.forEach(res => {
-                        var a = document.createElement("a");
-                        a.href = root + res.url;
-                        var span = document.createElement("span");
-                        span.innerText = res.title;
-                        a.appendChild(span);
-                        var small = document.createElement("span");
-                        small.style.float = "right";
-                        small.style.color = "#aaa";
-                        small.innerText = res.tag;
-                        a.appendChild(small);
-                        a.classList.add("list-group-item");
-                        result.appendChild(a);
-                    });
-                    if (res.length == 0) {
-                        var a = document.createElement("a");
-                        a.href = "#";
-                        a.innerText = "没有找到关于“" + input + "”的结果";
-                        a.classList.add("list-group-item");
-                        result.appendChild(a);
-                    }
-                }
-            </script>
-            <h3>搜索</h3>
-            <ul class="list-group">
-                <li class="input-group clearfix">
-                    <input type="text" class="form-control" placeholder="搜索" aria-label="搜索" id="searchInput"
-                        aria-describedby="button-addon2" oninput="search()">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                        onclick="search()">搜索</button>
-                </li>
-                <div id="searchResult"></div>
-            </ul>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    更新：<br>
-                    v2.1.0<br>
-                    1. 添加搜索框<br>
-                    2. 高级背景<br>
-                    <hr>
-                    v2.0.0<br>
-                    1. 整体模板化+使用Bootstrap<br>
-                    2. 整体美化<br>
-                    <br>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<body style="min-height: 100vh;">
-
-    <div style="position: fixed; left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;overflow: hidden;z-index: -10;">
-        <ul id="scene">
-            <li class="layer" data-depth="0.4">
-                <img id="bg" style="height: 120vh;width: 120vw;object-fit:cover;">
-                <script>
-                    var img = localStorage.getItem('imgbg') || 'bg.jpg';
-                    if (img == "custom") {
-                        localforage.getItem("imgbg").then(function (value) {
-                            document.getElementById('bg').src = value;
-                        })
-                    }
-                    else {
-                        document.getElementById('bg').src = '../res/img/' + img;
-                    }
-                </script>
-            </li>
-
-        </ul>
-    </div>
-    
-<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1" aria-labelledby="ErrorLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                检测到您没有账号，将跳转创建
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary" href="register.html">前往</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1" aria-labelledby="ErrorLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                更新将清除所有用户数据，继续请输入密码
-                <br>
-                <input id="password" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1" aria-labelledby="ErrorLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                密码错误
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    <div style="min-height: 100vh; padding: 60px 10px 0px 10px;background:rgba(255,255,255,0.5);overflow-x:hidden"
-        id="mainbody">
-        
-<h1>账号管理</h1>
-
-
-<h3>当前账号</h3>
-<p id="nowAccount"></p>
-<script>
-    var usernameJSONValue = localStorage.getItem('username');
-    var usernameValue = JSON.parse(usernameJSONValue);
-    document.getElementById('nowAccount').innerHTML = '当前账号:' + usernameValue + '<br>密码：***';
-</script>
-<hr>
-<h3>账号设置</h3>
-<h4 id="personalization">个性化</h4>
-<div class="input-group mb-1">
-    <label class="input-group-text" for="color">背景颜色</label>
-    <input type="color" id="color" name="color" value="#ffffff" class="form-control form-control-color">
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var colorValue = localStorage.getItem('color') || '#ffffff';
-            document.getElementById('color').value = colorValue;
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('color',document.getElementById('color').value);location.reload()">应用</button>
-
-</div>
-<div class="input-group mb-1">
-    <div class="form-control form-switch">
-        <input type="checkbox" id="no-anim" role="switch" name="no-anim" class="form-check-input">
-        去除动画
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('no-anim') || 'false';
-            if (value == 'true') {
-                document.getElementById('no-anim').checked = true;
-            }
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('no-anim',document.getElementById('no-anim').checked);location.reload()">应用</button>
-
-</div>
-<div class="input-group mb-1">
-    <div class="form-control form-switch">
-        <input type="checkbox" id="adv_bg" role="switch" name="adv_bg" class="form-check-input">
-        高级的背景
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('adv_bg') || 'true';
-            if (value == 'true') {
-                document.getElementById('adv_bg').checked = true;
-            }
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('adv_bg',document.getElementById('adv_bg').checked);location.reload()">应用</button>
-</div>
-<div class="input-group mb-1">
-    <div class="form-control form-switch">
-        <input type="checkbox" id="dark" role="switch" name="adv_bg" class="form-check-input">
-        深色模式
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('dark') || 'false';
-            if (value == 'true') {
-                document.getElementById('dark').checked = true;
-            }
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('dark',document.getElementById('dark').checked);location.reload()">应用</button>
-</div>
-<div class="input-group mb-1">
-    <label class="input-group-text" for="color">自定义背景（需要开启高级背景）</label>
-    <select id="imgbg" name="color" value="" class="form-control form-select">
-        <option value="custom">自定义 →</option>
-        <option>SchoolGate.jpg</option>
-        <option>bg.jpg</option>
-        <option>bg-1.jpg</option>
-        <option>bg-2.jpg</option>
-        <option>bg-3.jpg</option>
-        <option>bg-4.jpg</option>
-        <option>bg-5.jpg</option>
-        <option>bg-6.jpg</option>
-        <option>bg-7.jpg</option>
-        <option>bg-8.jpg</option>
-        <option>bg-9.jpg</option>
-        <option>bg-10.jpg</option>
-        <option>bg-11.jpg</option>
-        <option>bg-12.jpg</option>
-        <option>bg-13.jpg</option>
-        <option>bg-14.jpg</option>
-        <option>bg-15.jpg</option>
-        <option>bg-16.jpg</option>
-        <option>bg-17.jpg</option>
-        <option>bg-18.jpg</option>
-        <option>bg-19.jpg</option>
-        <option>bg-20.jpg</option>
-        <option>bg-21.jpg</option>
-        <option>bg-22.jpg</option>
-        <option>bg-23.jpg</option>
-        <option>bg-24.jpg</option>
-        <option>bg-25.jpg</option>
-        <option>bg-26.jpg</option>
-        <option>bg-27.jpg</option>
-        <option>bg-28.jpg</option>
-        <option>bg-29.jpg</option>
-        <option>bg-30.jpg</option>
-        
-    </select>
-    <input type="file" id="imgbg" class="form-control" accept="image/*" onchange="upload(this)">
-    <script>
-        function upload(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    localforage.setItem('imgbg', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            var value = localStorage.getItem('imgbg') || '';
-            document.getElementById('imgbg').value = value;
-        })
-    </script>
-    <button type="button" class="btn btn-primary"
-        onclick="localStorage.setItem('imgbg',document.getElementById('imgbg').value);localStorage.setItem('adv_bg',true);if(document.getElementById('imgbg').value!='custom')localforage.removeItem('imgbg');location.reload()">应用</button>
-
-</div>
-<hr>
-<button type="button" class="btn btn-danger m-1"
-    onclick="document.getElementById('password').value='';$('#Ask').modal('show')">注销</button>
-<a class="btn btn-primary m-1" href="register.html">注册</a>
-<script defer>
-    //没有账号创建账号
-    var accountBe = localStorage.getItem('accountBe');
-    if (!accountBe) {
-        document.addEventListener("DOMContentLoaded", () => {
-            $('#Error').modal('show');
-        })
-    }
-    function clear() {
-        var password = document.getElementById('password').value;
-        if (password == "密码") {
-            localStorage.clear();
-            location.href = "../home.html";
-        } else {
-            $("#Ask").modal('hide');
-            $('#Error2').modal('show');
-        }
-    }
-</script>
-
-    </div>
-    <script>
-        document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
-
-        window.onresize = function () {
-            document.getElementById("mainbody").style.paddingTop = getComputedStyle(document.getElementsByTagName("nav")[0]).height;
-        }
-    </script>
-    <script>
-        var scene = document.getElementById('scene');
-        var parallax = new Parallax(scene);
-    </script>
-    <div class="text-sm bg-light text-muted" id="footer">
-        <small>
-            如果你要提供意见，请 <a href="../contact.html">联系我们</a>
-            <em>
-                <br>电话：13270463238
-                <br>邮箱:Caixukun11451489@outlook.com
-            </em>
-        </small>
-    </div>
-</body>
-
-
+			function search() {
+				$('#searchResult').empty();
+				if ($('#searchInput').val() == '') {
+					$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+					return;
+				}
+				var res = search_document($('#searchInput').val());
+				res.forEach((res) => {
+					$('#searchResult').append(
+						$('<a class="list-group-item"></a>')
+							.attr('href', root + res.url)
+							.append($('<span></span>').text(res.title))
+							.append($('<span></span>').text(res.tag))
+					);
+				});
+				if (res.length == 0) {
+					$('#searchResult').append(
+						$('<a class="list-group-item"></a>')
+							.attr('href', '#')
+							.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
+					);
+				}
+			}
+		</script>
+	</footer>
 </html>
