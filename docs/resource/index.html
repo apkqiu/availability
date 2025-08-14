@@ -4,7 +4,7 @@
 		<div id="script-mount-node"></div>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>林屋探奇 | 资料</title>
+		<title> 林屋探奇 | 资料 </title>
 		<link href="../res/css/bootstrap.min.css" rel="stylesheet" />
 		<script src="../res/js/bootstrap.bundle.min.js" defer></script>
 		<script src="../res/js/index.min.js"></script>
@@ -23,6 +23,7 @@
 		</script>
 		<script src="../res/js/localforage.js"></script>
 		<script src="../res/js/pdf.mjs" type="module"></script>
+		<script src="../res/js/.mjs" type="module"></script>
 		<style>
 			@media screen and (max-width: 768px) {
 				.hide_on_mobile {
@@ -120,13 +121,15 @@
 				</li>
 			</ul>
 		</div>
-
+		 
 		<div style="min-height: 100vh; padding: 60px 0 0 0; background: rgba(255, 255, 255, 0.5); overflow-x: hidden" id="mainbody">
 			<div style="min-height: calc(100vh - 60px); margin: 0 10px">
-				<h1>资料</h1>
-				敬请期待
-				<a href="../home.html">返回首页</a>
-			</div>
+
+<h1>资料</h1>
+敬请期待
+<a href="../home.html">返回首页</a>
+
+</div>
 			<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
 				<small>
 					如果你要提供意见，请 <a href="../contact.html">联系我们</a>
@@ -158,14 +161,14 @@
 			const root = '..';
 
 			// personalization
-			var color = localStorage.getItem('color') || '#ffffff';
+			var color = localStorage.getItem('color') || '#000000';
 			if (localStorage.getItem('adv_bg') == 'false') $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
 			else $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',0.5)');
 			if (localStorage.getItem('no-anim') == 'true') {
 				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
 				$('#script-mount-node').append(style_noanim);
 			}
-			if (localStorage.getItem('dark') == 'true') {
+			if ((localStorage.getItem('dark')||"true") == 'true') {
 				$('#html-root').attr('data-bs-theme', 'dark');
 			}
 			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';

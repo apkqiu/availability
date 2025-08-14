@@ -124,10 +124,10 @@
 		if (!accountBe) {
 			$('#Error').modal('show');
 		}
-		$('#color').val(localStorage.getItem('color') || '#ffffff');
+		$('#color').val(localStorage.getItem('color') || '#000000');
 		$('#no-anim').prop('checked', (localStorage.getItem('no-anim') || 'false') == 'true');
 		$('#adv_bg').prop('checked', (localStorage.getItem('adv_bg') || 'true') == 'true');
-		$('#dark').prop('checked', (localStorage.getItem('dark') || 'false') == 'true');
+		$('#dark').prop('checked', (localStorage.getItem('dark') || 'true') == 'true');
 		$('#imgbg').val(localStorage.getItem('imgbg') || '');
 	});
 	function save(name, value) {

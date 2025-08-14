@@ -4,7 +4,7 @@
 		<div id="script-mount-node"></div>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>棕亭霁雪 | 自制网页</title>
+		<title> 棕亭霁雪 | 自制网页 </title>
 		<link href="../res/css/bootstrap.min.css" rel="stylesheet" />
 		<script src="../res/js/bootstrap.bundle.min.js" defer></script>
 		<script src="../res/js/index.min.js"></script>
@@ -23,6 +23,7 @@
 		</script>
 		<script src="../res/js/localforage.js"></script>
 		<script src="../res/js/pdf.mjs" type="module"></script>
+		<script src="../res/js/.mjs" type="module"></script>
 		<style>
 			@media screen and (max-width: 768px) {
 				.hide_on_mobile {
@@ -120,92 +121,92 @@
 				</li>
 			</ul>
 		</div>
-
+		 
 		<div style="min-height: 100vh; padding: 60px 0 0 0; background: rgba(255, 255, 255, 0.5); overflow-x: hidden" id="mainbody">
 			<div style="min-height: calc(100vh - 60px); margin: 0 10px">
-				<h1>自制网页</h1>
-				<div class="list-group" id="files"></div>
-				<script>
-					// 从localstorage获取文件数据
-					var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
-					$('<a></a>')
-						.addClass('list-group-item btn btn-success')
-						.css('border-radius', '5px 5px 0px 0px ')
-						.attr('href', '../web_maker/edit.html?id=null')
-						.text('添加新文件')
-						.appendTo($('#files'));
+<h1>自制网页</h1>
+<div class="list-group" id="files"></div>
+<script>
+	// 从localstorage获取文件数据
+	var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+	$('<a></a>')
+		.addClass('list-group-item btn btn-success')
+		.css('border-radius', '5px 5px 0px 0px ')
+		.attr('href', '../web_maker/edit.html?id=null')
+		.text('添加新文件')
+		.appendTo($('#files'));
 
-					// 遍历文件数据，生成列表项
-					files.forEach(function (file) {
-						$('<div></div>')
-							.addClass('list-group-item')
-							.append($('<span></span>').text(file.name))
-							.append($('<br>'))
-							.append(
-								$('<button></button>')
-									.addClass('btn btn-danger btn-sm m-1')
-									.text('删除')
-									.click(function () {
-										var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
-										files = files.filter(function (f) {
-											return f.id !== file.id;
-										});
-										localStorage.setItem('web_editor_files', JSON.stringify(files));
-										localforage.removeItem(file.id);
-										location.reload();
-									})
-							)
-							.append(
-								$('<a></a>')
-									.addClass('btn btn-primary btn-sm m-1')
-									.attr('href', '../web_maker/edit.html?id=' + file.id)
-									.text('编辑')
-							)
-							.append(
-								$('<button></button>')
-									.addClass('btn btn-warning btn-sm m-1')
-									.text('重命名')
-									.click(function () {
-										var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
-										// 找到当前的ID的索引
-										var index = files.findIndex(function (f) {
-											return f.id === file.id;
-										});
-										// 弹出重命名窗口
-										var new_name = prompt('请输入新的文件名', files[index].name);
-										if (new_name) {
-											files[index].name = new_name;
-											localStorage.setItem('web_editor_files', JSON.stringify(files));
-											location.reload();
-										}
-									})
-							)
-							.append(
-								$('<button></button>')
-									.addClass('btn btn-info btn-sm m-1')
-									.text('复制')
-									.click(function () {
-										var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
-										// 找到当前的ID的索引
-										var index = files.findIndex(function (f) {
-											return f.id === file.id;
-										});
-										// 复制文件
-										var new_file = {};
-										new_file.name = files[index].name + ' - 副本';
-										new_file.id = new Date().getTime().toString(36);
-										files.push(new_file);
-										localStorage.setItem('web_editor_files', JSON.stringify(files));
-										localforage.getItem(files[index].id).then(function (value) {
-											localforage.setItem(new_file.id, value);
-										});
-										location.reload();
-									})
-							)
-							.appendTo($('#files'));
-					});
-				</script>
-			</div>
+	// 遍历文件数据，生成列表项
+	files.forEach(function (file) {
+		$('<div></div>')
+			.addClass('list-group-item')
+			.append($('<span></span>').text(file.name))
+			.append($('<br>'))
+			.append(
+				$('<button></button>')
+					.addClass('btn btn-danger btn-sm m-1')
+					.text('删除')
+					.click(function () {
+						var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+						files = files.filter(function (f) {
+							return f.id !== file.id;
+						});
+						localStorage.setItem('web_editor_files', JSON.stringify(files));
+						localforage.removeItem(file.id);
+						location.reload();
+					})
+			)
+			.append(
+				$('<a></a>')
+					.addClass('btn btn-primary btn-sm m-1')
+					.attr('href', '../web_maker/edit.html?id=' + file.id)
+					.text('编辑')
+			)
+			.append(
+				$('<button></button>')
+					.addClass('btn btn-warning btn-sm m-1')
+					.text('重命名')
+					.click(function () {
+						var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+						// 找到当前的ID的索引
+						var index = files.findIndex(function (f) {
+							return f.id === file.id;
+						});
+						// 弹出重命名窗口
+						var new_name = prompt('请输入新的文件名', files[index].name);
+						if (new_name) {
+							files[index].name = new_name;
+							localStorage.setItem('web_editor_files', JSON.stringify(files));
+							location.reload();
+						}
+					})
+			)
+			.append(
+				$('<button></button>')
+					.addClass('btn btn-info btn-sm m-1')
+					.text('复制')
+					.click(function () {
+						var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+						// 找到当前的ID的索引
+						var index = files.findIndex(function (f) {
+							return f.id === file.id;
+						});
+						// 复制文件
+						var new_file = {};
+						new_file.name = files[index].name + ' - 副本';
+						new_file.id = new Date().getTime().toString(36);
+						files.push(new_file);
+						localStorage.setItem('web_editor_files', JSON.stringify(files));
+						localforage.getItem(files[index].id).then(function (value) {
+							localforage.setItem(new_file.id, value);
+						});
+						location.reload();
+					})
+			)
+			.appendTo($('#files'));
+	});
+</script>
+</div>
 			<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
 				<small>
 					如果你要提供意见，请 <a href="../contact.html">联系我们</a>
@@ -237,14 +238,14 @@
 			const root = '..';
 
 			// personalization
-			var color = localStorage.getItem('color') || '#ffffff';
+			var color = localStorage.getItem('color') || '#000000';
 			if (localStorage.getItem('adv_bg') == 'false') $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
 			else $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',0.5)');
 			if (localStorage.getItem('no-anim') == 'true') {
 				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
 				$('#script-mount-node').append(style_noanim);
 			}
-			if (localStorage.getItem('dark') == 'true') {
+			if ((localStorage.getItem('dark')||"true") == 'true') {
 				$('#html-root').attr('data-bs-theme', 'dark');
 			}
 			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';

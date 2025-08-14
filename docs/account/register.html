@@ -4,7 +4,7 @@
 		<div id="script-mount-node"></div>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>柳荫眠琴 | 账号管理</title>
+		<title> 柳荫眠琴 | 账号管理 </title>
 		<link href="../res/css/bootstrap.min.css" rel="stylesheet" />
 		<script src="../res/js/bootstrap.bundle.min.js" defer></script>
 		<script src="../res/js/index.min.js"></script>
@@ -23,6 +23,7 @@
 		</script>
 		<script src="../res/js/localforage.js"></script>
 		<script src="../res/js/pdf.mjs" type="module"></script>
+		<script src="../res/js/.mjs" type="module"></script>
 		<style>
 			@media screen and (max-width: 768px) {
 				.hide_on_mobile {
@@ -120,104 +121,106 @@
 				</li>
 			</ul>
 		</div>
+		
+<div class="modal fade" data-bs-backdrop="static" id="Info" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">
+				提交成功<br />
+				注册信息会保存到浏览器用户数据中
+			</div>
+			<div class="modal-footer">
+				<a type="button" class="btn btn-primary" href="index.html">返回</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">两次输入的密码不一致</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">密码只能包括数字，字母，下划线</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" data-bs-backdrop="static" id="Error3" tabindex="-1">
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">输入值不能为空</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-		<div class="modal fade" data-bs-backdrop="static" id="Info" tabindex="-1">
-			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-body">
-						提交成功<br />
-						注册信息会保存到浏览器用户数据中
-					</div>
-					<div class="modal-footer">
-						<a type="button" class="btn btn-primary" href="index.html">返回</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1">
-			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-body">两次输入的密码不一致</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1">
-			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-body">密码只能包括数字，字母，下划线</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade" data-bs-backdrop="static" id="Error3" tabindex="-1">
-			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-body">输入值不能为空</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<div style="min-height: 100vh; padding: 60px 0 0 0; background: rgba(255, 255, 255, 0.5); overflow-x: hidden" id="mainbody">
 			<div style="min-height: calc(100vh - 60px); margin: 0 10px">
-				<h1>注册</h1>
-				<script>
-					function register() {
-						var username = $('#username').val();
-						var password = $('#password').val();
-						var password2 = $('#password2').val();
-						if (password != password2) {
-							$('#Error').modal('show');
-							return;
-						}
-						if (/\W/g.test(password)) {
-							$('#Error2').modal('show');
-							return;
-						}
-						if (username == '' || password == '' || password2 == '') {
-							$('#Error3').modal('show');
-							return;
-						}
-						localStorage.setItem('username', JSON.stringify(username));
-						localStorage.setItem('password', JSON.stringify(password));
-						localStorage.setItem('accountBe', 'true');
-						$('#Info').modal('show');
-					}
-				</script>
-				<div>
-					<!--标签对齐，文本框对齐，宽度4/12-->
-					<div class="form-group row m-3">
-						<label for="username" class="col-sm-4 col-form-label">用户名</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="username" name="username" placeholder="用户名" />
-						</div>
-					</div>
-					<div class="form-group row m-3">
-						<label for="password" class="col-sm-4 col-form-label">密码</label>
-						<div class="col-sm-8">
-							<input type="password" class="form-control" id="password" name="password" placeholder="密码" />
-						</div>
-					</div>
-					<div class="form-group row m-3">
-						<label for="password2" class="col-sm-4 col-form-label">确认密码</label>
-						<div class="col-sm-8">
-							<input type="password" class="form-control" id="password2" name="password2" placeholder="确认密码" />
-						</div>
-					</div>
-					<div class="form-group row m-3">
-						<div class="col-sm-8 offset-sm-4">
-							<button onclick="register()" class="btn btn-primary">注册</button>
-						</div>
-					</div>
-				</div>
-			</div>
+<h1>注册</h1>
+<script>
+	function register() {
+		var username = $('#username').val();
+		var password = $('#password').val();
+		var password2 = $('#password2').val();
+		if (password != password2) {
+			$('#Error').modal('show');
+			return;
+		}
+		if (/\W/g.test(password)) {
+			$('#Error2').modal('show');
+			return;
+		}
+		if (username == '' || password == '' || password2 == '') {
+			$('#Error3').modal('show');
+			return;
+		}
+		localStorage.setItem('username', JSON.stringify(username));
+		localStorage.setItem('password', JSON.stringify(password));
+		localStorage.setItem('accountBe', 'true');
+		$('#Info').modal('show');
+	}
+</script>
+<div>
+	<!--标签对齐，文本框对齐，宽度4/12-->
+	<div class="form-group row m-3">
+		<label for="username" class="col-sm-4 col-form-label">用户名</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="username" name="username" placeholder="用户名" />
+		</div>
+	</div>
+	<div class="form-group row m-3">
+		<label for="password" class="col-sm-4 col-form-label">密码</label>
+		<div class="col-sm-8">
+			<input type="password" class="form-control" id="password" name="password" placeholder="密码" />
+		</div>
+	</div>
+	<div class="form-group row m-3">
+		<label for="password2" class="col-sm-4 col-form-label">确认密码</label>
+		<div class="col-sm-8">
+			<input type="password" class="form-control" id="password2" name="password2" placeholder="确认密码" />
+		</div>
+	</div>
+	<div class="form-group row m-3">
+		<div class="col-sm-8 offset-sm-4">
+			<button onclick="register()" class="btn btn-primary">注册</button>
+		</div>
+	</div>
+</div>
+
+</div>
 			<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
 				<small>
 					如果你要提供意见，请 <a href="../contact.html">联系我们</a>
@@ -249,14 +252,14 @@
 			const root = '..';
 
 			// personalization
-			var color = localStorage.getItem('color') || '#ffffff';
+			var color = localStorage.getItem('color') || '#000000';
 			if (localStorage.getItem('adv_bg') == 'false') $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
 			else $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',0.5)');
 			if (localStorage.getItem('no-anim') == 'true') {
 				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
 				$('#script-mount-node').append(style_noanim);
 			}
-			if (localStorage.getItem('dark') == 'true') {
+			if ((localStorage.getItem('dark')||"true") == 'true') {
 				$('#html-root').attr('data-bs-theme', 'dark');
 			}
 			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
