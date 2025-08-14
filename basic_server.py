@@ -24,4 +24,4 @@ def send_file(path, dir="docs"):
 @app.route("/old/<path:path>")
 def send_old_file(path):
     return send_file(path, dir="old")
-app.run(debug=True)
+app.run(debug=True, host="0.0.0.0")
