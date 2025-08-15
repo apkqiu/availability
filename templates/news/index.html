@@ -39,6 +39,7 @@ body%}
         $("#news-wechat").removeClass('active');
         if (embed != null) {
             $('#iframe').addClass('hidden');
+            $("#iframe").attr("src", "about:blank"); // Release iframe
             $('#frame').removeClass('hidden');
             $("#news-"+embed).addClass('active');
             $("#frame").html('<div class="spinner-border"></div>')
