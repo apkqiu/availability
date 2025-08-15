@@ -1,134 +1,131 @@
 <!doctype html>
 <html lang="en" style="min-height: 100vh" id="html-root">
-	<head>
-		<div id="script-mount-node"></div>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title> 隔岸观鱼 | 小游戏 </title>
-		<link href="../res/css/bootstrap.min.css" rel="stylesheet" />
-		<script src="../res/js/bootstrap.bundle.min.js" defer></script>
-		<script src="../res/js/index.min.js"></script>
-		<script src="../res/js/jquery-3.6.0.min.js"></script>
-		<script src="../res/js/pinyin-pro.js"></script>
-		<script src="../res/js/parallax.min.js"></script>
-		<link rel="stylesheet" href="../res/css/bootstrap-icons.min.css" />
-		<script src="../res/js/obj_index.js"></script>
-		<script src="../res/js/lzma-c.js"></script>
-		<script>
-			const LZMA_C = LZMA;
-		</script>
-		<script src="../res/js/lzma-d.js"></script>
-		<script>
-			const LZMA_D = LZMA;
-		</script>
-		<script src="../res/js/localforage.js"></script>
-		<script src="../res/js/pdf.mjs" type="module"></script>
-		<script src="../res/js/.mjs" type="module"></script>
-		<style>
-			@media screen and (max-width: 768px) {
-				.hide_on_mobile {
-					display: none;
-					visibility: collapse;
-					height: 0px;
-				}
-			}
-		</style>
-	</head>
 
-	<header>
-		<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
-			<div class="container-fluid">
-				<span> 隔岸观鱼 | 小游戏 </span>
-				<ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
-					<li class="nav-item">
-						<a class="nav-link" href="../home.html">首页</a>
-					</li>
-					<li class="nav-item">
-						<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">报错</a>
-					</li>
-				</ul>
-				<div class="d-flex">
-					<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
-						<span class="navbar-toggler-icon"></span>
-					</a>
-				</div>
-			</div>
-		</nav>
+<head>
+	<div id="script-mount-node"></div>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title> 隔岸观鱼 | 小游戏 </title>
 
-		<!-- Offcanvas -->
-		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
-			<div class="offcanvas-header">
-				<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-			</div>
-			<div class="offcanvas-body">
-				<h3>导航</h3>
-				<div class="list-group">
-					<a class="list-group-item" href="../home.html">首页</a>
-					<a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a>
-					<a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
-					<a class="list-group-item" href="../text/index.html">文学创作</a>
-					<a class="list-group-item" href="../web_maker/index.html">自制网页</a>
-					<a class="list-group-item" href="../account/index.html">账号管理</a>
-					<a class="list-group-item" href="../news/index.html">周报</a>
-					<a class="list-group-item" href="../school/index.html">一草种</a>
-					<a class="list-group-item" href="../resource/index.html">资料</a>
-					<a class="list-group-item" href="../game/index.html">小游戏</a>
-				</div>
-				<br />
-				<h3>搜索</h3>
-				<ul class="list-group">
-					<li class="input-group clearfix">
-						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
-						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
-					</li>
-					<div id="searchResult"></div>
-				</ul>
-			</div>
-		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1">
-			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-					</div>
-					<div class="modal-body">
-						更新：<br />
-						v2.1.0<br />
-						1. 添加搜索框<br />
-						2. 高级背景<br />
-						<hr />
-						v2.0.0<br />
-						1. 整体模板化+使用Bootstrap<br />
-						2. 整体美化<br />
-						<br />
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+	<link rel="stylesheet" href="../res/css/bootstrap.css" />
+	<link rel="stylesheet" href="../res/css/bootstrap-icons.css" />
+	<link rel="stylesheet" href="../res/css/utils.css" />
 
-	<body style="min-height: 100vh">
-		<div style="position: fixed; left: -10vw; top: -10vh; right: -10vw; bottom: -10vh; overflow: hidden; z-index: -10">
-			<ul id="scene">
-				<li class="layer" data-depth="0.4">
-					<img id="bg" style="height: 120vh; width: 120vw; object-fit: cover" />
+	<script>
+		var root = '..';
+		var loaded = false;
+	</script>
+	<script src="../res/js/bootstrap.bundle.js" defer></script>
+	<script src="../res/js/levenshetin.js"></script>
+	<script src="../res/js/jquery-3.6.0.js"></script>
+	<script src="../res/js/parallax.js"></script>
+	<script src="../res/js/obj_index.js"></script>
+	<script src="../res/js/localforage.js"></script>
+	<script src="../res/js/preload.js"></script>
+	<script src="../res/js/utils.js"></script>
+	<script src="../res/js/vconsole.js"></script>
+</head>
+
+<header>
+	<nav class="navbar navbar-expand-sm" id="nav"
+		style="position: fixed; width: 100%; z-index: 1001;backdrop-filter: blur(10px);">
+		<div class="container-fluid">
+			<span> 隔岸观鱼 | 小游戏 </span>
+			<ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
+				<li class="nav-item">
+					<a class="nav-link" href="../home.html">首页</a>
+				</li>
+				<li class="nav-item">
+					<button type="button" class="nav-link" data-bs-toggle="modal"
+						data-bs-target="#exampleModal">公告</button>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">报错</a>
 				</li>
 			</ul>
+			<div class="d-flex">
+				<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
+					<span class="navbar-toggler-icon"></span>
+				</a>
+			</div>
 		</div>
-		 
-		<div style="min-height: 100vh; padding: 60px 0 0 0; background: rgba(255, 255, 255, 0.5); overflow-x: hidden" id="mainbody">
-			<div style="min-height: calc(100vh - 60px); margin: 0 10px">
+	</nav>
+
+	<!-- Offcanvas -->
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+		</div>
+		<div class="offcanvas-body">
+			<h3>导航</h3>
+			<div class="list-group">
+				<a class="list-group-item" href="../home.html">首页</a>
+				<a type="button" href="#" class="list-group-item" data-bs-toggle="modal"
+					data-bs-target="#exampleModal">公告</a>
+				<a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
+				<a class="list-group-item" href="../text/index.html">文学创作</a>
+				<a class="list-group-item" href="../web_maker/index.html">自制网页</a>
+				<a class="list-group-item" href="../account/index.html">账号管理</a>
+				<a class="list-group-item" href="../news/index.html">周报</a>
+				<a class="list-group-item" href="../school/index.html">一草种</a>
+				<a class="list-group-item" href="../resource/index.html">资料</a>
+				<a class="list-group-item" href="../game/index.html">小游戏</a>
+				<a class="list-group-item" href="../debug.html">调试</a>
+			</div>
+			<br />
+			<h3>搜索</h3>
+			<ul class="list-group">
+				<li class="input-group clearfix">
+					<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
+					<button class="btn btn-outline-secondary" type="button" id="button-addon2"
+						onclick="search()">搜索</button>
+				</li>
+				<div id="searchResult"></div>
+			</ul>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					更新：<br />
+					v2.1.0<br />
+					1. 添加搜索框<br />
+					2. 高级背景<br />
+					<hr />
+					v2.0.0<br />
+					1. 整体模板化+使用Bootstrap<br />
+					2. 整体美化<br />
+					<br />
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+
+<body style="min-height: 100vh">
+	<div style="position: fixed; left: -10vw; top: -10vh; right: -10vw; bottom: -10vh; overflow: hidden; z-index: -10">
+		<ul id="scene">
+			<li class="layer" data-depth="0.4">
+				<img id="bg" style="height: 120vh; width: 120vw; object-fit: cover" />
+			</li>
+		</ul>
+	</div>
+	 
+	<div id="mask">
+		<div style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden" id="mainbody">
+			<div style="min-height: calc(100vh - 60px); margin: 0 10px" id="app">
 <a class="btn" href="index.html">◀ 返回</a>
 <iframe style="width: 100%; height: 80vh" id="iframe"></iframe>
 <script>
-	var embed = getarg('embed');
-	document.getElementById('iframe').src = embed;
+    var embed = getarg('embed');
+    document.getElementById('iframe').src = embed;
 </script>
 </div>
 			<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
@@ -138,82 +135,77 @@
 				</small>
 			</div>
 		</div>
-	</body>
-	<footer>
-		<script defer>
-			function hex2rgb(hex) {
-				let r = 0,
-					g = 0,
-					b = 0;
-				// 3 digits
-				if (hex.length == 4) {
-					r = parseInt(hex[1] + hex[1], 16);
-					g = parseInt(hex[2] + hex[2], 16);
-					b = parseInt(hex[3] + hex[3], 16);
-				}
-				// 6 digits
-				else if (hex.length == 7) {
-					r = parseInt(hex[1] + hex[2], 16);
-					g = parseInt(hex[3] + hex[4], 16);
-					b = parseInt(hex[5] + hex[6], 16);
-				}
-				return [r, g, b];
-			}
-			const root = '..';
-
-			// personalization
-			var color = localStorage.getItem('color') || '#000000';
-			if (localStorage.getItem('adv_bg') == 'false') $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
-			else $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',0.5)');
-			if (localStorage.getItem('no-anim') == 'true') {
-				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
-				$('#script-mount-node').append(style_noanim);
-			}
-			if ((localStorage.getItem('dark')||"true") == 'true') {
-				$('#html-root').attr('data-bs-theme', 'dark');
-			}
-			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
-			if (img == 'custom') {
-				localforage.getItem('imgbg').then(function (value) {
-					$('#bg').attr('src', value);
-				});
-			} else {
-				$('#bg').attr('src', root + '/res/img/' + img);
-			}
-			// search
-			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
-			// navbar fix
-			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-			$(window).resize(function () {
-				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+	</div>
+</body>
+<footer>
+	<script defer>
+		// personalization
+		var color = localStorage.getItem('color') || '#000000';
+		if (localStorage.getItem('adv_bg') == 'false') {
+			$('#bg').css('display', 'none');
+			$('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
+		}
+		else {
+			var brightness = new Number(localStorage.getItem('bgbrightness')) || 50;
+			if (brightness >= 100) $('#mask').css('background', 'rgba(255,255,255,' + ((brightness - 100) / 100) + ')');
+			else $('#mask').css('background', 'rgba(0,0,0,' + ((100 - brightness) / 100) + ')');
+			var coloropacity = new Number(localStorage.getItem('coloropacity')) || 0;
+			$("#mainbody").css('background', 'rgba(' + hex2rgb(color).join(',') + ',' + (coloropacity / 100) + ')');
+			$("#bg").css("filter", "blur(" + (new Number(localStorage.getItem('bgblur')) || 0) + "px)");
+		}
+		if (localStorage.getItem('no-anim') == 'true') {
+			var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
+			$('#script-mount-node').append(style_noanim);
+		}
+		if ((localStorage.getItem('dark') || 'true') == 'true') {
+			$('#html-root').attr('data-bs-theme', 'dark');
+		}
+		var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
+		if (img == 'custom') {
+			localforage.getItem('imgbg').then(function (value) {
+				$('#bg').attr('src', value);
 			});
-			// parallax
-			var scene = document.getElementById('scene');
-			var parallax = new Parallax(scene);
+		} else {
+			$('#bg').attr('src', root + '/res/img/' + img);
+		}
+		// search
+		$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+		// navbar fix
+		$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+		$(window).resize(function () {
+			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+		});
+		// parallax
+		var scene = document.getElementById('scene');
+		var parallax = new Parallax(scene);
+		// VConsole 默认会挂载到 `window.VConsole` 上
+		if (localStorage.getItem('vconsole') == 'true')
+			var vConsole = new window.VConsole();
 
-			function search() {
-				$('#searchResult').empty();
-				if ($('#searchInput').val() == '') {
-					$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
-					return;
-				}
-				var res = search_document($('#searchInput').val());
-				res.forEach((res) => {
-					$('#searchResult').append(
-						$('<a class="list-group-item"></a>')
-							.attr('href', root + res.url)
-							.append($('<span></span>').text(res.title))
-							.append($('<span></span>').text(res.tag))
-					);
-				});
-				if (res.length == 0) {
-					$('#searchResult').append(
-						$('<a class="list-group-item"></a>')
-							.attr('href', '#')
-							.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
-					);
-				}
+		function search() {
+			$('#searchResult').empty();
+			if ($('#searchInput').val() == '') {
+				$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+				return;
 			}
-		</script>
-	</footer>
+			var res = search_document($('#searchInput').val());
+			res.forEach((res) => {
+				$('#searchResult').append(
+					$('<a class="list-group-item"></a>')
+						.attr('href', root + res.url)
+						.append($('<span></span>').text(res.title))
+						.append($('<span></span>').text(res.tag))
+				);
+			});
+			if (res.length == 0) {
+				$('#searchResult').append(
+					$('<a class="list-group-item"></a>')
+						.attr('href', '#')
+						.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
+				);
+			}
+		}
+	</script>
+</footer>
+
 </html>

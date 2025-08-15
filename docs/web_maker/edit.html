@@ -1,366 +1,362 @@
 <!doctype html>
 <html lang="en" style="min-height: 100vh" id="html-root">
-	<head>
-		<div id="script-mount-node"></div>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title> 棕亭霁雪 | 自制网页 </title>
-		<link href="../res/css/bootstrap.min.css" rel="stylesheet" />
-		<script src="../res/js/bootstrap.bundle.min.js" defer></script>
-		<script src="../res/js/index.min.js"></script>
-		<script src="../res/js/jquery-3.6.0.min.js"></script>
-		<script src="../res/js/pinyin-pro.js"></script>
-		<script src="../res/js/parallax.min.js"></script>
-		<link rel="stylesheet" href="../res/css/bootstrap-icons.min.css" />
-		<script src="../res/js/obj_index.js"></script>
-		<script src="../res/js/lzma-c.js"></script>
-		<script>
-			const LZMA_C = LZMA;
-		</script>
-		<script src="../res/js/lzma-d.js"></script>
-		<script>
-			const LZMA_D = LZMA;
-		</script>
-		<script src="../res/js/localforage.js"></script>
-		<script src="../res/js/pdf.mjs" type="module"></script>
-		<script src="../res/js/.mjs" type="module"></script>
-		<style>
-			@media screen and (max-width: 768px) {
-				.hide_on_mobile {
-					display: none;
-					visibility: collapse;
-					height: 0px;
-				}
-			}
-		</style>
-	</head>
 
-	<header>
-		<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
-			<div class="container-fluid">
-				<span> 棕亭霁雪 | 自制网页 </span>
-				<ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
-					<li class="nav-item">
-						<a class="nav-link" href="../home.html">首页</a>
-					</li>
-					<li class="nav-item">
-						<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">报错</a>
-					</li>
-				</ul>
-				<div class="d-flex">
-					<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
-						<span class="navbar-toggler-icon"></span>
-					</a>
-				</div>
-			</div>
-		</nav>
+<head>
+	<div id="script-mount-node"></div>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title> 棕亭霁雪 | 自制网页 </title>
 
-		<!-- Offcanvas -->
-		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
-			<div class="offcanvas-header">
-				<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-			</div>
-			<div class="offcanvas-body">
-				<h3>导航</h3>
-				<div class="list-group">
-					<a class="list-group-item" href="../home.html">首页</a>
-					<a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a>
-					<a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
-					<a class="list-group-item" href="../text/index.html">文学创作</a>
-					<a class="list-group-item" href="../web_maker/index.html">自制网页</a>
-					<a class="list-group-item" href="../account/index.html">账号管理</a>
-					<a class="list-group-item" href="../news/index.html">周报</a>
-					<a class="list-group-item" href="../school/index.html">一草种</a>
-					<a class="list-group-item" href="../resource/index.html">资料</a>
-					<a class="list-group-item" href="../game/index.html">小游戏</a>
-				</div>
-				<br />
-				<h3>搜索</h3>
-				<ul class="list-group">
-					<li class="input-group clearfix">
-						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
-						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
-					</li>
-					<div id="searchResult"></div>
-				</ul>
-			</div>
-		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1">
-			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-					</div>
-					<div class="modal-body">
-						更新：<br />
-						v2.1.0<br />
-						1. 添加搜索框<br />
-						2. 高级背景<br />
-						<hr />
-						v2.0.0<br />
-						1. 整体模板化+使用Bootstrap<br />
-						2. 整体美化<br />
-						<br />
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+	<link rel="stylesheet" href="../res/css/bootstrap.css" />
+	<link rel="stylesheet" href="../res/css/bootstrap-icons.css" />
+	<link rel="stylesheet" href="../res/css/utils.css" />
 
-	<body style="min-height: 100vh">
-		<div style="position: fixed; left: -10vw; top: -10vh; right: -10vw; bottom: -10vh; overflow: hidden; z-index: -10">
-			<ul id="scene">
-				<li class="layer" data-depth="0.4">
-					<img id="bg" style="height: 120vh; width: 120vw; object-fit: cover" />
+	<script>
+		var root = '..';
+		var loaded = false;
+	</script>
+	<script src="../res/js/bootstrap.bundle.js" defer></script>
+	<script src="../res/js/levenshetin.js"></script>
+	<script src="../res/js/jquery-3.6.0.js"></script>
+	<script src="../res/js/parallax.js"></script>
+	<script src="../res/js/obj_index.js"></script>
+	<script src="../res/js/localforage.js"></script>
+	<script src="../res/js/preload.js"></script>
+	<script src="../res/js/utils.js"></script>
+	<script src="../res/js/vconsole.js"></script>
+</head>
+
+<header>
+	<nav class="navbar navbar-expand-sm" id="nav"
+		style="position: fixed; width: 100%; z-index: 1001;backdrop-filter: blur(10px);">
+		<div class="container-fluid">
+			<span> 棕亭霁雪 | 自制网页 </span>
+			<ul class="navbar-nav me-auto hide_on_mobile" id="nav_left">
+				<li class="nav-item">
+					<a class="nav-link" href="../home.html">首页</a>
+				</li>
+				<li class="nav-item">
+					<button type="button" class="nav-link" data-bs-toggle="modal"
+						data-bs-target="#exampleModal">公告</button>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">报错</a>
 				</li>
 			</ul>
-		</div>
-		
-<div class="modal fade" id="propModal" tabindex="-1">
-	<div class="modal-dialog modal-fullscreen modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="header">属性</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			<div class="d-flex">
+				<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
+					<span class="navbar-toggler-icon"></span>
+				</a>
 			</div>
-			<div class="modal-body">
-				<div id="prop-general">
-					<h3>通用</h3>
-					<table class="w-100 table">
-						<tr>
-							<td>元素ID</td>
-							<td><input type="text" id="id" class="form-control" /></td>
-						</tr>
-						<tr>
-							<td>套用元素样式</td>
-							<td><input type="text" id="class" class="form-control" placeholder="默认模板" /></td>
-						</tr>
-					</table>
+		</div>
+	</nav>
+
+	<!-- Offcanvas -->
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+		</div>
+		<div class="offcanvas-body">
+			<h3>导航</h3>
+			<div class="list-group">
+				<a class="list-group-item" href="../home.html">首页</a>
+				<a type="button" href="#" class="list-group-item" data-bs-toggle="modal"
+					data-bs-target="#exampleModal">公告</a>
+				<a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
+				<a class="list-group-item" href="../text/index.html">文学创作</a>
+				<a class="list-group-item" href="../web_maker/index.html">自制网页</a>
+				<a class="list-group-item" href="../account/index.html">账号管理</a>
+				<a class="list-group-item" href="../news/index.html">周报</a>
+				<a class="list-group-item" href="../school/index.html">一草种</a>
+				<a class="list-group-item" href="../resource/index.html">资料</a>
+				<a class="list-group-item" href="../game/index.html">小游戏</a>
+				<a class="list-group-item" href="../debug.html">调试</a>
+			</div>
+			<br />
+			<h3>搜索</h3>
+			<ul class="list-group">
+				<li class="input-group clearfix">
+					<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
+					<button class="btn btn-outline-secondary" type="button" id="button-addon2"
+						onclick="search()">搜索</button>
+				</li>
+				<div id="searchResult"></div>
+			</ul>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
-				<div id="prop-text">
-					<h3>文本</h3>
-					<table class="w-100 table">
-						<tr>
-							<td>文本内容</td>
-							<td><input id="text" class="form-control" /></td>
-						</tr>
-					</table>
+				<div class="modal-body">
+					更新：<br />
+					v2.1.0<br />
+					1. 添加搜索框<br />
+					2. 高级背景<br />
+					<hr />
+					v2.0.0<br />
+					1. 整体模板化+使用Bootstrap<br />
+					2. 整体美化<br />
+					<br />
 				</div>
-				<div id="prop-link">
-					<h3>超链接</h3>
-					<table class="w-100 table">
-						<tr>
-							<td>链接地址</td>
-							<td><input id="href" class="form-control" /></td>
-						</tr>
-						<tr>
-							<td>链接文本</td>
-							<td><input id="link_text" class="form-control" /></td>
-						</tr>
-					</table>
-				</div>
-				<div id="prop-style">
-					<h3>CSS样式</h3>
-					<table class="w-100 table">
-						<tr>
-							<td>
-								<h4>字体</h4>
-							</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>字体</td>
-							<td><input id="css-font-family" class="form-control" placeholder="与套用模板一致" /></td>
-						</tr>
-						<tr>
-							<td>颜色</td>
-							<td><input id="css-color" class="form-control" placeholder="与套用模板一致" /></td>
-						</tr>
-						<tr>
-							<td>字体大小</td>
-							<td>
-								<div class="input-group">
-									<input id="css-font-size" type="number" class="form-control" placeholder="与套用模板一致" />
-									<select class="form-select" id="css-font-size-unit">
-										<option disabled>虚拟大小</option>
-										<option value="px">px - 像素</option>
-										<option value="pt">pt - 磅（word风格）</option>
-										<option value="em">em - 相对大小（缩放倍数，相对于父级div的设定的大小）</option>
-										<option value="rem">rem - 相对绝对大小（缩放倍数，相对于字体的大小）</option>
-										<option disabled>真实大小</option>
-										<option value="cm">cm - 厘米</option>
-										<option value="mm">mm - 毫米</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>字体变体</td>
-							<td>
-								<div class="input-group">
-									<select class="form-select" id="css-font-weight">
-										<option value="">加粗：与套用模板一致</option>
-										<option value="normal">不加粗</option>
-										<option value="bold">加粗</option>
-										<option value="bolder">更粗</option>
-									</select>
-									<select class="form-select" id="css-font-style">
-										<option value="">倾斜：与套用模板一致</option>
-										<option value="normal">不倾斜</option>
-										<option value="italic">斜体</option>
-										<option value="oblique">倾斜</option>
-									</select>
-									<select class="form-select" id="css-text-decoration">
-										<option value="">线条：与套用模板一致</option>
-										<option value="none">无附加线条</option>
-										<option value="underline">下划线</option>
-										<option value="overline">上划线</option>
-										<option value="line-through">删除线</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<h4>背景</h4>
-							</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>背景颜色</td>
-							<td><input id="css-background-color" class="form-control" placeholder="与套用模板一致" /></td>
-						</tr>
-						<tr>
-							<td>
-								<h4>布局</h4>
-							</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>宽度</td>
-							<td>
-								<div class="input-group">
-									<input id="css-width" class="form-control" placeholder="与套用模板一致" />
-									<select id="css-width-unit" class="form-select">
-										<option disabled>虚拟大小</option>
-										<option value="px">px - 像素</option>
-										<option value="vw">vw - 相对于屏幕宽度的百分比</option>
-										<option disabled>真实大小</option>
-										<option value="cm">cm - 厘米</option>
-										<option value="mm">mm - 毫米</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>高度</td>
-							<td>
-								<div class="input-group">
-									<input id="css-height" class="form-control" placeholder="与套用模板一致" />
-									<select id="css-height-unit" class="form-select">
-										<option disabled>虚拟大小</option>
-										<option value="px">px - 像素</option>
-										<option value="vh">vh - 相对于屏幕高度的百分比</option>
-										<option disabled>真实大小</option>
-										<option value="cm">cm - 厘米</option>
-										<option value="mm">mm - 毫米</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>出界部分可见性</td>
-							<td>
-								<select id="css-overflow" class="form-select">
-									<option value="">与套用模板一致</option>
-									<option value="visible">堆叠到其他元素</option>
-									<option value="hidden">隐藏</option>
-									<option value="clip">裁剪</option>
-									<option value="scroll">使用滚动条</option>
-									<option value="auto">浏览器决定方案</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>外边距</td>
-							<td>
-								<div class="input-group">
-									<span class="input-group-text">上</span>
-									<input type="number" id="css-margin-top" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<div class="input-group">
-									<span class="input-group-text">右</span>
-									<input type="number" id="css-margin-right" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<div class="input-group">
-									<span class="input-group-text">下</span>
-									<input type="number" id="css-margin-bottom" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<div class="input-group">
-									<span class="input-group-text">左</span>
-									<input type="number" id="css-margin-left" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<hr />
-								<div class="input-group">
-									<span class="input-group-text">单位</span>
-									<select id="css-margin-unit" class="form-select">
-										<option disabled>虚拟大小</option>
-										<option value="px">px - 像素</option>
-										<option disabled>真实大小</option>
-										<option value="cm">cm - 厘米</option>
-										<option value="mm">mm - 毫米</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>内边距</td>
-							<td>
-								<div class="input-group">
-									<span class="input-group-text">上</span>
-									<input type="number" id="css-padding-top" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<div class="input-group">
-									<span class="input-group-text">右</span>
-									<input type="number" id="css-padding-right" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<div class="input-group">
-									<span class="input-group-text">下</span>
-									<input type="number" id="css-padding-bottom" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<div class="input-group">
-									<span class="input-group-text">左</span>
-									<input type="number" id="css-padding-left" class="form-control" placeholder="与套用模板一致" />
-								</div>
-								<hr />
-								<div class="input-group">
-									<span class="input-group-text">单位</span>
-									<select id="css-padding-unit" class="form-select">
-										<option disabled>虚拟大小</option>
-										<option value="px">px - 像素</option>
-										<option disabled>真实大小</option>
-										<option value="cm">cm - 厘米</option>
-										<option value="mm">mm - 毫米</option>
-									</select>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div id="preview">
-					<h3>元素预览</h3>
-					<input type="checkbox" id="preview-checkbox" onchange="set_transparenty()" />体现透明度
-					<script>
-						function set_transparenty() {
-							var checkbox = document.getElementById('preview-checkbox');
-							if (checkbox.checked) {
-								document.getElementById('preview-box').style = `
+			</div>
+		</div>
+	</div>
+</header>
+
+<body style="min-height: 100vh">
+	<div style="position: fixed; left: -10vw; top: -10vh; right: -10vw; bottom: -10vh; overflow: hidden; z-index: -10">
+		<ul id="scene">
+			<li class="layer" data-depth="0.4">
+				<img id="bg" style="height: 120vh; width: 120vw; object-fit: cover" />
+			</li>
+		</ul>
+	</div>
+	
+<div class="modal fade" id="propModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="header">属性</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="prop-general">
+                    <h3>通用</h3>
+                    <table class="w-100 table">
+                        <tr>
+                            <td>元素ID</td>
+                            <td><input type="text" id="id" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td>套用元素样式</td>
+                            <td><input type="text" id="class" class="form-control" placeholder="默认模板" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="prop-text">
+                    <h3>文本</h3>
+                    <table class="w-100 table">
+                        <tr>
+                            <td>文本内容</td>
+                            <td><input id="text" class="form-control" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="prop-link">
+                    <h3>超链接</h3>
+                    <table class="w-100 table">
+                        <tr>
+                            <td>链接地址</td>
+                            <td><input id="href" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td>链接文本</td>
+                            <td><input id="link_text" class="form-control" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="prop-style">
+                    <h3>CSS样式</h3>
+                    <table class="w-100 table">
+                        <tr>
+                            <td>
+                                <h4>字体</h4>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>字体</td>
+                            <td><input id="css-font-family" class="form-control" placeholder="与套用模板一致" /></td>
+                        </tr>
+                        <tr>
+                            <td>颜色</td>
+                            <td><input id="css-color" class="form-control" placeholder="与套用模板一致" /></td>
+                        </tr>
+                        <tr>
+                            <td>字体大小</td>
+                            <td>
+                                <div class="input-group">
+                                    <input id="css-font-size" type="number" class="form-control" placeholder="与套用模板一致" />
+                                    <select class="form-select" id="css-font-size-unit">
+                                        <option disabled>虚拟大小</option>
+                                        <option value="px">px - 像素</option>
+                                        <option value="pt">pt - 磅（word风格）</option>
+                                        <option value="em">em - 相对大小（缩放倍数，相对于父级div的设定的大小）</option>
+                                        <option value="rem">rem - 相对绝对大小（缩放倍数，相对于字体的大小）</option>
+                                        <option disabled>真实大小</option>
+                                        <option value="cm">cm - 厘米</option>
+                                        <option value="mm">mm - 毫米</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>字体变体</td>
+                            <td>
+                                <div class="input-group">
+                                    <select class="form-select" id="css-font-weight">
+                                        <option value="">加粗：与套用模板一致</option>
+                                        <option value="normal">不加粗</option>
+                                        <option value="bold">加粗</option>
+                                        <option value="bolder">更粗</option>
+                                    </select>
+                                    <select class="form-select" id="css-font-style">
+                                        <option value="">倾斜：与套用模板一致</option>
+                                        <option value="normal">不倾斜</option>
+                                        <option value="italic">斜体</option>
+                                        <option value="oblique">倾斜</option>
+                                    </select>
+                                    <select class="form-select" id="css-text-decoration">
+                                        <option value="">线条：与套用模板一致</option>
+                                        <option value="none">无附加线条</option>
+                                        <option value="underline">下划线</option>
+                                        <option value="overline">上划线</option>
+                                        <option value="line-through">删除线</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>背景</h4>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>背景颜色</td>
+                            <td><input id="css-background-color" class="form-control" placeholder="与套用模板一致" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>布局</h4>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>宽度</td>
+                            <td>
+                                <div class="input-group">
+                                    <input id="css-width" class="form-control" placeholder="与套用模板一致" />
+                                    <select id="css-width-unit" class="form-select">
+                                        <option disabled>虚拟大小</option>
+                                        <option value="px">px - 像素</option>
+                                        <option value="vw">vw - 相对于屏幕宽度的百分比</option>
+                                        <option disabled>真实大小</option>
+                                        <option value="cm">cm - 厘米</option>
+                                        <option value="mm">mm - 毫米</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>高度</td>
+                            <td>
+                                <div class="input-group">
+                                    <input id="css-height" class="form-control" placeholder="与套用模板一致" />
+                                    <select id="css-height-unit" class="form-select">
+                                        <option disabled>虚拟大小</option>
+                                        <option value="px">px - 像素</option>
+                                        <option value="vh">vh - 相对于屏幕高度的百分比</option>
+                                        <option disabled>真实大小</option>
+                                        <option value="cm">cm - 厘米</option>
+                                        <option value="mm">mm - 毫米</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>出界部分可见性</td>
+                            <td>
+                                <select id="css-overflow" class="form-select">
+                                    <option value="">与套用模板一致</option>
+                                    <option value="visible">堆叠到其他元素</option>
+                                    <option value="hidden">隐藏</option>
+                                    <option value="clip">裁剪</option>
+                                    <option value="scroll">使用滚动条</option>
+                                    <option value="auto">浏览器决定方案</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>外边距</td>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-text">上</span>
+                                    <input type="number" id="css-margin-top" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">右</span>
+                                    <input type="number" id="css-margin-right" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">下</span>
+                                    <input type="number" id="css-margin-bottom" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">左</span>
+                                    <input type="number" id="css-margin-left" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <hr />
+                                <div class="input-group">
+                                    <span class="input-group-text">单位</span>
+                                    <select id="css-margin-unit" class="form-select">
+                                        <option disabled>虚拟大小</option>
+                                        <option value="px">px - 像素</option>
+                                        <option disabled>真实大小</option>
+                                        <option value="cm">cm - 厘米</option>
+                                        <option value="mm">mm - 毫米</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>内边距</td>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-text">上</span>
+                                    <input type="number" id="css-padding-top" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">右</span>
+                                    <input type="number" id="css-padding-right" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">下</span>
+                                    <input type="number" id="css-padding-bottom" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">左</span>
+                                    <input type="number" id="css-padding-left" class="form-control" placeholder="与套用模板一致" />
+                                </div>
+                                <hr />
+                                <div class="input-group">
+                                    <span class="input-group-text">单位</span>
+                                    <select id="css-padding-unit" class="form-select">
+                                        <option disabled>虚拟大小</option>
+                                        <option value="px">px - 像素</option>
+                                        <option disabled>真实大小</option>
+                                        <option value="cm">cm - 厘米</option>
+                                        <option value="mm">mm - 毫米</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="preview">
+                    <h3>元素预览</h3>
+                    <input type="checkbox" id="preview-checkbox" onchange="set_transparenty()" />体现透明度
+                    <script>
+                        function set_transparenty() {
+                            var checkbox = document.getElementById('preview-checkbox');
+                            if (checkbox.checked) {
+                                document.getElementById('preview-box').style = `
 
   background-color: #fff;
   background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%),
@@ -368,383 +364,384 @@
   background-position: 0 0, 25px 25px;
   background-size: 50px 50px;
 `;
-							} else {
-								document.getElementById('preview-box').style = '';
-							}
-						}
-					</script>
-					<div id="preview-box"></div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-				<button type="button" class="btn btn-primary" onclick="saveProp()">保存</button>
-			</div>
-		</div>
-	</div>
+                            } else {
+                                document.getElementById('preview-box').style = '';
+                            }
+                        }
+                    </script>
+                    <div id="preview-box"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="saveProp()">保存</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-	var currentShow = null;
-	const propText = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'];
-	const hyperLink = ['a'];
-	var interval = null;
-	function showPropModal(element) {
-		$('#propModal').modal('show');
-		$('#header').text(element.tagName + '标签');
-		$('#id').val(element.id);
-		$('#class').val(element.className);
-		// prop: text
-		if (propText.includes(element.tagName.toLowerCase())) {
-			$('#prop-text').show();
-			$('#text').val(element.innerText);
-		} else {
-			$('#prop-text').hide();
-		}
-		// prop: link
-		if (hyperLink.includes(element.tagName.toLowerCase())) {
-			$('#prop-link').show();
-			$('#href').val(element.href);
-			$('#link_text').val(element.innerText);
-		} else {
-			$('#prop-link').hide();
-		}
-		// prop: style
-		$('#css-color').val(element.style.color);
-		var size = element.style.fontSize;
-		if (size == '') {
-			$('#css-font-size').val('');
-			$('#css-font-size-unit').val('px');
-		} else {
-			$('#css-font-size').val(size.match(/(\d+)/g)[0]);
-			$('#css-font-size-unit').val(size.match(/(\D+)$/g)[0]);
-		}
-		$('#css-font-family').val(element.style.fontFamily);
-		$('#css-background-color').val(element.style.backgroundColor);
-		$('#css-font-weight').val(element.style.fontWeight);
-		$('#css-font-style').val(element.style.fontStyle);
-		$('#css-text-decoration').val(element.style.textDecoration);
-		var width = element.style.width;
-		if (width == '') {
-			$('#css-width').val('');
-			$('#css-width-unit').val('px');
-		} else {
-			$('#css-width').val(width.match(/(\d+)/g)[0]);
-			$('#css-width-unit').val(width.match(/(\D+)$/g)[0]);
-		}
-		var height = element.style.height;
-		if (height == '') {
-			$('#css-height').val('');
-			$('#css-height-unit').val('px');
-		} else {
-			$('#css-height').val(height.match(/(\d+)/g)[0]);
-			$('#css-height-unit').val(height.match(/(\D+)$/g)[0]);
-		}
-		$('#css-overflow').val(element.style.overflow);
-		interval = setInterval(function () {
-			var ele = saveProp(false);
-			document.getElementById('preview-box').innerHTML = '';
-			document.getElementById('preview-box').appendChild(ele);
-		}, 1);
-		var margin = [element.style.marginTop, element.style.marginRight, element.style.marginBottom, element.style.marginLeft];
-		for (var i = 0; i < margin.length; i++) {
-			$('#css-margin-' + ['top', 'right', 'bottom', 'left'][i]).val(margin[i] ? margin[i].match(/(\d+)/g)[0] : '');
-		}
-		$('#css-margin-unit').val(margin[0] !== '' ? margin[0].match(/(\D+)$/g)[0] : 'px');
-		var padding = [element.style.paddingTop, element.style.paddingRight, element.style.paddingBottom, element.style.paddingLeft];
-		for (var i = 0; i < padding.length; i++) {
-			$('#css-padding-' + ['top', 'right', 'bottom', 'left'][i]).val(padding[i] ? padding[i].match(/(\d+)/g)[0] : '');
-		}
-		$('#css-padding-unit').val(padding[0] !== '' ? padding[0].match(/(\D+)$/g)[0] : 'px');
+    var currentShow = null;
+    const propText = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'];
+    const hyperLink = ['a'];
+    var interval = null;
+    function showPropModal(element) {
+        $('#propModal').modal('show');
+        $('#header').text(element.tagName + '标签');
+        $('#id').val(element.id);
+        $('#class').val(element.className);
+        // prop: text
+        if (propText.includes(element.tagName.toLowerCase())) {
+            $('#prop-text').show();
+            $('#text').val(element.innerText);
+        } else {
+            $('#prop-text').hide();
+        }
+        // prop: link
+        if (hyperLink.includes(element.tagName.toLowerCase())) {
+            $('#prop-link').show();
+            $('#href').val(element.href);
+            $('#link_text').val(element.innerText);
+        } else {
+            $('#prop-link').hide();
+        }
+        // prop: style
+        $('#css-color').val(element.style.color);
+        var size = element.style.fontSize;
+        if (size == '') {
+            $('#css-font-size').val('');
+            $('#css-font-size-unit').val('px');
+        } else {
+            $('#css-font-size').val(size.match(/(\d+)/g)[0]);
+            $('#css-font-size-unit').val(size.match(/(\D+)$/g)[0]);
+        }
+        $('#css-font-family').val(element.style.fontFamily);
+        $('#css-background-color').val(element.style.backgroundColor);
+        $('#css-font-weight').val(element.style.fontWeight);
+        $('#css-font-style').val(element.style.fontStyle);
+        $('#css-text-decoration').val(element.style.textDecoration);
+        var width = element.style.width;
+        if (width == '') {
+            $('#css-width').val('');
+            $('#css-width-unit').val('px');
+        } else {
+            $('#css-width').val(width.match(/(\d+)/g)[0]);
+            $('#css-width-unit').val(width.match(/(\D+)$/g)[0]);
+        }
+        var height = element.style.height;
+        if (height == '') {
+            $('#css-height').val('');
+            $('#css-height-unit').val('px');
+        } else {
+            $('#css-height').val(height.match(/(\d+)/g)[0]);
+            $('#css-height-unit').val(height.match(/(\D+)$/g)[0]);
+        }
+        $('#css-overflow').val(element.style.overflow);
+        interval = setInterval(function () {
+            var ele = saveProp(false);
+            document.getElementById('preview-box').innerHTML = '';
+            document.getElementById('preview-box').appendChild(ele);
+        }, 1);
+        var margin = [element.style.marginTop, element.style.marginRight, element.style.marginBottom, element.style.marginLeft];
+        for (var i = 0; i < margin.length; i++) {
+            $('#css-margin-' + ['top', 'right', 'bottom', 'left'][i]).val(margin[i] ? margin[i].match(/(\d+)/g)[0] : '');
+        }
+        $('#css-margin-unit').val(margin[0] !== '' ? margin[0].match(/(\D+)$/g)[0] : 'px');
+        var padding = [element.style.paddingTop, element.style.paddingRight, element.style.paddingBottom, element.style.paddingLeft];
+        for (var i = 0; i < padding.length; i++) {
+            $('#css-padding-' + ['top', 'right', 'bottom', 'left'][i]).val(padding[i] ? padding[i].match(/(\d+)/g)[0] : '');
+        }
+        $('#css-padding-unit').val(padding[0] !== '' ? padding[0].match(/(\D+)$/g)[0] : 'px');
 
-		currentShow = element;
-	}
-	function saveProp(real = true) {
-		if (!real) {
-			var cshow = document.createElement(currentShow.tagName);
-		} else {
-			var cshow = currentShow;
-		}
-		cshow.id = $('#id').val();
-		cshow.className = $('#class').val();
-		if (propText.includes(cshow.tagName.toLowerCase())) {
-			cshow.innerText = $('#text').val();
-		}
-		if (hyperLink.includes(cshow.tagName.toLowerCase())) {
-			cshow.href = $('#href').val();
-			cshow.innerText = $('#link_text').val();
-		}
-		//style
-		cshow.style.color = $('#css-color').val();
-		cshow.style.fontSize = $('#css-font-size').val() ? $('#css-font-size').val() + $('#css-font-size-unit').val() : '';
-		cshow.style.fontFamily = $('#css-font-family').val();
-		cshow.style.backgroundColor = $('#css-background-color').val();
-		cshow.style.fontWeight = $('#css-font-weight').val();
-		cshow.style.fontStyle = $('#css-font-style').val();
-		cshow.style.textDecoration = $('#css-text-decoration').val();
-		cshow.style.width = $('#css-width').val() ? $('#css-width').val() + $('#css-width-unit').val() : '';
-		cshow.style.height = $('#css-height').val() ? $('#css-height').val() + $('#css-height-unit').val() : '';
-		cshow.style.overflow = $('#css-overflow').val();
-		cshow.style.marginTop = $('#css-margin-top').val() ? $('#css-margin-top').val() + $('#css-margin-unit').val() : '';
-		cshow.style.marginBottom = $('#css-margin-bottom').val() ? $('#css-margin-bottom').val() + $('#css-margin-unit').val() : '';
-		cshow.style.marginLeft = $('#css-margin-left').val() ? $('#css-margin-left').val() + $('#css-margin-unit').val() : '';
-		cshow.style.marginRight = $('#css-margin-right').val() ? $('#css-margin-right').val() + $('#css-margin-unit').val() : '';
-		cshow.style.paddingTop = $('#css-padding-top').val() ? $('#css-padding-top').val() + $('#css-padding-unit').val() : '';
-		cshow.style.paddingBottom = $('#css-padding-bottom').val() ? $('#css-padding-bottom').val() + $('#css-padding-unit').val() : '';
-		cshow.style.paddingLeft = $('#css-padding-left').val() ? $('#css-padding-left').val() + $('#css-padding-unit').val() : '';
-		cshow.style.paddingRight = $('#css-padding-right').val() ? $('#css-padding-right').val() + $('#css-padding-unit').val() : '';
-		if (real) {
-			clearInterval(interval);
-			$('#propModal').modal('hide');
-			make_element_tree();
-		} else {
-			return cshow;
-		}
-	}
+        currentShow = element;
+    }
+    function saveProp(real = true) {
+        if (!real) {
+            var cshow = document.createElement(currentShow.tagName);
+        } else {
+            var cshow = currentShow;
+        }
+        cshow.id = $('#id').val();
+        cshow.className = $('#class').val();
+        if (propText.includes(cshow.tagName.toLowerCase())) {
+            cshow.innerText = $('#text').val();
+        }
+        if (hyperLink.includes(cshow.tagName.toLowerCase())) {
+            cshow.href = $('#href').val();
+            cshow.innerText = $('#link_text').val();
+        }
+        //style
+        cshow.style.color = $('#css-color').val();
+        cshow.style.fontSize = $('#css-font-size').val() ? $('#css-font-size').val() + $('#css-font-size-unit').val() : '';
+        cshow.style.fontFamily = $('#css-font-family').val();
+        cshow.style.backgroundColor = $('#css-background-color').val();
+        cshow.style.fontWeight = $('#css-font-weight').val();
+        cshow.style.fontStyle = $('#css-font-style').val();
+        cshow.style.textDecoration = $('#css-text-decoration').val();
+        cshow.style.width = $('#css-width').val() ? $('#css-width').val() + $('#css-width-unit').val() : '';
+        cshow.style.height = $('#css-height').val() ? $('#css-height').val() + $('#css-height-unit').val() : '';
+        cshow.style.overflow = $('#css-overflow').val();
+        cshow.style.marginTop = $('#css-margin-top').val() ? $('#css-margin-top').val() + $('#css-margin-unit').val() : '';
+        cshow.style.marginBottom = $('#css-margin-bottom').val() ? $('#css-margin-bottom').val() + $('#css-margin-unit').val() : '';
+        cshow.style.marginLeft = $('#css-margin-left').val() ? $('#css-margin-left').val() + $('#css-margin-unit').val() : '';
+        cshow.style.marginRight = $('#css-margin-right').val() ? $('#css-margin-right').val() + $('#css-margin-unit').val() : '';
+        cshow.style.paddingTop = $('#css-padding-top').val() ? $('#css-padding-top').val() + $('#css-padding-unit').val() : '';
+        cshow.style.paddingBottom = $('#css-padding-bottom').val() ? $('#css-padding-bottom').val() + $('#css-padding-unit').val() : '';
+        cshow.style.paddingLeft = $('#css-padding-left').val() ? $('#css-padding-left').val() + $('#css-padding-unit').val() : '';
+        cshow.style.paddingRight = $('#css-padding-right').val() ? $('#css-padding-right').val() + $('#css-padding-unit').val() : '';
+        if (real) {
+            clearInterval(interval);
+            $('#propModal').modal('hide');
+            make_element_tree();
+        } else {
+            return cshow;
+        }
+    }
 </script>
 <div class="modal fade" id="addModal" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="header">添加</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-			</div>
-			<div class="modal-body">
-				<div id="basic">
-					<span>文本</span>
-					<div class="list-group">
-						<a class="list-group-item" href="javascript:add_element('p', wait_to_add)">段落 (p)</a>
-						<a class="list-group-item" href="javascript:add_element('span', wait_to_add)">文字 (span)</a>
-						<a class="list-group-item" href="javascript:add_element('h1', wait_to_add)">大标题 (h1)</a>
-						<a class="list-group-item" href="javascript:add_element('h2', wait_to_add)">中标题 (h2)</a>
-						<a class="list-group-item" href="javascript:add_element('h3', wait_to_add)">小标题 (h3)</a>
-					</div>
-					<span>布局</span>
-					<div class="list-group">
-						<a class="list-group-item" href="javascript:add_element('div', wait_to_add)">盒子 (div)</a>
-						<a class="list-group-item" href="javascript:add_element('ul', wait_to_add)">无序列表[· · ·] (ul)</a>
-						<a class="list-group-item" href="javascript:add_element('ol', wait_to_add)">有序列表[1 2 3] (ol)</a>
-						<a class="list-group-item" href="javascript:add_element('table', wait_to_add)">表格 (table)</a>
-					</div>
-					<span>交互</span>
-					<div class="list-group">
-						<a class="list-group-item" href="javascript:add_element('a', wait_to_add)">链接 (a)</a>
-					</div>
-				</div>
-				<div id="table-part">
-					<span>表格</span>
-					<div class="list-group">
-						<a class="list-group-item" href="javascript:add_element('thead', wait_to_add)">表头 (thead)</a>
-						<a class="list-group-item" href="javascript:add_element('tbody', wait_to_add)">表体 (tbody)</a>
-						<a class="list-group-item" href="javascript:add_element('tfoot', wait_to_add)">表尾 (tfoot)</a>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="header">添加</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="basic">
+                    <span>文本</span>
+                    <div class="list-group">
+                        <a class="list-group-item" href="javascript:add_element('p', wait_to_add)">段落 (p)</a>
+                        <a class="list-group-item" href="javascript:add_element('span', wait_to_add)">文字 (span)</a>
+                        <a class="list-group-item" href="javascript:add_element('h1', wait_to_add)">大标题 (h1)</a>
+                        <a class="list-group-item" href="javascript:add_element('h2', wait_to_add)">中标题 (h2)</a>
+                        <a class="list-group-item" href="javascript:add_element('h3', wait_to_add)">小标题 (h3)</a>
+                    </div>
+                    <span>布局</span>
+                    <div class="list-group">
+                        <a class="list-group-item" href="javascript:add_element('div', wait_to_add)">盒子 (div)</a>
+                        <a class="list-group-item" href="javascript:add_element('ul', wait_to_add)">无序列表[· · ·] (ul)</a>
+                        <a class="list-group-item" href="javascript:add_element('ol', wait_to_add)">有序列表[1 2 3] (ol)</a>
+                        <a class="list-group-item" href="javascript:add_element('table', wait_to_add)">表格 (table)</a>
+                    </div>
+                    <span>交互</span>
+                    <div class="list-group">
+                        <a class="list-group-item" href="javascript:add_element('a', wait_to_add)">链接 (a)</a>
+                    </div>
+                </div>
+                <div id="table-part">
+                    <span>表格</span>
+                    <div class="list-group">
+                        <a class="list-group-item" href="javascript:add_element('thead', wait_to_add)">表头 (thead)</a>
+                        <a class="list-group-item" href="javascript:add_element('tbody', wait_to_add)">表体 (tbody)</a>
+                        <a class="list-group-item" href="javascript:add_element('tfoot', wait_to_add)">表尾 (tfoot)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-	var wait_to_add = null;
-	function showAddModal(tagName) {
-		$('#addModal').modal('show');
-		$('#basic').show();
-		$('#table-part').hide();
-		wait_to_add = tagName;
-	}
-	function showTableAddModal(ele) {
-		$('#addModal').modal('show');
-		$('#basic').hide();
-		$('#table-part').show();
-		wait_to_add = ele;
-	}
+    var wait_to_add = null;
+    function showAddModal(tagName) {
+        $('#addModal').modal('show');
+        $('#basic').show();
+        $('#table-part').hide();
+        wait_to_add = tagName;
+    }
+    function showTableAddModal(ele) {
+        $('#addModal').modal('show');
+        $('#basic').hide();
+        $('#table-part').show();
+        wait_to_add = ele;
+    }
 </script>
 
 
-		<div style="min-height: 100vh; padding: 60px 0 0 0; background: rgba(255, 255, 255, 0.5); overflow-x: hidden" id="mainbody">
-			<div style="min-height: calc(100vh - 60px); margin: 0 10px">
+	<div id="mask">
+		<div style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden" id="mainbody">
+			<div style="min-height: calc(100vh - 60px); margin: 0 10px" id="app">
 
 <h1>自制网页</h1>
 <!--左半边代码编写，右半边iframe沙盒(bootstrap)式布局-->
 <div class="row">
-	<div class="col-md-6">
-		<button onclick="savef()" class="btn btn-primary" id="save">保存</button>
-		<a href="index.html" class="btn btn-secondary">返回</a>
-		<h4>元素树</h4>
-		<div id="element-tree" style="overflow: auto; white-space: nowrap"></div>
-	</div>
-	<div class="col-md-6">
-		<h4>预览</h4>
-		<div id="sandbox" style="overflow: auto"></div>
-	</div>
+    <div class="col-md-6">
+        <button onclick="savef()" class="btn btn-primary" id="save">保存</button>
+        <a href="index.html" class="btn btn-secondary">返回</a>
+        <h4>元素树</h4>
+        <div id="element-tree" style="overflow: auto; white-space: nowrap"></div>
+    </div>
+    <div class="col-md-6">
+        <h4>预览</h4>
+        <div id="sandbox" style="overflow: auto"></div>
+    </div>
 </div>
 <script>
-	function saveasf() {
-		var name = prompt('取个名字呗');
-		if (name == null) {
-			return;
-		}
-		var localstorage_data = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
-		var new_data = {
-			name: name,
-			id: new Date().getTime().toString(36),
-		};
-		localstorage_data.push(new_data);
-		id = new_data.id;
-		localstorage_data = JSON.stringify(localstorage_data);
-		localStorage.setItem('web_editor_files', localstorage_data);
-	}
-	function savef() {
-		if (id == 'null') {
-			saveasf();
-		}
-		localforage.setItem(id, document.getElementById('sandbox').innerHTML);
-		document.getElementById('save').classList.remove('btn-primary');
-		document.getElementById('save').classList.add('btn-success');
-		setTimeout(() => {
-			document.getElementById('save').classList.remove('btn-success');
-			document.getElementById('save').classList.add('btn-primary');
-		}, 3000);
-	}
-	function openf() {
-		// choose file
-		var input = document.createElement('input');
-		input.type = 'file';
-		input.accept = '.qysf';
-		input.onchange = function (e) {
-			var file = e.target.files[0];
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				var html = atob(e.target.result);
-				document.getElementById('sandbox').innerHTML = html;
-				make_element_tree();
-			};
-			reader.readAsText(file);
-		};
-		input.click();
-	}
+    function saveasf() {
+        var name = prompt('取个名字呗');
+        if (name == null) {
+            return;
+        }
+        var localstorage_data = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+        var new_data = {
+            name: name,
+            id: new Date().getTime().toString(36),
+        };
+        localstorage_data.push(new_data);
+        id = new_data.id;
+        localstorage_data = JSON.stringify(localstorage_data);
+        localStorage.setItem('web_editor_files', localstorage_data);
+    }
+    function savef() {
+        if (id == 'null') {
+            saveasf();
+        }
+        localforage.setItem(id, document.getElementById('sandbox').innerHTML);
+        document.getElementById('save').classList.remove('btn-primary');
+        document.getElementById('save').classList.add('btn-success');
+        setTimeout(() => {
+            document.getElementById('save').classList.remove('btn-success');
+            document.getElementById('save').classList.add('btn-primary');
+        }, 3000);
+    }
+    function openf() {
+        // choose file
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.qysf';
+        input.onchange = function (e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var html = atob(e.target.result);
+                document.getElementById('sandbox').innerHTML = html;
+                make_element_tree();
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
 
-	function add_element(element_name, parent) {
-		$('#addModal').modal('hide');
-		var element = document.createElement(element_name);
-		parent.appendChild(element);
-		make_element_tree();
-	}
-	function clear_element_tree() {
-		document.getElementById('element-tree').innerHTML = '';
-	}
+    function add_element(element_name, parent) {
+        $('#addModal').modal('hide');
+        var element = document.createElement(element_name);
+        parent.appendChild(element);
+        make_element_tree();
+    }
+    function clear_element_tree() {
+        document.getElementById('element-tree').innerHTML = '';
+    }
 
-	function lock_local(args, func) {
-		return function (arg) {
-			func(arg, args);
-		};
-	}
-	function make_root_toolbar() {
-		var add = document.createElement('button');
-		add.className = 'btn btn-success btn-sm m-1';
-		add.innerHTML = '添加';
-		add.onclick = function () {
-			showAddModal(document.getElementById('sandbox'));
-			make_element_tree();
-		};
-		document.getElementById('element-tree').appendChild(add);
-	}
-	const addable = ['div', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'thead', 'tbody', 'tfoot'];
-	function test_element(e, list) {
-		for (var item of list) {
-			if ($(e).is(item)) return true;
-		}
-		return false;
-	}
-	function make_element_tree(element = $('#sandbox'), tree = $('#element-tree'), deepth = 0) {
-		if (deepth == 0) {
-			clear_element_tree();
-			make_root_toolbar();
-		}
-		// prevent legacy call
-		element = $(element);
-		tree = $(tree);
+    function lock_local(args, func) {
+        return function (arg) {
+            func(arg, args);
+        };
+    }
+    function make_root_toolbar() {
+        var add = document.createElement('button');
+        add.className = 'btn btn-success btn-sm m-1';
+        add.innerHTML = '添加';
+        add.onclick = function () {
+            showAddModal(document.getElementById('sandbox'));
+            make_element_tree();
+        };
+        document.getElementById('element-tree').appendChild(add);
+    }
+    const addable = ['div', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'thead', 'tbody', 'tfoot'];
+    function test_element(e, list) {
+        for (var item of list) {
+            if ($(e).is(item)) return true;
+        }
+        return false;
+    }
+    function make_element_tree(element = $('#sandbox'), tree = $('#element-tree'), deepth = 0) {
+        if (deepth == 0) {
+            clear_element_tree();
+            make_root_toolbar();
+        }
+        // prevent legacy call
+        element = $(element);
+        tree = $(tree);
 
-		if (element.children().length > 0) {
-			var ul = $('<ul></ul>');
-			ul.css('list-style-type', 'none');
-			for (var i = 0; i < element.children().length; i++) {
-				let bind_element = $(element.children()[i]);
-				var details = $('<details></details>')
-					.attr('open', true)
-					.append(
-						$('<summary></summary>')
-							.append(
-								$('<span></span>').text(
-									test_element(bind_element, addable)
-										? bind_element[0].tagName
-										: bind_element[0].tagName + ' (' + bind_element.text() + ')'
-								)
-							)
-							.append(
-								$('<div></div')
-									.css('display', 'inline-block')
-									.append(
-										$('<button></button>')
-											.addClass('btn btn-danger btn-sm m-1')
-											.text('删除')
-											.click(function () {
-												bind_element.remove();
-												make_element_tree();
-											})
-									)
-									.append(
-										$('<button></button>')
-											.addClass('btn btn-info btn-sm m-1')
-											.text('属性')
-											.click(() => showPropModal(bind_element[0]))
-									)
-									.append(() => {
-										if (addable.includes(bind_element[0].tagName.toLowerCase()))
-											return $('<button></button>')
-												.addClass('btn btn-success btn-sm m-1')
-												.text('添加')
-												.click(() => {
-													if (test_element(bind_element, ['ul', 'ol'])) {
-														add_element('li', bind_element[0]);
-													} else if (test_element(bind_element, ['table'])) {
-														showTableAddModal(bind_element[0]);
-													} else if (test_element(bind_element, ['thead', 'tbody', 'tfoot'])) {
-														add_element('tr', bind_element[0]);
-													} else if (test_element(bind_element, ['tr'])) {
-														add_element('td', bind_element[0]);
-													} else {
-														showAddModal(bind_element[0]);
-													}
-												});
+        if (element.children().length > 0) {
+            var ul = $('<ul></ul>');
+            ul.css('list-style-type', 'none');
+            for (var i = 0; i < element.children().length; i++) {
+                let bind_element = $(element.children()[i]);
+                var details = $('<details></details>')
+                    .attr('open', true)
+                    .append(
+                        $('<summary></summary>')
+                            .append(
+                                $('<span></span>').text(
+                                    test_element(bind_element, addable)
+                                        ? bind_element[0].tagName
+                                        : bind_element[0].tagName + ' (' + bind_element.text() + ')'
+                                )
+                            )
+                            .append(
+                                $('<div></div')
+                                    .css('display', 'inline-block')
+                                    .append(
+                                        $('<button></button>')
+                                            .addClass('btn btn-danger btn-sm m-1')
+                                            .text('删除')
+                                            .click(function () {
+                                                bind_element.remove();
+                                                make_element_tree();
+                                            })
+                                    )
+                                    .append(
+                                        $('<button></button>')
+                                            .addClass('btn btn-info btn-sm m-1')
+                                            .text('属性')
+                                            .click(() => showPropModal(bind_element[0]))
+                                    )
+                                    .append(() => {
+                                        if (addable.includes(bind_element[0].tagName.toLowerCase()))
+                                            return $('<button></button>')
+                                                .addClass('btn btn-success btn-sm m-1')
+                                                .text('添加')
+                                                .click(() => {
+                                                    if (test_element(bind_element, ['ul', 'ol'])) {
+                                                        add_element('li', bind_element[0]);
+                                                    } else if (test_element(bind_element, ['table'])) {
+                                                        showTableAddModal(bind_element[0]);
+                                                    } else if (test_element(bind_element, ['thead', 'tbody', 'tfoot'])) {
+                                                        add_element('tr', bind_element[0]);
+                                                    } else if (test_element(bind_element, ['tr'])) {
+                                                        add_element('td', bind_element[0]);
+                                                    } else {
+                                                        showAddModal(bind_element[0]);
+                                                    }
+                                                });
 
-										return null;
-									})
-							)
-							.on('toggle', function () {
-								$(this).attr('open', true);
-							})
-					);
-				ul.append($('<li></li>').append(details));
-				make_element_tree(element.children()[i], details, deepth + 1);
-			}
-			tree.append(ul);
-		}
-	}
-	function get_arg_from_url(arg) {
-		var url = new URL(window.location.href);
-		return url.searchParams.get(arg);
-	}
-	var id = get_arg_from_url('id');
-	if (id != 'null') {
-		localforage.getItem(id).then((value) => {
-			document.getElementById('sandbox').innerHTML = value;
-			4;
-			make_element_tree();
-		});
-	}
-	make_element_tree();
+                                        return null;
+                                    })
+                            )
+                            .on('toggle', function () {
+                                $(this).attr('open', true);
+                            })
+                    );
+                ul.append($('<li></li>').append(details));
+                make_element_tree(element.children()[i], details, deepth + 1);
+            }
+            tree.append(ul);
+        }
+    }
+    function get_arg_from_url(arg) {
+        var url = new URL(window.location.href);
+        return url.searchParams.get(arg);
+    }
+    var id = get_arg_from_url('id');
+    if (id != 'null') {
+        localforage.getItem(id).then((value) => {
+            document.getElementById('sandbox').innerHTML = value;
+            4;
+            make_element_tree();
+        });
+    }
+    make_element_tree();
 </script>
 
 </div>
@@ -755,82 +752,77 @@
 				</small>
 			</div>
 		</div>
-	</body>
-	<footer>
-		<script defer>
-			function hex2rgb(hex) {
-				let r = 0,
-					g = 0,
-					b = 0;
-				// 3 digits
-				if (hex.length == 4) {
-					r = parseInt(hex[1] + hex[1], 16);
-					g = parseInt(hex[2] + hex[2], 16);
-					b = parseInt(hex[3] + hex[3], 16);
-				}
-				// 6 digits
-				else if (hex.length == 7) {
-					r = parseInt(hex[1] + hex[2], 16);
-					g = parseInt(hex[3] + hex[4], 16);
-					b = parseInt(hex[5] + hex[6], 16);
-				}
-				return [r, g, b];
-			}
-			const root = '..';
-
-			// personalization
-			var color = localStorage.getItem('color') || '#000000';
-			if (localStorage.getItem('adv_bg') == 'false') $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
-			else $('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',0.5)');
-			if (localStorage.getItem('no-anim') == 'true') {
-				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
-				$('#script-mount-node').append(style_noanim);
-			}
-			if ((localStorage.getItem('dark')||"true") == 'true') {
-				$('#html-root').attr('data-bs-theme', 'dark');
-			}
-			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
-			if (img == 'custom') {
-				localforage.getItem('imgbg').then(function (value) {
-					$('#bg').attr('src', value);
-				});
-			} else {
-				$('#bg').attr('src', root + '/res/img/' + img);
-			}
-			// search
-			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
-			// navbar fix
-			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-			$(window).resize(function () {
-				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+	</div>
+</body>
+<footer>
+	<script defer>
+		// personalization
+		var color = localStorage.getItem('color') || '#000000';
+		if (localStorage.getItem('adv_bg') == 'false') {
+			$('#bg').css('display', 'none');
+			$('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
+		}
+		else {
+			var brightness = new Number(localStorage.getItem('bgbrightness')) || 50;
+			if (brightness >= 100) $('#mask').css('background', 'rgba(255,255,255,' + ((brightness - 100) / 100) + ')');
+			else $('#mask').css('background', 'rgba(0,0,0,' + ((100 - brightness) / 100) + ')');
+			var coloropacity = new Number(localStorage.getItem('coloropacity')) || 0;
+			$("#mainbody").css('background', 'rgba(' + hex2rgb(color).join(',') + ',' + (coloropacity / 100) + ')');
+			$("#bg").css("filter", "blur(" + (new Number(localStorage.getItem('bgblur')) || 0) + "px)");
+		}
+		if (localStorage.getItem('no-anim') == 'true') {
+			var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
+			$('#script-mount-node').append(style_noanim);
+		}
+		if ((localStorage.getItem('dark') || 'true') == 'true') {
+			$('#html-root').attr('data-bs-theme', 'dark');
+		}
+		var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
+		if (img == 'custom') {
+			localforage.getItem('imgbg').then(function (value) {
+				$('#bg').attr('src', value);
 			});
-			// parallax
-			var scene = document.getElementById('scene');
-			var parallax = new Parallax(scene);
+		} else {
+			$('#bg').attr('src', root + '/res/img/' + img);
+		}
+		// search
+		$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+		// navbar fix
+		$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+		$(window).resize(function () {
+			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
+		});
+		// parallax
+		var scene = document.getElementById('scene');
+		var parallax = new Parallax(scene);
+		// VConsole 默认会挂载到 `window.VConsole` 上
+		if (localStorage.getItem('vconsole') == 'true')
+			var vConsole = new window.VConsole();
 
-			function search() {
-				$('#searchResult').empty();
-				if ($('#searchInput').val() == '') {
-					$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
-					return;
-				}
-				var res = search_document($('#searchInput').val());
-				res.forEach((res) => {
-					$('#searchResult').append(
-						$('<a class="list-group-item"></a>')
-							.attr('href', root + res.url)
-							.append($('<span></span>').text(res.title))
-							.append($('<span></span>').text(res.tag))
-					);
-				});
-				if (res.length == 0) {
-					$('#searchResult').append(
-						$('<a class="list-group-item"></a>')
-							.attr('href', '#')
-							.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
-					);
-				}
+		function search() {
+			$('#searchResult').empty();
+			if ($('#searchInput').val() == '') {
+				$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+				return;
 			}
-		</script>
-	</footer>
+			var res = search_document($('#searchInput').val());
+			res.forEach((res) => {
+				$('#searchResult').append(
+					$('<a class="list-group-item"></a>')
+						.attr('href', root + res.url)
+						.append($('<span></span>').text(res.title))
+						.append($('<span></span>').text(res.tag))
+				);
+			});
+			if (res.length == 0) {
+				$('#searchResult').append(
+					$('<a class="list-group-item"></a>')
+						.attr('href', '#')
+						.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
+				);
+			}
+		}
+	</script>
+</footer>
+
 </html>

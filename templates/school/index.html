@@ -3,33 +3,27 @@
 <a href="https://sz1cz.gusuedu.cn/index.htm">学校官网</a>
 <h3>热点资讯</h3>
 <ul class="nav nav-tabs">
-	<li class="nav-item">
-		<a class="nav-link" href="?p=1" id="p1">学校攻防2025.9.1</a>
-	</li>
+    <li class="nav-item">
+        <a class="nav-link" href="?p=1" id="p1">学校攻防2025.9.1</a>
+    </li>
 </ul>
 
 <div style="width: 100%; background-color: black" id="iframe"></div>
 <script>
-	function getarg(name) {
-		var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-		var r = window.location.search.substr(1).match(reg);
-		if (r != null) return unescape(r[2]);
-		return null;
-	}
-	var p = getarg('p');
-	p = {
-		1: 'v,{{root}}/res/video/25.9.1xvexiaogongfang.mp4',
-	}[p];
-	if (p.startsWith('v,')) {
-		p = p.substring(2);
-		$('<video></video>')
-			.attr('src', p)
-			.attr('controls', true)
-			.attr('autoplay', true)
-			.css('width', '100%')
-			.css('height', '90vh')
-			.appendTo('#iframe');
-	}
-	$('#p' + getarg('p')).addClass('active');
+    var p = getarg('p');
+    p = {
+        1: 'v,{{root}}/res/video/25.9.1xvexiaogongfang.mp4',
+    }[p];
+    if (p.startsWith('v,')) {
+        p = p.substring(2);
+        $('<video></video>')
+            .attr('src', p)
+            .attr('controls', true)
+            .attr('autoplay', true)
+            .css('width', '100%')
+            .css('height', '90vh')
+            .appendTo('#iframe');
+    }
+    $('#p' + getarg('p')).addClass('active');
 </script>
 {%endblock%}

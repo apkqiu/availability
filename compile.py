@@ -7,12 +7,11 @@ import bs4
 import queue
 import threading
 
+
+
 outbuf = queue.Queue()
 start = time.time()
 pool = concurrent.futures.ThreadPoolExecutor(max_workers=128)
-os.system("rd /s /q docs")
-
-
 def output_daemon():
     while True:
         try:
@@ -20,8 +19,8 @@ def output_daemon():
         except Exception as e:
             print(e)
 
-
-threading.Thread(target=output_daemon, daemon=True).start()
+if __name__ == "__main__":
+    threading.Thread(target=output_daemon, daemon=True).start()
 
 
 def make_context(path):
@@ -40,18 +39,21 @@ def make_context(path):
 
 def render(path, copy_path):
     start = time.time()
-    if os.path.exists(copy_path):
-        os.remove(copy_path)
+    
     env = jinja2.Environment(loader=jinja2.loaders.FileSystemLoader("templates"))
     template = env.get_template(
         os.path.relpath(path, "templates").replace("\\", "/"), 1
     )
     data = template.render(**make_context(path))
-    with open(copy_path, "w", encoding="utf-8") as f:
-        f.write(data)
-    end = time.time()
-    outbuf.put(f"[渲染, {(end - start)*1000: 4.2f} ms] {path}")
-
+    if copy_path:
+        if os.path.exists(copy_path):
+            os.remove(copy_path)
+        with open(copy_path, "w", encoding="utf-8") as f:
+            f.write(data)
+        end = time.time()
+        outbuf.put(f"[渲染, {(end - start)*1000: 4.2f} ms] {path}")
+    else:
+        return data
 
 def copy(path, copy_path):
     start = time.time()
@@ -125,20 +127,21 @@ def make_index():
     end = time.time()
     outbuf.put(f"[索引, {(end - start)*1000:4.2f} ms] 已索引{len(obj_index)}条数据")
 
-
-for dirpath, dirs, files in os.walk("templates"):
-    for file in files:
-        path = os.path.join(dirpath, file)
-        copy_path = path.replace("templates\\", "docs\\", 1)
-        # ensure the directory exists
-        os.makedirs(os.path.dirname(copy_path), exist_ok=True)
-        if file.endswith(".html"):
-            pool.submit(render, path, copy_path)
-        else:
-            pool.submit(copy, path, copy_path)
-pool.shutdown(True)
-make_index()
-end = time.time()
-outbuf.put(f"全部完成，耗时：{end - start}s")
-while not outbuf.empty():
-    pass
+if __name__ == "__main__":
+    os.system("rd /s /q docs")
+    for dirpath, dirs, files in os.walk("templates"):
+        for file in files:
+            path = os.path.join(dirpath, file)
+            copy_path = path.replace("templates\\", "docs\\", 1)
+            # ensure the directory exists
+            os.makedirs(os.path.dirname(copy_path), exist_ok=True)
+            if file.endswith(".html"):
+                pool.submit(render, path, copy_path)
+            else:
+                pool.submit(copy, path, copy_path)
+    pool.shutdown(True)
+    make_index()
+    end = time.time()
+    outbuf.put(f"全部完成，耗时：{end - start}s")
+    while not outbuf.empty():
+        pass

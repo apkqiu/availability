@@ -1,10 +1,18 @@
 import flask
+import compile
+import os
 app = flask.Flask(__name__)
+@app.route("/")
+def index():
+    return flask.redirect("/home.html")
+@app.route("/old/<path:path>")
+def send_old_file(path):
+    return flask.send_from_directory("old", path)
 @app.route("/<path:path>")
-def send_file(path, dir="docs"):
+def send_file(path, dir="templates"):
     # detect ext and send file with correct mime type
     if path.endswith(".html"):
-        return flask.send_from_directory(dir, path, mimetype="text/html")
+        return compile.render(os.path.join(dir, path), None)
     elif path.endswith(".css"):
         return flask.send_from_directory(dir, path, mimetype="text/css")
     elif path.endswith(".js"):
@@ -21,7 +29,4 @@ def send_file(path, dir="docs"):
         return flask.send_from_directory(dir, path, mimetype="image/svg+xml")
     else:
         return flask.send_from_directory(dir, path)
-@app.route("/old/<path:path>")
-def send_old_file(path):
-    return send_file(path, dir="old")
 app.run(debug=True, host="0.0.0.0")
