@@ -188,7 +188,7 @@
     (window.onhashchange = function() {
         var p = getarg('p') || 1;
         var type = getarg('type') || 1;
-        $('#content').text("加载中...");
+        $('#content').html('<div class="spinner-border"></div>');
         $.get(p + ".html").then(
             function (data) {
                 $('#content').html(data);
@@ -227,10 +227,10 @@
 			$('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
 		}
 		else {
-			var brightness = new Number(localStorage.getItem('bgbrightness')) || 50;
+			var brightness = localStorage.getItem('bgbrightness') || 50;
 			if (brightness >= 100) $('#mask').css('background', 'rgba(255,255,255,' + ((brightness - 100) / 100) + ')');
 			else $('#mask').css('background', 'rgba(0,0,0,' + ((100 - brightness) / 100) + ')');
-			var coloropacity = new Number(localStorage.getItem('coloropacity')) || 0;
+			var coloropacity = localStorage.getItem('coloropacity') || 0;
 			$("#mainbody").css('background', 'rgba(' + hex2rgb(color).join(',') + ',' + (coloropacity / 100) + ')');
 			$("#bg").css("filter", "blur(" + (new Number(localStorage.getItem('bgblur')) || 0) + "px)");
 		}
