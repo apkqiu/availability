@@ -41,6 +41,7 @@ body%}
             $('#iframe').addClass('hidden');
             $('#frame').removeClass('hidden');
             $("#news-"+embed).addClass('active');
+            $("#frame").html('<div class="spinner-border"></div>')
             $.get(embed + ".html").then((data) => {
                 $('#frame').html(data);
             })
