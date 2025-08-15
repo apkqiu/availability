@@ -70,7 +70,7 @@
     (window.onhashchange = function() {
         var p = getarg('p') || 1;
         var type = getarg('type') || 1;
-        $('#content').text("加载中...");
+        $('#content').html('<div class="spinner-border"></div>');
         $.get(p + ".html").then(
             function (data) {
                 $('#content').html(data);
