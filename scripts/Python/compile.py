@@ -1,4 +1,5 @@
 import time
+from flask import g
 import jinja2
 import os
 import json
@@ -9,24 +10,26 @@ import threading
 import subprocess
 import sys
 import argparse
+import traceback
 
-parser = argparse.ArgumentParser(description='Compile a website from a template')
-parser.add_argument('--no-build', action='store_true', help='Do not build the website')
+parser = argparse.ArgumentParser(description="Compile a website from a template")
+parser.add_argument("--no-build", action="store_true", help="Do not build the website")
 args = parser.parse_args()
 
 outbuf = queue.Queue()
 start = time.time()
-pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-sys.excepthook = lambda *args: print(*args)
+pool = concurrent.futures.ThreadPoolExecutor(max_workers=512)
+
+
 def output_daemon():
     while True:
         try:
-            print(outbuf.get(),flush=True)
+            if count == 0:
+                print(f"?/?, ??%\t", outbuf.get(), flush=True)
+            else:
+                print(f"{fin}/{count}, {fin*100//count}% | ETA:{(time.time()-start)/fin*(count-fin):.2f}s".ljust(50), outbuf.get(), flush=True)
         except Exception as e:
             print(e)
-
-if __name__ == "__main__":
-    threading.Thread(target=output_daemon, daemon=True).start()
 
 
 def make_context(path):
@@ -44,9 +47,12 @@ def make_context(path):
 
 
 def render(path, copy_path):
+    global fin
     start = time.time()
-    
-    env = jinja2.Environment(loader=jinja2.loaders.FileSystemLoader("templates"))
+
+    env = jinja2.Environment(
+        loader=jinja2.loaders.FileSystemLoader("templates", encoding="utf-8")
+    )
     template = env.get_template(
         os.path.relpath(path, "templates").replace("\\", "/"), 1
     )
@@ -56,50 +62,73 @@ def render(path, copy_path):
     with open(copy_path, "w", encoding="utf-8") as f:
         f.write(data)
     if not args.no_build:
-        cont = subprocess.getoutput(f"node scripts/Node/compress_html.js \"{copy_path}\"")
+        cont = subprocess.getoutput(
+            f'node scripts/Node/compress_html.js "{copy_path}"', encoding="utf-8"
+        )
         with open(copy_path, "w", encoding="utf-8") as f:
             f.write(cont)
     end = time.time()
     outbuf.put(f"[渲染, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
+
 
 def svg_process(path, copy_path):
+    global fin
+
     start = time.time()
     with open(path, "rb") as f:
         data = f.read()
     with open(copy_path, "wb") as f:
         f.write(data)
     if not args.no_build:
-        if os.system(f"npm exec -- svgo -i \"{copy_path}\" > NUL"):
+        if os.system(f'npm exec -- svgo -i "{copy_path}" > NUL'):
             outbuf.put("[错误] svgo 优化失败，回退到html压缩")
-            data = subprocess.getoutput(f"node scripts/Node/compress_html.js \"{copy_path}\"")
+            data = subprocess.getoutput(
+                f'node scripts/Node/compress_html.js "{copy_path}"', encoding="utf-8"
+            )
             with open(copy_path, "w", encoding="utf-8") as f:
                 f.write(data)
     end = time.time()
     outbuf.put(f"[优化, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
+
 
 def js_process(path, copy_path):
+    global fin
+
     start = time.time()
     if args.no_build:
         code = open(path, "r", encoding="utf-8").read()
     else:
-        code = subprocess.getoutput(f'npm exec -- esbuild "{path}" --minify')
-    with open(copy_path, "w") as f:
+        code = subprocess.getoutput(
+            f'npm exec -- esbuild "{path}" --minify', encoding="utf-8"
+        )
+    with open(copy_path, "w", encoding="utf-8") as f:
         f.write(code)
     end = time.time()
     outbuf.put(f"[编译, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
+
 
 def css_process(path, copy_path):
+    global fin
+
     start = time.time()
     if args.no_build:
         code = open(path, "r", encoding="utf-8").read()
     else:
-        code = subprocess.getoutput(f'npm exec -- esbuild "{path}" --minify')
-    with open(copy_path, "w") as f:
+        code = subprocess.getoutput(
+            f'npm exec -- esbuild "{path}" --minify', encoding="utf-8"
+        )
+    with open(copy_path, "w", encoding="utf-8") as f:
         f.write(code)
     end = time.time()
     outbuf.put(f"[编译, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
+
 
 def copy(path, copy_path):
+    global fin
     start = time.time()
     # copy as-is
     with open(path, "rb") as f:
@@ -108,11 +137,12 @@ def copy(path, copy_path):
         f.write(data)
     end = time.time()
     outbuf.put(f"[复制, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
 
 
 def make_index():
+    global fin
     start = time.time()
-
     obj_index = [
         {
             "title": "藤崖伫月 · 草皮土壤",
@@ -170,28 +200,41 @@ def make_index():
     )
     end = time.time()
     outbuf.put(f"[索引, {(end - start)*1000: 4.2f} ms] 已索引{len(obj_index)}条数据")
+    fin += 1
 
+
+count = 0
+fin = 0
 if __name__ == "__main__":
+    threading.Thread(target=output_daemon, daemon=True).start()
     os.system("rd /s /q docs")
+    futures: list[concurrent.futures.Future] = []
     for dirpath, dirs, files in os.walk("templates"):
         for file in files:
             path = os.path.join(dirpath, file)
             copy_path = path.replace("templates\\", "docs\\", 1)
             # ensure the directory exists
             os.makedirs(os.path.dirname(copy_path), exist_ok=True)
+            count += 1
             if file.endswith(".html"):
-                pool.submit(render, path, copy_path)
+                f = pool.submit(render, path, copy_path)
             elif file.endswith(".svg"):
-                pool.submit(svg_process, path, copy_path)
+                f = pool.submit(svg_process, path, copy_path)
             elif file.endswith(".js") or file.endswith(".mjs"):
-                pool.submit(js_process, path, copy_path)
+                f = pool.submit(js_process, path, copy_path)
             elif file.endswith(".css"):
-                pool.submit(css_process, path, copy_path)
+                f = pool.submit(css_process, path, copy_path)
             else:
-                pool.submit(copy, path, copy_path)
-    pool.shutdown(True)
+                f = pool.submit(copy, path, copy_path)
+            futures.append((f, path))
+    count += 1
+    wait = concurrent.futures.wait([f[0] for f in futures])
+    for f in futures:
+        if f[0].exception():
+            print("at", f[1])
+            traceback.print_exception(f[0].exception())
     make_index()
     end = time.time()
-    outbuf.put(f"全部完成，耗时：{end - start}s")
+    outbuf.put(f"全部完成，耗时：{end - start}s，共处理{count}个文件")
     while not outbuf.empty():
         pass

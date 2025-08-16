@@ -17,7 +17,10 @@ const compressedContent = minify(fileContent, {
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
     removeEmptyAttributes: true,
-    useShortDoctype: true
-
+    useShortDoctype: true,
+    minifyJS:true,
+    minifyCSS:true,
+    removeTagWhitespace: true,
+    collapseBooleanAttributes: true,
 })
 console.log(compressedContent);

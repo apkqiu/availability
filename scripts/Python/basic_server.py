@@ -3,12 +3,10 @@ import os
 app = flask.Flask(__name__)
 @app.route("/")
 def index():
-    return flask.redirect("/home.html")
-@app.route("/old/<path:path>")
-def send_old_file(path):
-    return flask.send_from_directory("old", path)
-@app.route("/<path:path>")
-def send_file(path, dir="docs"):
+    return flask.redirect("/docs/home.html")
+@app.route("/<dir>/<path:path>")
+def send_file(path, dir):
+    dir = "../../"+dir
     # detect ext and send file with correct mime type
     if path.endswith(".html"):
         return flask.send_from_directory(dir, path, mimetype="text/html")

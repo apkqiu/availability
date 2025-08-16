@@ -350,7 +350,7 @@
             var href = $('#href').val();
             if((!href.startsWith('http://') && !href.startsWith('https://')) && (href.indexOf(":")!=-1)) {
                 // Bad uri
-                cshow.href = "#禁止使用的地址#";
+                cshow.href = "";
             }else{
                 cshow.href = $('#href').val();
             }

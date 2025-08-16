@@ -13,7 +13,6 @@
 
 	<script>
 		var root = '{{root}}';
-		var loaded = false;
 	</script>
 	<script src="{{root}}/res/js/bootstrap.bundle.js"></script>
 	<script src="{{root}}/res/js/levenshetin.js"></script>
@@ -91,15 +90,30 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 				<div class="modal-body">
-					更新：<br />
-					v2.1.0<br />
-					1. 添加搜索框<br />
-					2. 高级背景<br />
-					<hr />
-					v2.0.0<br />
-					1. 整体模板化+使用Bootstrap<br />
-					2. 整体美化<br />
-					<br />
+					<h2>v2.4.1版本更新：</h2>
+					<h3>漏洞修复</h3>
+					<p>技术支持：Github CodeQL</p>
+					<ol>
+						<li>修复<a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79 (网页生成期间输入的不当中和)</a></li>
+					</ol>
+					<h3>Bug修复</h3>
+					<p>技术支持：Github Copilot & Codegeex</p>
+					<ol>
+						<li>修复了背景的bug</li>
+						<li>修复了在手机浏览器不能查看PDF的Bug</li>
+						<li>修复了页面的死链接、404的Bug</li>
+						<li>修复了背景视差图像显示黑（白）边的Bug</li>
+						<li>修复了导航栏层级错误的Bug</li>
+						<li>修复了搜索框结果过于死板的Bug</li>
+					</ol>
+					<h3>功能改进</h3>
+					<ol>
+						<li>个性化设置内容重新分类</li>
+						<li>使用AJAX加载文章，确保“框架优先”原则</li>
+						<li>修复了文章页面默认没有选中任何文章的Bug</li>
+						<li>为HTML、CSS、JS的编译进行压缩，提高加载速度</li>
+						<li>将文章展示页的ID参数由“?”转为“#”，提高加载速度</li>
+					</ol>
 				</div>
 			</div>
 		</div>
@@ -107,10 +121,11 @@
 </header>
 
 <body style="min-height: 100vh">
-	<div style="position: fixed; left: -25vw; top: -25vh; right: -25vw; bottom: -25vh; overflow: hidden; z-index: -10">
-		<ul id="scene">
-			<li class="layer" data-depth="0.4">
-				<img id="bg" style="height: 150vh; width: 150vw; object-fit: cover; transform: translate(calc(-50% + 50vw), calc(-50% + 50vh));" />
+	<div
+		style="position: fixed; left: 50vw; top: 50vh; right: 50vw; bottom: 50vh; transform: translate(-50%, -50%); width:150vw; height: 150vh; overflow: hidden; z-index: -10">
+		<ul id="scene" style="height: 100%; width: 100%;">
+			<li class="layer" data-depth="0.4" style="height: 100%; width: 100%;">
+				<img id="bg" style="height: 100%; width: 100%; object-fit: cover;" />
 			</li>
 		</ul>
 	</div>
