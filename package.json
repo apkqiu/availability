@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "clean-css": "^5.3.3",
+    "html-minifier": "^4.0.0",
+    "node-minify": "^3.6.0",
+    "svgo": "^4.0.0",
+    "uglifyjs": "^2.4.11",
+    "webpack": "^5.101.2"
+  }
+}
