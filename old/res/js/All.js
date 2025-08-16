@@ -83,7 +83,25 @@ function openNoticeboard() {
     //打开
     noticeboardDiv.style.display = 'block';
 }
-noticeboardDiv.innerHTML = '<p>当前账号：' + localStorage.getItem('username') + '</p>';
+function escapeHTML(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+var username = localStorage.getItem('username');
+if (username) {
+    try {
+        username = JSON.parse(username);
+    } catch (e) {
+        // fallback: use as is
+    }
+} else {
+    username = '';
+}
+noticeboardDiv.innerHTML = '<p>当前账号：' + escapeHTML(username) + '</p>';
 noticeboardDiv.innerHTML += `
     <p>
         v1.3.2主要更新<br>

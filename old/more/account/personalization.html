@@ -24,7 +24,10 @@
             //显示当前
             var nowBackgroundColorJSONValue = localStorage.getItem('backgroundColor');
             var nowBackgroundColorValue = JSON.parse(nowBackgroundColorJSONValue);
-            document.getElementById('backgroundcolor').innerHTML += '当前颜色：' + nowBackgroundColorValue;
+            var backgroundColorElem = document.getElementById('backgroundcolor');
+            var currentColorText = document.createElement('span');
+            currentColorText.textContent = '当前颜色：' + nowBackgroundColorValue;
+            backgroundColorElem.appendChild(currentColorText);
             //修改颜色
             document.getElementById('personalizationBackgroundColorBtn').onclick = function () {
                 var personalizationBackgroundColorInput = document.getElementById('personalizationBackgroundColorInput').value;
