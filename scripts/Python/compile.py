@@ -21,7 +21,7 @@ sys.excepthook = lambda *args: print(*args)
 def output_daemon():
     while True:
         try:
-            print(outbuf.get())
+            print(outbuf.get(),flush=True)
         except Exception as e:
             print(e)
 
