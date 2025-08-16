@@ -16,7 +16,7 @@ args = parser.parse_args()
 
 outbuf = queue.Queue()
 start = time.time()
-pool = concurrent.futures.ThreadPoolExecutor(max_workers=16)
+pool = concurrent.futures.ThreadPoolExecutor(max_workers=1)
 sys.excepthook = lambda *args: print(*args)
 def output_daemon():
     while True:
