@@ -349,7 +349,9 @@
         if (hyperLink.includes(cshow.tagName.toLowerCase())) {
             var href = $('#href').val().trim();
             // Only allow http, https, and mailto schemes (case-insensitive)
-            if (!/^((https?|mailto):\/\/)/i.test(href)) {
+            var isHttp = /^https?:\/\/.+/i.test(href);
+            var isMailto = /^mailto:[^@]+@[^@]+\.[^@]+$/i.test(href);
+            if (!(isHttp || isMailto)) {
                 // Bad uri
                 cshow.href = "#禁止使用的地址#";
             } else {
