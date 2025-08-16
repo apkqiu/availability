@@ -1,18 +1,156 @@
-node:internal/modules/cjs/loader:1404
-  throw err;
-  ^
+﻿<!doctype html>
+<html>
+    <head>
+        <title>上课睡觉模拟器</title>
+        <link rel="stylesheet" href="../../res/css/All.css" />
+        <style>
+            p,
+            #condition {
+                color: white;
+                text-align: center;
+            }
 
-Error: Cannot find module 'E:\blogs\availability\scripts\Node\compress_html.js'
-    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
-    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
-    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
-    at Function._load (node:internal/modules/cjs/loader:1211:37)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
-    at node:internal/main/run_main_module:36:49 {
-  code: 'MODULE_NOT_FOUND',
-  requireStack: []
-}
+            .loading {
+                width: 100px;
+                height: 100px;
+            }
 
-Node.js v22.15.0
+            img {
+                width: 50%;
+                margin: 0 auto;
+            }
+
+            #sit {
+                width: 49.9%;
+                height: 100px;
+                background-color: white;
+                float: left;
+                text-align: center;
+            }
+
+            #sleep {
+                width: 49.9%;
+                height: 100px;
+                background-color: white;
+                float: right;
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="BA">
+            <h1>上课睡觉模拟器</h1>
+            <a href="javascript:startGame()">无尽模式</a>
+        </div>
+        <span style="color: red" id="errors"></span>
+        <script>
+            var myDate = new Date();
+            var sil = 0;
+            var sleepAlltime = 0;
+            var sleepStartTime = 0;
+            var sleepEndTime = 0;
+            var startGameCondition = 0;
+            var TeacherCondition = 1;
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+            async function startGame() {
+                document.body.style.backgroundColor = 'black';
+                document.getElementById('BA').innerHTML = '<p>你很困。<br>加载中<\/p><img src="res\/loading.gif" alt="loading" class="loading">';
+                await sleep(2000);
+                document.getElementById('BA').innerHTML = '<p>你很困。<br>加载完成。即将开始<\/p>';
+                await sleep(2000);
+                document.getElementById('BA').innerHTML =
+                    '<p id="condition">状态<\/p><!-- 睡眠或端坐 -->   <p id="sleeptimeprint"><\/p><!-- 睡眠时间 -->   <br><div id="sit">端坐<\/div><div id="sleep">睡眠<\/div><!-- 按钮 -->   <br>  <p id="YuLu">初始化<\/p><!-- 语录 -->  <div id="sil"><img src="res\/sit.jpeg"><\/div><!-- 图片 -->';
+                document.getElementById('sit').onmouseover = function (e) {
+                    sil = 0;
+                };
+                document.getElementById('sleep').onmouseover = function (e) {
+                    sil = 1;
+                };
+                var LetSleepTimeOnlyAddOnce = 0;
+                async function update() {
+                    /* 显示睡眠时间 */
+                    if (sil == 0) {
+                        if (startGameCondition == 0) {
+                            sleepAlltime = 0;
+                            sleepStartTime = 0;
+                            sleepEndTime = 0;
+                            startGameCondition = 1;
+                            sleepOnetime = 0;
+                        }
+                        if (LetSleepTimeOnlyAddOnce == 0) {
+                            sleepAlltime += sleepOnetime;
+                            LetSleepTimeOnlyAddOnce = 1;
+                        }
+                        document.getElementById('condition').innerHTML = '正在端坐';
+                        sleepEndTime = performance.now();
+                        document.getElementById('sleeptimeprint').innerHTML = '统共睡眠时间：' + Math.round(sleepAlltime) / 1000 + '秒';
+                    } else {
+                        if (TeacherCondition == 0) {
+                            document.body.addEventListener('click', function () {
+                                window.location.reload();
+                            });
+                            document.getElementById('BA').innerHTML =
+                                '<p>游戏失败<br>我对你客气，你把我当福气是不是<\/p><p>成绩：' + Math.round(sleepAlltime) / 1000 + '秒<\/p>';
+                        }
+                        document.getElementById('condition').innerHTML = '正在睡眠';
+                        sleepStartTime = performance.now();
+                        sleepOnetime = sleepStartTime - sleepEndTime;
+                        document.getElementById('sleeptimeprint').innerHTML = '本次睡眠时间：' + Math.round(sleepOnetime) / 1000 + '秒';
+                        LetSleepTimeOnlyAddOnce = 0;
+                    }
+                    /* 老师回头 */
+                    async function TeacherChange() {
+                        while (sil != 114514) {
+                            //while的开头。
+                            TeacherCondition = 1;
+                            document.getElementById('sil').innerHTML = '<img src="res\/sleep.jpeg" alt="老师转头">';
+                            await sleep(Math.random() * 2000000);
+                            document.getElementById('sil').innerHTML = '<img src="res\/sit.jpeg" alt="老师看你">';
+                            await sleep(100);
+                            TeacherCondition = 0;
+                            await sleep(Math.random() * 2000000);
+                        } //while的结尾。
+                    }
+                    TeacherChange();
+                }
+                setInterval(update, 1);
+                /* 讲话 */
+                async function speak() {
+                    var YuLu = [
+                        '我客气你当福气啊', //0
+                        'Underline.',
+                        'Underline the whole sentence.',
+                        '来',
+                        '已知∠BA=200°',
+                        '表达了作者的喜爱和赞美之情。', //5
+                        '闲敲棋子落灯花。', //6
+                        '进了一班，不等于进了保险箱',
+                        '死读书，读死书，读书死',
+                        '你有没有感觉这道题像在考语文？',
+                        '咬文嚼字', //10
+                        'ok挠',
+                        '表达了作者的思乡之情',
+                        'Underline the phrase.',
+                        '这题错的站起来',
+                        '做一张基础卷', //15
+                    ];
+                    document.getElementById('YuLu').innerHTML = YuLu[Math.round(Math.random() * 15)];
+                }
+                setInterval(speak, 5000);
+            }
+            window.addEventListener('error', function (event) {
+                var message = event.message;
+                var source = event.source;
+                var lineno = event.lineno;
+                var colno = event.colno;
+                var error = event.error;
+                document.getElementById('errors').innerText += '\n错误：';
+                document.getElementById('errors').innerText += message;
+                document.getElementById('errors').innerText += '(在第';
+                document.getElementById('errors').innerText += lineno;
+                document.getElementById('errors').innerText += '行)';
+            });
+        </script>
+    </body>
+</html>
