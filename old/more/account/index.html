@@ -33,7 +33,9 @@
         <script>
             var usernameJSONValue = localStorage.getItem('username');
             var usernameValue = JSON.parse(usernameJSONValue);
-            document.getElementById('nowAccount').innerHTML = '当前账号:' + usernameValue + '<br>密码：***';
+
+            document.getElementById('nowAccount').innerHTML = '当前账号:<span id="username"></span><br>密码：***';
+            document.getElementById('username').innerText = usernameValue;
         </script>
         <hr />
         <ul>
