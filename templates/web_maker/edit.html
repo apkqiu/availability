@@ -347,12 +347,13 @@
             cshow.innerText = $('#text').val();
         }
         if (hyperLink.includes(cshow.tagName.toLowerCase())) {
-            var href = $('#href').val();
-            if((!href.startsWith('http://') && !href.startsWith('https://')) && (href.indexOf(":")!=-1)) {
+            var href = $('#href').val().trim();
+            // Only allow http, https, and mailto schemes (case-insensitive)
+            if (!/^((https?|mailto):\/\/)/i.test(href)) {
                 // Bad uri
                 cshow.href = "#禁止使用的地址#";
-            }else{
-                cshow.href = $('#href').val();
+            } else {
+                cshow.href = href;
             }
             cshow.innerText = $('#link_text').val();
         }
