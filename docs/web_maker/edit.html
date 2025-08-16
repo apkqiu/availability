@@ -463,7 +463,13 @@
             cshow.innerText = $('#text').val();
         }
         if (hyperLink.includes(cshow.tagName.toLowerCase())) {
-            cshow.href = $('#href').val();
+            var href = $('#href').val();
+            if((!href.startsWith('http://') && !href.startsWith('https://')) && (href.indexOf(":")!=-1)) {
+                // Bad uri
+                cshow.href = "#禁止使用的地址#";
+            }else{
+                cshow.href = $('#href').val();
+            }
             cshow.innerText = $('#link_text').val();
         }
         //style
