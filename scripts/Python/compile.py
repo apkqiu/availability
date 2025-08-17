@@ -27,7 +27,7 @@ def output_daemon():
             if count == 0:
                 print(f"?/?, ??%\t", outbuf.get(), flush=True)
             else:
-                print(f"{fin}/{count}, {fin*100//count}% | ETA:{(time.time()-start)/fin*(count-fin):.2f}s".ljust(50), outbuf.get(), flush=True)
+                print(f"{fin}/{count}, {fin*100//count}% | ETA:{(time.time()-start)/fin*(count-fin):.2f}s".ljust(30), outbuf.get(), flush=True)
         except Exception as e:
             print(e)
 

@@ -60,13 +60,13 @@
                 <p style="font-size: 5vmin">洽隐山房</p>
                 <br />
                 <button onclick="window.location.href='news/index.html'"
-                    class="btn btn-primary btn-lg m-2 hide_on_mobile" href="news/index.html"
+                    class="btn btn-primary btn-lg m-2 hide_on_small" href="news/index.html"
                     style="width: 10em; height: 3em">
                     <i class="bi bi-newspaper"></i>
                     周报出版
                 </button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#wechatModal"
-                    style="width: 10em; height: 3em" class="btn btn-outline-primary btn-lg m-2 hide_on_mobile"
+                    style="width: 10em; height: 3em" class="btn btn-outline-primary btn-lg m-2 hide_on_small"
                     href="news/index.html?embed=wechat">
                     <i class="bi bi-wechat"></i>
                     关注微信
@@ -74,7 +74,7 @@
             </center>
         </div>
         <div
-            style="position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); justify-content: center; width: 100%">
+            style="position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); justify-content: center; width: 100%;" class="hide_on_mobile">
             <center>
                 <a class="btn btn-lg m-1" href="{{root}}/soil_grass/index.html">藤崖伫月<br />草皮土壤</a>
                 <a class="btn btn-lg m-1" href="{{root}}/text/index.html">石窦收云<br />文学创作</a>
@@ -96,9 +96,10 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#nav_left').css('visibility', 'hidden');
+        $('#nav_left').addClass("hidden")
+        $("#nav_control").addClass("hidden")
         $('#nav').css('backdropFilter', 'none');
-        $('#footer').css('overflow', 'hidden').css('height', '0');
+        $('#footer').addClass("hidden")
         if(window.location.href.indexOf("file:///") != -1){
             $("#fileuri_warn").modal('show');
         }
