@@ -28,12 +28,17 @@ body%}
     (window.onhashchange = function () {
         var p = getarg('p');
         var embed = getarg('embed');
+        var url = getarg('url');
+        if (url && url != "/news/index.html") {
+            load();
+            return;
+        }
         if (p == null && embed == null) {
             p = 1;
         }
-        for(var i=1;i<=100;i++){
-            $('#p'+i).removeClass('active');
-            $("#news-"+i).removeClass('active');
+        for (var i = 1; i <= 100; i++) {
+            $('#p' + i).removeClass('active');
+            $("#news-" + i).removeClass('active');
         }
         $('#p5\\.5').removeClass('active');
         $("#news-wechat").removeClass('active');
@@ -41,7 +46,7 @@ body%}
             $('#iframe').addClass('hidden');
             $("#iframe").attr("src", "about:blank"); // Release iframe
             $('#frame').removeClass('hidden');
-            $("#news-"+embed).addClass('active');
+            $("#news-" + embed).addClass('active');
             $("#frame").html('<div class="spinner-border"></div>')
             $.get(embed + ".html").then((data) => {
                 $('#frame').html(data);
@@ -50,7 +55,7 @@ body%}
             })
         }
         if (p != null) {
-            
+
             $('#frame').addClass('hidden');
             $('#iframe').removeClass('hidden');
             $('#p' + p).addClass('active');

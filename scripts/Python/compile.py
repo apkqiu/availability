@@ -41,6 +41,7 @@ def make_context(path, **ex):
     # calculate the relative path to the root of the docs directory
     ret["root"] = "../" * (ret["relpath"].count("/"))
     ret["root"] = ret["root"][:-1] if ret["root"] else "."
+    ret["true_root"] = ret["root"]
     ret["breadcrumbs"] = ret["relpath"].split("/")
     ret["breadcrumbs"] = ret["breadcrumbs"]
     ret.update(ex)

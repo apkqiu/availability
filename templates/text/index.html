@@ -67,11 +67,21 @@
     </div>
 </div>
 <script>
-    (window.onhashchange = function() {
+    (window.onhashchange = function () {
+
         var p = getarg('p') || 1;
         var type = getarg('type') || 1;
+        var url = getarg('url') || "";
+        if (url && url != "/text/index.html") {
+            load();
+            return;
+        }
+        for (var i = 1; i <= 18; i++) {
+            if ($("#p" + i).attr("href").indexOf("url=") == -1)
+                $("#p" + i).attr("href", $("#p" + i).attr("href") + "&url=" + url);
+        }
         $('#content').html('<div class="spinner-border"></div>');
-        $.get(p + ".html").then(
+        $.get(true_root + "/text/" + p + ".html").then(
             function (data) {
                 $('#content').html(data);
             }
@@ -85,11 +95,11 @@
                 .text()
                 .split(' ')[0]
         );
-        for( var i = 1; i <= 100; i++ ) {
+        for (var i = 1; i <= 100; i++) {
             $('#p' + i).removeClass('active');
         }
         $('#p' + p).addClass('active');
-        
+
         $('#h' + type).removeClass('collapsed');
         $('#collapse' + type).addClass('show');
     })();
