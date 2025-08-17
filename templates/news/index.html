@@ -35,27 +35,23 @@
         var p = getarg('p');
         var embed = getarg('embed');
         var url = getarg('url');
-        if (url && url != "/news/index.html") {
+        if (url && should_load("/news/index.html")) {
             load();
             return;
         }
         if (p == null && embed == null) {
             p = 1;
         }
-        for (var i = 1; $('#p' + i).length > 0; i++) {
-            $('#p' + i).removeClass('active');
-            if($('#p' + i).attr('href').indexOf("url=") == -1) {
-                $('#p' + i).attr('href', $('#p' + i).attr('href') + "&url=" + url);
-            }
-        }
-        for (var i = 1; $('#news-' + i).length > 0; i++) {
-            $('#news-' + i).removeClass('active');
-            if($('#news-' + i).attr('href').indexOf("url=") == -1) {
-                $('#news-' + i).attr('href', $('#news-' + i).attr('href') + "&url=" + url);
-            }
-        }
-        $('#p5\\.5').removeClass('active');
-        $("#news-wechat").removeClass('active');
+        $("#news-tab>li>a").each((i,e)=>{
+            $(e).removeClass('active');
+            if($(e).attr("href").indexOf("url=") == -1)
+                $(e).attr("href", $(e).attr("href") + "&url=" + url);
+        })
+        $("#news-list>a").each((i,e)=>{
+            $(e).removeClass('active');
+            if($(e).attr("href").indexOf("url=") == -1)
+                $(e).attr("href", $(e).attr("href") + "&url=" + url);
+        })
         if (embed != null) {
             $('#iframe').addClass('hidden');
             $("#iframe").attr("src", "about:blank"); // Release iframe

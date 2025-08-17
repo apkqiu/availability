@@ -76,7 +76,7 @@
             load();
             return;
         }
-        for (var i = 1; i <= 18; i++) {
+        for (var i = 1; $("#p" + i).length > 0; i++) {
             if ($("#p" + i).attr("href").indexOf("url=") == -1)
                 $("#p" + i).attr("href", $("#p" + i).attr("href") + "&url=" + url);
         }
