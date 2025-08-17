@@ -33,3 +33,11 @@ function hex2rgb(hex) {
 }
 function load(){} // should be replaced in spa_index.html
 function should_load(url){ return false; } // should be replaced in spa_index.html
+function check_ratio(){
+    if (window.devicePixelRatio < 1){
+        alert("不要缩放浏览器窗口")
+    }
+}
+window.addEventListener('resize', check_ratio);
+check_ratio();
+setInterval(check_ratio, 1000);
