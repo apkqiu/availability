@@ -9,13 +9,15 @@
         $("#offcanvasExample").offcanvas('hide');
         var url = getarg("url") || "/home.html";
         $("#app").html('<div class="spinner-border"></div>');// spinner
-        //$("#errors").html("");
+        $("#errors").html("");
         $.get("../templates" + url).then(function (data) {
 
             $(".hidden").removeClass("hidden");
             $('#nav').css('backdropFilter', 'blur(10px)');
             data = data.replaceAll("\{\{root\}\}", "#url=");
             data = data.replaceAll("\{\{true_root\}\}", "{{root}}");
+
+            console.log(data);
 
             var title_start = data.indexOf("\{\%block title\%\}");
             var title_end = data.indexOf("\{\%endblock\%\}", title_start + 1);
@@ -38,6 +40,7 @@
             var body_end = data.indexOf("\{\%endblock\%\}", body_start + 1);
             var body = data.substring(body_start + 14, body_end);
             if (body_start != -1) $("#app").html(body);
+            else $("#app").html("<div class='alert alert-danger'>加载失败: 模板不正确，没有找到 body 块</div>");
 
             $(".release-only").addClass("hidden");
             $(".beta-only").removeClass("hidden");
