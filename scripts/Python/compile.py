@@ -32,7 +32,7 @@ def output_daemon():
             print(e)
 
 
-def make_context(path):
+def make_context(path, **ex):
     ret = {}
     ret["path"] = path
     ret["filename"] = os.path.basename(path)
@@ -43,6 +43,7 @@ def make_context(path):
     ret["root"] = ret["root"][:-1] if ret["root"] else "."
     ret["breadcrumbs"] = ret["relpath"].split("/")
     ret["breadcrumbs"] = ret["breadcrumbs"]
+    ret.update(ex)
     return ret
 
 
@@ -157,7 +158,7 @@ def make_index():
         {"title": "林屋探奇 · 资料整理", "tag": "网页", "url": "/resource/index.html"},
         {"title": "荷岸观鱼 · 小游戏", "tag": "网页", "url": "/game/index.html"},
     ]
-    # 使用爬虫方式建立索引
+    # 使用爬虫方式建立索引 | 文学创作
     bs = bs4.BeautifulSoup(
         open("docs/text/index.html", encoding="utf-8").read(), "html.parser"
     )
@@ -195,11 +196,37 @@ def make_index():
                 }
             )
 
+    # 使用爬虫方式建立索引 | 热点新闻
+    bs = bs4.BeautifulSoup(
+        open("docs/news/index.html", encoding="utf-8").read(), "html.parser"
+    )
+    xpath = "#news-list"
+    for j in bs.select(xpath):
+        for k in j.select("a"):
+            obj_index.append(
+                {
+                    "title": k.text,
+                    "tag": "新闻",
+                    "url": "/news/index.html" + k["href"],
+                }
+            )
+    xpath = "#news-tab"
+    for j in bs.select(xpath):
+        for k in j.select("a"):
+            if k.get("href"):
+                obj_index.append(
+                    {
+                        "title": "周报"+k.text,
+                        "tag": "周报",
+                        "url": "/news/index.html" + k["href"],
+                    }
+                )
+    # 写入索引
     open("docs/res/js/obj_index.js", "a", encoding="utf-8").write(
         "var documents = " + json.dumps(obj_index) + ";"
     )
     end = time.time()
-    outbuf.put(f"[索引, {(end - start)*1000: 4.2f} ms] 已索引{len(obj_index)}条数据")
+    outbuf.put(f"[索引, {(end - start)*1000: 4.2f} ms] 已为{len(obj_index)}条数据编制索引")
     fin += 1
 
 

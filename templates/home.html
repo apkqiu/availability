@@ -87,9 +87,17 @@
                 <br />
                 <br />
                 <br />
-                <a class="btn" href="{{root}}/../old/zhuye.html">前往旧版</a>
+                <a class="btn release-only" href="{{root}}/../old/zhuye.html">前往旧版</a>
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
                 <a class="btn" href="{{root}}/contact.html">联系我们</a>
+                <span width="20px"></span>
+                <a class="btn release-only" href="{{root}}/spa_home.html">Beta版</a>
+                <a class="btn beta-only hidden" href="home.html" id="release">返回正式版</a>
+                <script>
+                    $("#release").click(function () {
+                        window.location.href = root+"/home.html"
+                    })
+                </script>
             </center>
         </div>
     </div>

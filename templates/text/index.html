@@ -75,6 +75,10 @@
             function (data) {
                 $('#content').html(data);
             }
+        ).fail(
+            function () {
+                $('#content').html('<div class="alert alert-danger">加载失败</div>');
+            }
         )
         $('#title').text(
             $('#p' + p)
