@@ -129,10 +129,17 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#nav_left').addClass("hidden")
-        $("#nav_control").addClass("hidden")
-        $('#nav').css('backdropFilter', 'none');
-        $('#footer').addClass("hide_on_large hide_on_small")
+        if (root != true_root) {
+            $("#nav_left").hide(100);
+            $("#nav_control").hide(100);
+            $('#nav').css('backdropFilter', 'none');
+            $('#footer').addClass("hide_on_large hide_on_small")
+        } else {
+            $('#nav_left').addClass("hidden")
+            $("#nav_control").addClass("hidden")
+            $('#nav').css('backdropFilter', 'none');
+            $('#footer').addClass("hide_on_large hide_on_small")
+        }
         if (window.location.href.indexOf("file:///") != -1) {
             $("#fileuri_warn").modal('show');
         }

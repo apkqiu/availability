@@ -8,13 +8,8 @@ import bs4
 import queue
 import threading
 import subprocess
-import sys
-import argparse
+import PIL.Image
 import traceback
-
-parser = argparse.ArgumentParser(description="Compile a website from a template")
-parser.add_argument("--no-build", action="store_true", help="Do not build the website")
-args = parser.parse_args()
 
 outbuf = queue.Queue()
 start = time.time()
@@ -27,7 +22,13 @@ def output_daemon():
             if count == 0:
                 print(f"?/?, ??%\t", outbuf.get(), flush=True)
             else:
-                print(f"{fin}/{count}, {fin*100//count}% | ETA:{(time.time()-start)/fin*(count-fin):.2f}s".ljust(30), outbuf.get(), flush=True)
+                print(
+                    f"{fin}/{count}, {fin*100//count}% | ETA:{(time.time()-start)/fin*(count-fin):.2f}s".ljust(
+                        30
+                    ),
+                    outbuf.get(),
+                    flush=True,
+                )
         except Exception as e:
             print(e)
 
@@ -63,12 +64,11 @@ def render(path, copy_path):
         os.remove(copy_path)
     with open(copy_path, "w", encoding="utf-8") as f:
         f.write(data)
-    if not args.no_build:
-        cont = subprocess.getoutput(
-            f'node scripts/Node/compress_html.js "{copy_path}"', encoding="utf-8"
-        )
-        with open(copy_path, "w", encoding="utf-8") as f:
-            f.write(cont)
+    cont = subprocess.getoutput(
+        f'node scripts/Node/compress_html.js "{copy_path}"', encoding="utf-8"
+    )
+    with open(copy_path, "w", encoding="utf-8") as f:
+        f.write(cont)
     end = time.time()
     outbuf.put(f"[渲染, {(end - start)*1000: 4.2f} ms] {path}")
     fin += 1
@@ -82,14 +82,13 @@ def svg_process(path, copy_path):
         data = f.read()
     with open(copy_path, "wb") as f:
         f.write(data)
-    if not args.no_build:
-        if os.system(f'npm exec -- svgo -i "{copy_path}" > NUL'):
-            outbuf.put("[错误] svgo 优化失败，回退到html压缩")
-            data = subprocess.getoutput(
-                f'node scripts/Node/compress_html.js "{copy_path}"', encoding="utf-8"
-            )
-            with open(copy_path, "w", encoding="utf-8") as f:
-                f.write(data)
+    if os.system(f'npm exec -- svgo -i "{copy_path}" > NUL'):
+        outbuf.put("[错误] svgo 优化失败，回退到html压缩")
+        data = subprocess.getoutput(
+            f'node scripts/Node/compress_html.js "{copy_path}"', encoding="utf-8"
+        )
+        with open(copy_path, "w", encoding="utf-8") as f:
+            f.write(data)
     end = time.time()
     outbuf.put(f"[优化, {(end - start)*1000: 4.2f} ms] {path}")
     fin += 1
@@ -99,12 +98,11 @@ def js_process(path, copy_path):
     global fin
 
     start = time.time()
-    if args.no_build:
-        code = open(path, "r", encoding="utf-8").read()
-    else:
-        code = subprocess.getoutput(
-            f'npm exec -- esbuild "{path}" --minify', encoding="utf-8"
-        )
+
+    # esbuild --> minify and optimize
+    code = subprocess.getoutput(
+        f'npm exec -- esbuild "{path}" --minify', encoding="utf-8"
+    )
     with open(copy_path, "w", encoding="utf-8") as f:
         f.write(code)
     end = time.time()
@@ -116,18 +114,40 @@ def css_process(path, copy_path):
     global fin
 
     start = time.time()
-    if args.no_build:
-        code = open(path, "r", encoding="utf-8").read()
-    else:
-        code = subprocess.getoutput(
-            f'npm exec -- esbuild "{path}" --minify', encoding="utf-8"
-        )
+    code = subprocess.getoutput(
+        f'npm exec -- esbuild "{path}" --minify', encoding="utf-8"
+    )
     with open(copy_path, "w", encoding="utf-8") as f:
         f.write(code)
     end = time.time()
     outbuf.put(f"[编译, {(end - start)*1000: 4.2f} ms] {path}")
     fin += 1
 
+def img_process(path, copy_path):
+    global fin
+    start = time.time()
+    f = PIL.Image.open(path)
+    if path.endswith(".jpg") or path.endswith(".jpeg"):
+        f.save(copy_path, optimize=True, progressive=True)
+    elif path.endswith(".png"):
+        f.save(copy_path, optimize=True)
+    else:
+        f.save(copy_path)
+    end = time.time()
+    outbuf.put(f"[优化, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
+
+def pdf_process(path, copy_path):
+    global fin
+    start = time.time()
+
+    subprocess.run(
+        f"wsl gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile={copy_path.replace("\\","/")} {path.replace("\\","/")}",
+        shell=True,
+    )
+    end = time.time()
+    outbuf.put(f"[优化, {(end - start)*1000: 4.2f} ms] {path}")
+    fin += 1
 
 def copy(path, copy_path):
     global fin
@@ -217,7 +237,7 @@ def make_index():
             if k.get("href"):
                 obj_index.append(
                     {
-                        "title": "周报"+k.text,
+                        "title": "周报" + k.text,
                         "tag": "周报",
                         "url": "/news/index.html" + k["href"],
                     }
@@ -227,7 +247,9 @@ def make_index():
         "var documents = " + json.dumps(obj_index) + ";"
     )
     end = time.time()
-    outbuf.put(f"[索引, {(end - start)*1000: 4.2f} ms] 已为{len(obj_index)}条数据编制索引")
+    outbuf.put(
+        f"[索引, {(end - start)*1000: 4.2f} ms] 已为{len(obj_index)}条数据编制索引"
+    )
     fin += 1
 
 
@@ -252,6 +274,11 @@ if __name__ == "__main__":
                 f = pool.submit(js_process, path, copy_path)
             elif file.endswith(".css"):
                 f = pool.submit(css_process, path, copy_path)
+            elif file.endswith(".jpg") or file.endswith(".png") or file.endswith(".jpeg"):
+                f = pool.submit(img_process, path, copy_path)
+            elif file.endswith(".pdf"):
+                f = pool.submit(pdf_process, path, copy_path)
+            
             else:
                 f = pool.submit(copy, path, copy_path)
             futures.append((f, path))

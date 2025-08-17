@@ -1,10 +1,10 @@
 ﻿alert('点击菜单来编辑');
-//菜单文字
-document.getElementById('MenuAPlace').innerHTML = `
+                                                                      //菜单文字
+document.getElementById("MenuAPlace").innerHTML=`
     <a href=\"#\" id=\"MenuABtn\" onclick=\"openMenuA()\">菜单<\/a>
 `;
-function openMenuA() {
-    document.getElementById('MenuAArea').innerHTML = `
+function openMenuA(){
+    document.getElementById("MenuAArea").innerHTML=`
         <div>
           <b>菜单<\/b>
           <br>
@@ -66,86 +66,82 @@ function openMenuA() {
         敬请期待
         </div>
     `;
-    //菜单样式
-    document.getElementById('MenuAArea').style.display = 'block';
-    document.getElementById('MenuAShadow').style.opacity = '0.1';
-    //添加div(1)
-    document.getElementById('addElementDiv').onclick = function () {
+                                                                   //菜单样式
+    document.getElementById("MenuAArea").style.display="block";
+    document.getElementById("MenuAShadow").style.opacity="0.1";
+                                                                     //添加div(1)
+    document.getElementById('addElementDiv').onclick=function(){
         var divId = document.getElementById('addDivInput').value;
         addDivFn(divId);
+    }
+                                                                   //添加元素节点(1)
+    var theID = "请输入创建的该元素节点的id(不能与其他元素节点的ID重复，建议仅含数字、字母等字符，你想输入中文也行)";
+    document.getElementById('addElementP').onclick = function(){
+        addElementFn('p',prompt(theID));
     };
-    //添加元素节点(1)
-    var theID = '请输入创建的该元素节点的id(不能与其他元素节点的ID重复，建议仅含数字、字母等字符，你想输入中文也行)';
-    document.getElementById('addElementP').onclick = function () {
-        addElementFn('p', prompt(theID));
+    document.getElementById('addElementH1').onclick = function(){
+        addElementFn('h1',prompt(theID));
     };
-    document.getElementById('addElementH1').onclick = function () {
-        addElementFn('h1', prompt(theID));
+                                                                    //删除元素节点(1)
+    document.getElementById('deleteElement').onclick = function(){
+        var deleteDiv = document.getElementById('deleteElementByDiv').value
+        var deleteId = document.getElementById('deleteElementById').value
+        deleteElementFn(deleteDiv , deleteId);
     };
-    //删除元素节点(1)
-    document.getElementById('deleteElement').onclick = function () {
-        var deleteDiv = document.getElementById('deleteElementByDiv').value;
-        var deleteId = document.getElementById('deleteElementById').value;
-        deleteElementFn(deleteDiv, deleteId);
-    };
-    //全局搜索框
-    document.getElementById('searchOfAllBtn').onclick = function () {
+                                                                   //全局搜索框
+    document.getElementById('searchOfAllBtn').onclick=function(){
         var searchOfAllText = document.getElementById('searchOfAll').value;
         searchOfAllFn(searchOfAllText);
     };
 }
-//菜单功能
-function closeMenu() {
-    document.getElementById('MenuAArea').style.display = 'none';
-} //关闭菜单
-function zhuye() {
-    window.location.href = '../zhuye.html';
-} //返回主页
-//添加div(2)
-function addDivFn(DivId) {
-    if (DivId == '') {
+                                                                  //菜单功能
+function closeMenu(){document.getElementById("MenuAArea").style.display="none";}//关闭菜单
+function zhuye(){window.location.href="../zhuye.html"}//返回主页
+                                                                      //添加div(2)
+function addDivFn(DivId){
+    if(DivId == ''){
         alert('请查正内容分区id！');
     }
     var newDiv = document.createElement('div');
     newDiv.id = DivId;
     document.body.appendChild(newDiv);
 }
-//添加元素节点(2)
-function addElementFn(elementType, elementId) {
-    var inputText = document.getElementById('addPInput').value;
+                                                                //添加元素节点(2)
+function addElementFn(elementType,elementId){
+    var inputText = document.getElementById("addPInput").value;
     var newElement = document.createElement(elementType);
-    var parentDivId = document.getElementById('addPInputByDiv').value;
+    var parentDivId = document.getElementById("addPInputByDiv").value;
     var parentDiv = document.getElementById(parentDivId);
     newElement.id = elementId;
     newElement.textContent = inputText;
     parentDiv.appendChild(newElement);
 }
-//删除元素节点
-function deleteElementFn(divId, deleteId) {
+                                                                  //删除元素节点
+function deleteElementFn(divId,deleteId){
     var parentDiv = document.getElementById(divId);
     var childDiv = document.getElementById(deleteId);
     parentDiv.removeChild(childDiv);
 }
-//全局搜索
-function searchOfAllFn(theText) {
-    if (/[新建内容分区]/.test(theText)) {
-        addSearchOfAllResult('新建内容分区', '#addElementDiv');
+                                                                      //全局搜索
+function searchOfAllFn(theText){
+    if (/[新建内容分区]/.test(theText)){
+        addSearchOfAllResult('新建内容分区','#addElementDiv');
     }
-    if (/[创建一级标题]/.test(theText)) {
-        addSearchOfAllResult('创建一级标题', '#addElementH1');
+    if (/[创建一级标题]/.test(theText)){
+        addSearchOfAllResult('创建一级标题','#addElementH1');
     }
-    if (/[新建段落]/.test(theText)) {
-        addSearchOfAllResult('新建段落', '#addElementP');
+    if (/[新建段落]/.test(theText)){
+        addSearchOfAllResult('新建段落','#addElementP');
     }
-    if (/[删除]/.test(theText)) {
-        addSearchOfAllResult('删除', '#deleteElement');
+    if (/[删除]/.test(theText)){
+        addSearchOfAllResult('删除','#deleteElement');
     }
 }
-function addSearchOfAllResult(theText, theHref) {
+function addSearchOfAllResult(theText,theHref){
     var theResult = document.getElementById('searchOfAllResult');
     var newLi = document.createElement('li');
     var newA = document.createElement('a');
-    newA.textContent = theText;
+    newA.textContent=theText;
     newA.href = theHref;
     newLi.appendChild(newA);
     theResult.appendChild(newLi);

@@ -1,62 +1,56 @@
-﻿<!doctype html>
+﻿<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="../../res/css/All.css" />
-        <title>账号</title>
-        <style>
-            ul {
-                list-style-type: none;
-                padding: 0px;
-                margin: 0px;
-            }
-        </style>
-    </head>
-    <body>
-        <script>
-            //没有账号创建账号
-            var accountBe = localStorage.getItem('accountBe');
-            if (!accountBe) {
-                alert('检测到您没有账号，将跳转创建');
-                window.location.href = 'register.html';
-            }
-        </script>
-        <h1>账号</h1>
-        <!-- 位置 -->
-        <div><a class="anone" href="../../zhuye.html">洽隐山房主页</a>>账号</div>
+<head>
+    <link rel="stylesheet" href="../../res/css/All.css">
+    <title>账号</title>
+    <style>
+    ul {list-style-type:none;padding:0px;margin:0px;}
+    </style>
+</head>
+<body>
+    <script>
+                      //没有账号创建账号
+        var accountBe = localStorage.getItem('accountBe');
+        if(!accountBe){
+            alert('检测到您没有账号，将跳转创建');
+            window.location.href="register.html";
+        }
+    </script>
+    <h1>账号</h1>
+    <!-- 位置 -->
+    <div><a class="anone" href="../../zhuye.html">洽隐山房主页</a>>账号</div>
 
-        <!--菜单-->
-        <script src="../../res/js/All.js"></script>
+    <!--菜单-->
+    <script src="../../res/js/All.js"></script>
 
-        <hr />
-        <h2>当前账号</h2>
-        <p id="nowAccount"></p>
-        <script>
-            var usernameJSONValue = localStorage.getItem('username');
-            var usernameValue = JSON.parse(usernameJSONValue);
+    <hr>
+    <h2>当前账号</h2>
+    <p id="nowAccount"></p>
+    <script>
+        var usernameJSONValue = localStorage.getItem('username');
+        var usernameValue = JSON.parse(usernameJSONValue);
+        document.getElementById('nowAccount').innerHTML='当前账号:'+usernameValue+'<br>密码：***';
+    </script>
+    <hr>
+    <ul>
+      <li><a href="register.html">注册</a></li>
+      <li><a id="cancel">注销</a></li>
+      <li><a href="personalization.html">个性化</a></li>
+    </ul>
+    <script>
+    document.getElementById('cancel').onclick=function(){
+        cancelJSON();
+    };
+    function cancelJSON(){
+        if(prompt('更新将清除所有用户数据，继续请输入密码')=="密码"){
+            localStorage.clear();
+            alert('更新成功，请刷新');
+        }else{
+            alert('密码错误');
+        }
+    }
+    </script>
 
-            document.getElementById('nowAccount').innerHTML = '当前账号:<span id="username"></span><br>密码：***';
-            document.getElementById('username').innerText = usernameValue;
-        </script>
-        <hr />
-        <ul>
-            <li><a href="register.html">注册</a></li>
-            <li><a id="cancel">注销</a></li>
-            <li><a href="personalization.html">个性化</a></li>
-        </ul>
-        <script>
-            document.getElementById('cancel').onclick = function () {
-                cancelJSON();
-            };
-            function cancelJSON() {
-                if (prompt('更新将清除所有用户数据，继续请输入密码') == '密码') {
-                    localStorage.clear();
-                    alert('更新成功，请刷新');
-                } else {
-                    alert('密码错误');
-                }
-            }
-        </script>
-
-        <div id="main"></div>
-    </body>
+    <div id="main"></a>
+</body>
 </html>

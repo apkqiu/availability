@@ -1,33 +1,25 @@
 ﻿/* <a>按钮 */
 a {
-    display: inline-block;
-    padding: 8px 20px;
-    background-color: #2b313f;
-    color: white;
-    text-decoration: none;
-    font: bold 16px;
-    border-radius: 30px;
-    height: 23px;
-    margin: 1px;
+    display:inline-block;
+    padding:8px 20px;
+    background-color:#2b313f;
+    color:white;
+    text-decoration:none;
+    font:bold 16px;
+    border-radius:30px;
+    height:23px;
+    margin:1px;
 }
-a:hover {
-    background-color: #202830;
-    cursor: hand;
-}
-a:active {
-    position: relative;
-    top: 1px;
-}
+a:hover {background-color:#202830;cursor:hand;}
+a:active {position:relative;top:1px;}
 .anone {
-    background-color: transparent;
-    color: blue;
-    text-decoration: underline;
-    padding: 0px;
-    border: none;
-    height: 16px;
-    margin: 0px;
-}
+    background-color:transparent;
+    color:blue;
+    text-decoration:underline;
+    padding:0px;
+    border:none;
+    height:16px
+    margin:0px;}
 .anone:hover {
-    background-color: transparent;
-    cursor: hand;
-}
+    background-color:transparent;
+    cursor:hand;}

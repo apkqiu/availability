@@ -7,6 +7,8 @@
 <script>
     function load() {
         var url = getarg("url") || "/home.html";
+        $("#nav_left").show(100);
+        $("#nav_controls").show(100);
         $("#offcanvasExample").offcanvas('hide');
         $(".hidden").removeClass("hidden");
         $('#nav').css('backdropFilter', 'blur(10px)');
