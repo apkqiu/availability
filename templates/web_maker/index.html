@@ -7,7 +7,7 @@
     $('<a></a>')
         .addClass('list-group-item btn btn-success')
         .css('border-radius', '5px 5px 0px 0px ')
-        .attr('href', '{{root}}/web_maker/edit.html?id=null')
+        .attr('href', '{{root}}/web_maker/edit.html?id=null&id=null') // 其实我也不知道为什么要加两个id
         .text('添加新文件')
         .appendTo($('#files'));
 
@@ -34,7 +34,7 @@
             .append(
                 $('<a></a>')
                     .addClass('btn btn-primary btn-sm m-1')
-                    .attr('href', '{{root}}/web_maker/edit.html?id=' + file.id)
+                    .attr('href', '{{root}}/web_maker/edit.html?id=' + file.id+"&id="+file.id)
                     .text('编辑')
             )
             .append(

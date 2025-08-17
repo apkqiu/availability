@@ -262,8 +262,8 @@
 </div>
 <script>
     var currentShow = null;
-    const propText = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'];
-    const hyperLink = ['a'];
+    var propText = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'];
+    var hyperLink = ['a'];
     var interval = null;
     function showPropModal(element) {
         $('#propModal').modal('show');
@@ -451,7 +451,7 @@
 <div class="row">
     <div class="col-md-6">
         <button onclick="savef()" class="btn btn-primary" id="save">保存</button>
-        <a href="index.html" class="btn btn-secondary">返回</a>
+        <a href="{{root}}/web_maker/index.html" class="btn btn-secondary">返回</a>
         <h4>元素树</h4>
         <div id="element-tree" style="overflow: auto; white-space: nowrap"></div>
     </div>
@@ -531,7 +531,7 @@
         };
         document.getElementById('element-tree').appendChild(add);
     }
-    const addable = ['div', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'thead', 'tbody', 'tfoot'];
+    var addable = ['div', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'thead', 'tbody', 'tfoot'];
     function test_element(e, list) {
         for (var item of list) {
             if ($(e).is(item)) return true;
@@ -613,11 +613,8 @@
             tree.append(ul);
         }
     }
-    function get_arg_from_url(arg) {
-        var url = new URL(window.location.href);
-        return url.searchParams.get(arg);
-    }
-    var id = get_arg_from_url('id');
+    
+    var id = getarg('id');
     if (id != 'null') {
         localforage.getItem(id).then((value) => {
             document.getElementById('sandbox').innerHTML = value;
