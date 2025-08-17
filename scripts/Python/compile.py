@@ -277,7 +277,7 @@ if __name__ == "__main__":
             elif file.endswith(".jpg") or file.endswith(".png") or file.endswith(".jpeg"):
                 f = pool.submit(img_process, path, copy_path)
             elif file.endswith(".pdf"):
-                f = pool.submit(pdf_process, path, copy_path)
+                f = pool.submit(copy, path, copy_path)
             
             else:
                 f = pool.submit(copy, path, copy_path)

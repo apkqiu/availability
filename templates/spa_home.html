@@ -13,7 +13,7 @@
         $(".hidden").removeClass("hidden");
         $('#nav').css('backdropFilter', 'blur(10px)');
         document.title = "加载中...";
-        $("#app").html("");
+        $("#app").html('<div class="spinner-border"></div>').show();
         $("#title_in").hide(100);
         $("#app_out").hide(100);
         $("#errors").html("");
