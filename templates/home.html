@@ -60,8 +60,7 @@
                 <p style="font-size: 5vmin">洽隐山房</p>
                 <br />
                 <button onclick="window.location.href='{{root}}/news/index.html'"
-                    class="btn btn-primary btn-lg m-2 hide_on_small"
-                    style="width: 10em; height: 3em">
+                    class="btn btn-primary btn-lg m-2 hide_on_small" style="width: 10em; height: 3em">
                     <i class="bi bi-newspaper"></i>
                     周报出版
                 </button>
@@ -73,8 +72,8 @@
                 </button>
             </center>
         </div>
-        <div
-            style="position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); justify-content: center; width: 100%;" class="hide_on_mobile">
+        <div style="position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); justify-content: center; width: 100%;height:30%;overflow:hidden"
+            class="hide_on_mobile">
             <center>
                 <a class="btn btn-lg m-1" href="{{root}}/soil_grass/index.html">藤崖伫月<br />草皮土壤</a>
                 <a class="btn btn-lg m-1" href="{{root}}/text/index.html">石窦收云<br />文学创作</a>
@@ -86,6 +85,32 @@
                 <a class="btn btn-lg m-1" href="{{root}}/game/index.html">荷岸观鱼<br />小游戏</a>
                 <br />
                 <br />
+                <a class="btn release-only" href="{{root}}/../old/zhuye.html">前往旧版</a>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
+                <a class="btn" href="{{root}}/contact.html">联系我们</a>
+                <span width="20px"></span>
+                <a class="btn release-only" href="{{root}}/spa_home.html">Beta版</a>
+                <a class="btn beta-only hidden" href="home.html" id="release">返回正式版</a>
+                <script>
+                    $("#release").click(function () {
+                        window.location.href = root + "/home.html"
+                    })
+                </script>
+            </center>
+        </div>
+        <div style="height:60vh"></div>
+        <div class="hide_on_large hide_on_small">
+            <center>
+                <a class="btn btn-lg m-1" href="{{root}}/soil_grass/index.html">藤崖伫月 草皮土壤</a>
+                <a class="btn btn-lg m-1" href="{{root}}/text/index.html">石窦收云 文学创作</a><br>
+                <a class="btn btn-lg m-1" href="{{root}}/web_maker/index.html">棕亭霁雪 自制网页</a>
+                <a class="btn btn-lg m-1" href="{{root}}/account/index.html">柳荫眠琴 账号管理</a><br>
+                <a class="btn btn-lg m-1" href="{{root}}/news/index.html">屏山听瀑 周报</a>
+                <a class="btn btn-lg m-1" href="{{root}}/school/index.html">柳荫系舫 一草种</a><br>
+                <a class="btn btn-lg m-1" href="{{root}}/resource/index.html">林屋探奇 资料</a>
+                <a class="btn btn-lg m-1" href="{{root}}/game/index.html">荷岸观鱼 小游戏</a><br>
+                <br />
+                <br />
                 <br />
                 <a class="btn release-only" href="{{root}}/../old/zhuye.html">前往旧版</a>
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
@@ -95,7 +120,7 @@
                 <a class="btn beta-only hidden" href="home.html" id="release">返回正式版</a>
                 <script>
                     $("#release").click(function () {
-                        window.location.href = root+"/home.html"
+                        window.location.href = root + "/home.html"
                     })
                 </script>
             </center>
@@ -107,8 +132,8 @@
         $('#nav_left').addClass("hidden")
         $("#nav_control").addClass("hidden")
         $('#nav').css('backdropFilter', 'none');
-        $('#footer').addClass("hidden")
-        if(window.location.href.indexOf("file:///") != -1){
+        $('#footer').addClass("hide_on_large hide_on_small")
+        if (window.location.href.indexOf("file:///") != -1) {
             $("#fileuri_warn").modal('show');
         }
     });

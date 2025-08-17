@@ -37,7 +37,12 @@ function check_ratio(){
     if (window.devicePixelRatio < 1){
         alert("不要缩放浏览器窗口")
     }
+    if(window.screen.orientation == "landscape-primary"||window.screen.orientation == "landscape-secondary"){
+        alert("手机竖过来！")
+    }
+    if (window.screen.orientation == "portrait-secondary"){
+        alert("手机拿倒了！")
+    }
 }
-window.addEventListener('resize', check_ratio);
 check_ratio();
-setInterval(check_ratio, 1000);
+setInterval(check_ratio, 1);
