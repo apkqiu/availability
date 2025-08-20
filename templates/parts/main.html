@@ -29,6 +29,12 @@
 </head>
 
 <header>
+	<div id="customMenu" class="dropdown-menu" style="z-index: 50000;">
+		<button class="dropdown-item" id="cut">剪切</button>
+		<button class="dropdown-item" id="copy">复制</button>
+		<button class="dropdown-item" id="paste">粘贴</button>
+	</div>
+
 	<nav class="navbar navbar-expand-sm" id="nav"
 		style="position: fixed; width: 100%; z-index: 1001;backdrop-filter: blur(10px);">
 		<div class="container-fluid">
@@ -238,7 +244,7 @@
 						.click(() => {
 							$("#offcanvasExample").offcanvas('hide');
 							$('#searchInput').val('');
-						})	
+						})
 						.append(
 							$('<span></span>')
 								.css("float", "left")
