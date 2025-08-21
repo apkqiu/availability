@@ -104,7 +104,7 @@ var dev_dec2 = setInterval(() => {
         return
     } else {
         // 如果打印表格的时间是普通打印的2倍，那么就关闭
-        if (tablePrintTime > maxPrintTime * 2) { // 如果当前表格打印时间大于指定时间，那么将表示打开了devtools
+        if (tablePrintTime > maxPrintTime) { // 如果当前表格打印时间大于指定时间，那么将表示打开了devtools
             $("#app").html("<h1>检测到开发者工具被打开</h1><p>请关闭开发者工具，然后刷新页面</p>")
             clearInterval(dev_dec2)
         }
