@@ -1,6 +1,6 @@
 (function () {
 	// 事件处理
-    dectetors = [];
+    var dectetors = [];
 	function on_dev_open() {
         for (let i = 0; i < dectetors.length; i++) {
             clearInterval(dectetors[i]);
@@ -82,7 +82,7 @@
 		}
 		var dectetors = setInterval(console_checker, 500);
         dectetors.push(dectetor);
-	})();
+	});//();
 	(function () {
 		// 法3：RegEx劫持
 		var reg = / /;

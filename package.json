@@ -1,7 +1,7 @@
 {
   "main": "node/main.js",
   "name": "qysf",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "洽隐山房 电脑客户端",
   "author": "Puro",
   "license": "MIT",
