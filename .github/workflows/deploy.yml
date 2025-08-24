@@ -17,10 +17,10 @@ jobs:
             os: windows-latest
             platform: win
             arch: x64
-          - artifact_name: win-ia32
+          - artifact_name: win-x86
             os: windows-latest
             platform: win
-            arch: ia32
+            arch: x86
           - artifact_name: win-arm64
             os: windows-latest
             platform: win
@@ -42,10 +42,10 @@ jobs:
             os: ubuntu-latest
             platform: linux
             arch: x64
-          - artifact_name: linux-ia32
+          - artifact_name: linux-x86
             os: ubuntu-latest
             platform: linux
-            arch: ia32
+            arch: x86
           - artifact_name: linux-arm64
             os: ubuntu-latest
             platform: linux
@@ -103,12 +103,12 @@ jobs:
         with:
           files: |
             artifacts/electron-app-win-x64/*
-            artifacts/electron-app-win-ia32/*
+            artifacts/electron-app-win-x86/*
             artifacts/electron-app-win-arm64/*
             artifacts/electron-app-mac-x64/*
             artifacts/electron-app-mac-arm64/*
             artifacts/electron-app-linux-x64/*
-            artifacts/electron-app-linux-ia32/*
+            artifacts/electron-app-linux-x86/*
             artifacts/electron-app-linux-arm64/*
             artifacts/electron-app-linux-armv7l/*
         env:
