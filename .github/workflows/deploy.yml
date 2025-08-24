@@ -9,11 +9,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
         include:
           # Windows builds
           - artifact_name: win-x64
-          - os: windows-latest
+            os: windows-latest
             platform: win
             arch: x64
           - artifact_name: win-ia32
