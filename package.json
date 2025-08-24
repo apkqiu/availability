@@ -1,7 +1,18 @@
 {
   "main": "node/main.js",
-  "name": "qysf",
-  "version": "1.0.0",
+  "name": "洽隐山房",
+  "version": "1.2.0",
+  "description": "洽隐山房 电脑客户端",
+  "author": "Puro",
+  "license": "MIT",
+  
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
   "dependencies": {
     "@babel/cli": "7.28.3",
     "@babel/core": "7.28.3",

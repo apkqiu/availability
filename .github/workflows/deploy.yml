@@ -1,52 +1,76 @@
+name: Electron Build and Release
+
 on:
     push:
-        branches:
-            - main
     workflow_dispatch:
 
 jobs:
-    build:
-        name: 构建网站
-        runs-on: windows-latest
-        permissions:
-            pages: write
-            id-token: write
+    build-electron:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, macos-latest, windows-latest]
+                include:
+                    - os: ubuntu-latest
+                      platform: linux
+                    - os: macos-latest
+                      platform: mac
+                    - os: windows-latest
+                      platform: win
+
         steps:
-            # 迁出
-            - name: 迁出
-              uses: actions/checkout@v3
-            # 初始化Node.js环境
-            - name: 初始化Node.js环境
-              uses: actions/setup-node@v2
+            - name: Checkout repository
+              uses: actions/checkout@v4
               with:
-                node-version: 22
-            - name: 安装依赖
-              run: npm i
-            # 初始化Python环境
-            - name: 初始化Python环境
-              uses: actions/setup-python@v2
+                  ref: web # 指定web分支
+                  fetch-depth: 0
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
               with:
-                python-version: 3.13
-            - name: 安装依赖
-              run: |
-                pip install -r requirements.txt
-            # 部署！
-            - name: 部署
-              run: |
-                python3 -u scripts/Python/compile.py
-              shell: cmd
-            # 然后合并docs和old到web_dist
-            - name: 合并
-              run: |
-                python -u scripts/Python/merge.py
-              shell: cmd
-            - name: 部署到GitHub Pages
-              id: deployment
-              uses: JamesIves/github-pages-deploy-action@3.7.1
+                  node-version: '18'
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build Electron app
+              run: npm run build
+              env:
+                  GH_TOKEN: ${{ github.token }}
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
               with:
+                  name: electron-app-${{ matrix.platform }}
+                  path: |
+                      dist/*.zip
+                      dist/*.dmg
+                      dist/*.exe
+                      dist/*.AppImage
+                      dist/*.deb
+                      dist/*.rpm
+
+    create-release:
+        needs: build-electron
+        runs-on: ubuntu-latest
+        if: startsWith(github.ref, 'refs/tags/')
+
+        steps:
+            - name: Download all artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: artifacts
+
+            - name: List files for debugging
+              run: find artifacts -type f
+
+            - name: Create Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  files: |
+                      artifacts/electron-app-linux/*
+                      artifacts/electron-app-mac/*
+                      artifacts/electron-app-win/*
+              env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  BRANCH: gh-pages # The branch the action should deploy to.
-                  FOLDER: web_dist # The folder the action should deploy.
-                
-            
-            
