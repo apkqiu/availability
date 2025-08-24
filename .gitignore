@@ -1,10 +1,12 @@
 node_modules
-.vitepress/cache/
-.vitepress/dist/
 .vscode/
 .venv/
 avaliability.rar
+**/avaliability.rar
+__pycache__/
+**/__pycache__/
 .gitignore
-dist
-# 防止出现镜像不一致的情况
-.package-lock.json 
+dist/
+web_dist/
+docs/
+*.log

@@ -1,0 +1,50 @@
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+jobs:
+    build:
+        name: 构建网站
+        runs-on: windows-latest
+        permissions:
+            pages: write
+            id-token: write
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        steps:
+            # 初始化Node.js环境
+            - name: 初始化Node.js环境
+              uses: actions/setup-node@v2
+              with:
+                node-version: 22
+            - name: 安装依赖
+              run: npm ci
+            # 初始化Python环境
+            - name: 初始化Python环境
+              uses: actions/setup-python@v2
+              with:
+                python-version: 3.13
+            - name: 安装依赖
+              run: |
+                pip install -r requirements.txt
+            # 部署！
+            - name: 部署
+              run: |
+                python scripts/Python/compile.py
+            # 然后合并docs和old到web_dist
+            - name: 合并
+              run: |
+                python scripts/Python/merge.py
+            - name: 部署到GitHub Pages
+              id: deployment
+              uses: JamesIves/github-pages-deploy-action@3.7.1
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  BRANCH: gh-pages # The branch the action should deploy to.
+                  FOLDER: web_dist # The folder the action should deploy.
+                
+            
+            

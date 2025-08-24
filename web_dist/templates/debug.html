@@ -1,0 +1,22 @@
+{%extends "parts/main.html"%} {%block title%} 调试 {%endblock%} {%block title_in%} 调试 {%endblock%} {%block body%}
+<script>
+    function check_localhost(){
+        if (location.href.indexOf("127.0.0.1") == -1) {
+            alert("调试只能在localhost进行");
+            return false;
+        }
+        return true;
+    }
+</script>
+<h1>调试</h1>
+<input type="checkbox" id="vconsole">
+<script>
+    $("#vconsole").on("change", function () {
+        if(!check_localhost()) return;
+        localStorage.setItem("vconsole", $(this).prop("checked"));
+        location.reload()
+    })
+    $("#vconsole").prop("checked", localStorage.getItem("vconsole") == "true")
+</script>
+显示“检查”
+{%endblock%}
