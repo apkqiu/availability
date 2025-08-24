@@ -5,7 +5,6 @@
   "description": "洽隐山房 电脑客户端",
   "author": "Puro",
   "license": "MIT",
-  
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
@@ -25,6 +24,9 @@
     "stylecow": "7.4.0",
     "svgo": "^4.0.0",
     "uglify-js": "3.19.3",
-    "webpack": "5.101.3"
+    "webpack": "5.101.3",
+    "npx": "^10.2.2"
+  },
+  "dependencies": {
   }
 }
