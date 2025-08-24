@@ -38,7 +38,7 @@ jobs:
             # 然后合并docs和old到web_dist
             - name: 合并
               run: |
-                python scripts/Python/merge.py
+                python -u scripts/Python/merge.py
               shell: cmd
             - name: 部署到GitHub Pages
               id: deployment
