@@ -29,4 +29,5 @@ factory.register(".jpg", JpgCompiler.JpgCompiler)
 
 factory.register(".jpeg", JpgCompiler.JpgCompiler)
 
-factory.register(".pdf", PdfCompiler.PdfCompiler)
+# factory.register(".pdf", PdfCompiler.PdfCompiler) 
+# PdfCompiler is disabled because it needs wsl, but github actions does not support wsl
