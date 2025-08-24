@@ -74,7 +74,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: qysf-desktop-${{ matrix.platform }}
+          name: qysf-desktop-${{ matrix.artifact_name }}
           path: |
             dist/*.zip
             dist/*.dmg
