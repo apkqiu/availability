@@ -13,22 +13,16 @@ jobs:
       matrix:
         include:
           # Windows builds
-          - artifact_name: windows-universal
-            os: windows-latest
-            platform: win
-            arch: universal
+          - os: windows-latest
+            platform: windows
 
           # macOS builds (Intel)
-          - artifact_name: mac-universal
-            os: macos-latest
-            platform: mac
-            arch: universal
+          - os: macos-latest
+            platform: macos
 
           # Linux builds
-          - artifact_name: linux-universal
-            os: ubuntu-latest
+          - os: ubuntu-latest
             platform: linux
-            arch: universal
 
     steps:
       - name: Checkout repository
@@ -44,14 +38,14 @@ jobs:
         run: npm install --include=dev
 
       - name: Build Electron app
-        run: npx electron-builder --${{ matrix.platform }} --${{ matrix.arch }} --publish never
+        run: npx electron-builder --publish never
         env:
           GH_TOKEN: ${{ github.token }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: qysf-desktop-${{ matrix.artifact_name }}
+          name: qysf-desktop-${{ matrix.platform }}
           path: |
             dist/*.zip
             dist/*.dmg
@@ -77,14 +71,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/electron-app-win-x64/*
-            artifacts/electron-app-win-x86/*
-            artifacts/electron-app-win-arm64/*
-            artifacts/electron-app-mac-x64/*
-            artifacts/electron-app-mac-arm64/*
-            artifacts/electron-app-linux-x64/*
-            artifacts/electron-app-linux-x86/*
-            artifacts/electron-app-linux-arm64/*
-            artifacts/electron-app-linux-armv7l/*
+            artifacts/qysf-desktop-windows/*.zip
+            artifacts/qysf-desktop-linux/*.zip
+            artifacts/qysf-desktop-macos/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
