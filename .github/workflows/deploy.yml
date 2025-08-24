@@ -33,7 +33,7 @@ jobs:
             # 部署！
             - name: 部署
               run: |
-                python3 scripts/Python/compile.py
+                python3 -u scripts/Python/compile.py
               shell: cmd
             # 然后合并docs和old到web_dist
             - name: 合并
