@@ -71,8 +71,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/qysf-desktop-windows/*.zip
-            artifacts/qysf-desktop-linux/*.zip
-            artifacts/qysf-desktop-macos/*.zip
+            artifacts/qysf-desktop-windows/*
+            artifacts/qysf-desktop-linux/*
+            artifacts/qysf-desktop-macos/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
