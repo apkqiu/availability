@@ -11,47 +11,47 @@ jobs:
       matrix:
         include:
           # Windows builds
+          - artifact_name: win-x64
           - os: windows-latest
             platform: win
             arch: x64
-            artifact_name: win-x64
-          - os: windows-latest
+          - artifact_name: win-ia32
+            os: windows-latest
             platform: win
             arch: ia32
-            artifact_name: win-ia32
-          - os: windows-latest
+          - artifact_name: win-arm64
+            os: windows-latest
             platform: win
             arch: arm64
-            artifact_name: win-arm64
 
           # macOS builds (Intel)
-          - os: macos-12
+          - artifact_name: mac-x64
+            os: macos-latest
             platform: mac
             arch: x64
-            artifact_name: mac-x64
           # macOS builds (Apple Silicon)
-          - os: macos-13
+          - artifact_name: mac-arm64
+            os: macos-latest
             platform: mac
             arch: arm64
-            artifact_name: mac-arm64
 
           # Linux builds
-          - os: ubuntu-latest
+          - artifact_name: linux-x64
+            os: ubuntu-latest
             platform: linux
             arch: x64
-            artifact_name: linux-x64
-          - os: ubuntu-latest
+          - artifact_name: linux-ia32
+            os: ubuntu-latest
             platform: linux
             arch: ia32
-            artifact_name: linux-ia32
-          - os: ubuntu-latest
+          - artifact_name: linux-arm64
+            os: ubuntu-latest
             platform: linux
             arch: arm64
-            artifact_name: linux-arm64
-          - os: ubuntu-latest
+          - artifact_name: linux-armv7l
+            os: ubuntu-latest
             platform: linux
             arch: armv7l
-            artifact_name: linux-armv7l
 
     steps:
       - name: Checkout repository
