@@ -1,72 +1,107 @@
 name: Electron Build and Release
 
 on:
-    push:
-    workflow_dispatch:
+  push:
+  workflow_dispatch:
 
 jobs:
-    build-electron:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            matrix:
-                os: [ubuntu-latest, macos-latest, windows-latest]
-                include:
-                    - os: ubuntu-latest
-                      platform: linux
-                    - os: macos-latest
-                      platform: mac
-                    - os: windows-latest
-                      platform: win
+  build-electron:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # Windows builds
+          - os: windows-latest
+            platform: win
+            arch: x64
+            artifact_name: win-x64
+          - os: windows-latest
+            platform: win
+            arch: ia32
+            artifact_name: win-ia32
+          - os: windows-latest
+            platform: win
+            arch: arm64
+            artifact_name: win-arm64
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
+          # macOS builds (Intel)
+          - os: macos-12
+            platform: mac
+            arch: x64
+            artifact_name: mac-x64
+          # macOS builds (Apple Silicon)
+          - os: macos-13
+            platform: mac
+            arch: arm64
+            artifact_name: mac-arm64
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '22'
-                  cache: 'npm'
+          # Linux builds
+          - os: ubuntu-latest
+            platform: linux
+            arch: x64
+            artifact_name: linux-x64
+          - os: ubuntu-latest
+            platform: linux
+            arch: ia32
+            artifact_name: linux-ia32
+          - os: ubuntu-latest
+            platform: linux
+            arch: arm64
+            artifact_name: linux-arm64
+          - os: ubuntu-latest
+            platform: linux
+            arch: armv7l
+            artifact_name: linux-armv7l
 
-            - name: Install dependencies
-              run: npm install --include=dev
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-            - name: Build Electron app
-              run: npm run build
-              env:
-                  GH_TOKEN: ${{ github.token }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
 
-            - name: Upload artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: qysf-desktop-${{ matrix.platform }}
-                  path: |
-                      dist/*.zip
-                      dist/*.dmg
-                      dist/*.exe
-                      dist/*.AppImage
-                      dist/*.deb
-                      dist/*.rpm
+      - name: Install dependencies
+        run: npm install --include=dev
 
-    create-release:
-        needs: build-electron
-        runs-on: ubuntu-latest
+      - name: Build Electron app
+        run: npm run build
+        env:
+          GH_TOKEN: ${{ github.token }}
 
-        steps:
-            - name: Download all artifacts
-              uses: actions/download-artifact@v4
-              with:
-                  path: artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: qysf-desktop-${{ matrix.platform }}
+          path: |
+            dist/*.zip
+            dist/*.dmg
+            dist/*.exe
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
 
-            - name: List files for debugging
-              run: find artifacts -type f
+  create-release:
+    needs: build-electron
+    runs-on: ubuntu-latest
 
-            - name: Create Release
-              uses: softprops/action-gh-release@v1
-              with:
-                  files: |
-                      artifacts/qysf-desktop-linux/*
-                      artifacts/qysf-desktop-mac/*
-                      artifacts/qysf-desktop-win/*
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List files for debugging
+        run: find artifacts -type f
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/qysf-desktop-linux/*
+            artifacts/qysf-desktop-mac/*
+            artifacts/qysf-desktop-win/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
