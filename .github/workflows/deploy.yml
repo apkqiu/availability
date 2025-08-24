@@ -100,8 +100,14 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            artifacts/qysf-desktop-linux/*
-            artifacts/qysf-desktop-mac/*
-            artifacts/qysf-desktop-win/*
+            artifacts/electron-app-win-x64/*
+            artifacts/electron-app-win-ia32/*
+            artifacts/electron-app-win-arm64/*
+            artifacts/electron-app-mac-x64/*
+            artifacts/electron-app-mac-arm64/*
+            artifacts/electron-app-linux-x64/*
+            artifacts/electron-app-linux-ia32/*
+            artifacts/electron-app-linux-arm64/*
+            artifacts/electron-app-linux-armv7l/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
