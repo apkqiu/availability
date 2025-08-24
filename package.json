@@ -13,7 +13,7 @@
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux"
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/cli": "7.28.3",
     "@babel/core": "7.28.3",
     "clean-css": "^5.3.3",
