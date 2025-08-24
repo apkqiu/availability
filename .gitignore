@@ -6,7 +6,7 @@ avaliability.rar
 __pycache__/
 **/__pycache__/
 .gitignore
-dist/
-web_dist/
-docs/
+dist
+web_dist
+docs
 *.log
