@@ -21,9 +21,9 @@ cpool.waitall()
 cpool.add(IndexCompiler.IndexCompiler())
 cpool.waitall()
 
+os.chdir(old_dir)
 if len(cpool.errors):
     print(stringlib.special_text("编译失败", "31m"))
     cpool.print_errors()
-
+    exit(1)
 print(stringlib.special_text("编译完成", "32m"))
-os.chdir(old_dir)

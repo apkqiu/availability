@@ -5,24 +5,19 @@
     <div class="col-md-2">
         <h3>热点新闻</h3>
         <ul class="list-group" id="news-list">
-            <a class="list-group-item" id="news-wechat" href="#embed=wechat">微信公众号</a>
-            <a class="list-group-item" id="news-1" href="#embed=1">2025.7.27我学生胜利完成本周暑假作业</a>
+            {%for i in listdir("news")%}
+            {%if i[0]!="index"%}
+            <a class="list-group-item" id="news-{{i[0]}}" href="#embed={{i[0]}}">{{get_title(i[1])}}</a>
+            {%endif%}
+            {%endfor%}
         </ul>
     </div>
     <div class="col-md-10">
         <ul class="nav nav-tabs" id="news-tab">
             <li class="nav-item nav-link disabled">周报出版</li>
-            
-            <li class="nav-item"><a class="nav-link" href="#p=1" id="p1">第1期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=2" id="p2">第2期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=3" id="p3">第3期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=4" id="p4">第4期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=5" id="p5">第5期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=5.5" id="p5.5">第5.5期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=6" id="p6">第6期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=7" id="p7">第7期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=8" id="p8">第8期</a></li>
-            <li class="nav-item"><a class="nav-link" href="#p=9" id="p9">第9期</a></li>
+            {% for i in list_newspaper() %}
+            <li class="nav-item"><a class="nav-link" href="#p={{i}}" id="{{i}}">第{{i}}期</a></li>
+            {% endfor %}
         </ul>
 
         <iframe style="width: 100%; height: 70vh" id="iframe"></iframe>
