@@ -46,7 +46,16 @@
 			<span></span>
 			<ul class="navbar-nav hide_on_mobile hide_on_small" id="nav_left">
 				<li class="nav-item">
-					<a class="nav-link" href="./home.html">首页</a>
+					<a class="nav-link" href="/">首页</a>
+					<script>
+						$(document).ready(function () {
+							if (is_electron()) {
+								$("#nav_left li:nth-child(1)").attr("href", "./home.html");
+							}else if(is_using_fileuri()){
+								$("#nav_left li:nth-child(1)").attr("href", "./home.html");
+							}
+						});
+					</script>
 				</li>
 				<li class="nav-item">
 					<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
