@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>扫雷</title>
+        <style>
+            .go_black {
+                background-color: black;
+                animation: go_black 1s ease-in-out;
+            }
+
+            .go_white {
+                background-color: white;
+                opacity: 0;
+                animation: go_white 1s ease-in-out;
+            }
+
+            @keyframes go_black {
+                0% {
+                    background-color: white;
+                    opacity: 0;
+                }
+
+                100% {
+                    background-color: black;
+                    opacity: 1;
+                }
+            }
+
+            @keyframes go_white {
+                0% {
+                    background-color: black;
+                    opacity: 1;
+                }
+
+                100% {
+                    background-color: white;
+                    opacity: 0;
+                }
+            }
+
+            * {
+                color: white;
+            }
+
+            .block {
+                width: 2em;
+                height: 2em;
+            }
+
+            .no_open {
+                background-color: darkgray;
+            }
+
+            .open {
+                background-color: white;
+            }
+
+            .mine {
+                background-color: red;
+            }
+
+            .mine_nonclick {
+                background-color: orange;
+            }
+
+            .flag {
+                background-color: blue !important;
+            }
+
+            .num1 {
+                color: blue;
+            }
+
+            .num2 {
+                color: red;
+            }
+
+            .num3 {
+                color: purple;
+            }
+
+            .num4 {
+                color: orange;
+            }
+
+            .num5 {
+                color: brown;
+            }
+
+            .num6 {
+                color: gray;
+            }
+
+            .num7 {
+                color: black;
+            }
+
+            .num8 {
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body class="go_black">
+        <center>
+            <h1>扫雷</h1>
+        </center>
+
+        <span>剩余雷数：</span>
+        <span id="mineCount"></span>
+
+        <script>
+            // game.html?w=10&h=10&m=10
+            var w = parseInt(location.search.split('=')[1]);
+            var h = parseInt(location.search.split('=')[2]);
+            var m = parseInt(location.search.split('=')[3]);
+            var stage = [];
+            var button = [];
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            var dirx = [-1, -1, -1, 0, 0, 1, 1, 1];
+            var diry = [-1, 0, 1, -1, 1, -1, 0, 1];
+            var puredirx = [1, 0, -1, 0];
+            var purediry = [0, 1, 0, -1];
+            var call_queue = [];
+            var stopped = false;
+
+            function open_block(x, y) {
+                async function wrapper(human = true) {
+                    if (stopped) {
+                        return;
+                    }
+                    if (x < 0 || x >= w || y < 0 || y >= h) {
+                        return;
+                    }
+                    if (button[x][y].classList.contains('open')) {
+                        return;
+                    }
+                    button[x][y].classList.add('open');
+                    if (stage[x][y] == 0) {
+                        for (var i = 0; i < 4; i++) {
+                            var tx = x + puredirx[i];
+                            var ty = y + purediry[i];
+                            if (tx < -1 || tx >= w || ty < 0 || ty >= h) {
+                                continue;
+                            }
+                            call_queue.push(open_block(tx, ty));
+                        }
+                    } else if (stage[x][y] == 99) {
+                        button[x][y].classList.add('mine');
+                        if (!human) return;
+                        alert('你输了');
+                        // open every block
+                        for (var i = 0; i < w; i++) {
+                            for (var j = 0; j < h; j++) {
+                                if (stage[i][j] == 99) {
+                                    if (i == x && j == y) continue;
+                                    button[i][j].classList.add('mine_nonclick');
+                                }
+                            }
+                        }
+                        stopped = true;
+                    } else {
+                        button[x][y].classList.add('num' + stage[x][y]);
+                        button[x][y].innerText = stage[x][y];
+                    }
+                }
+                return wrapper;
+            }
+            function check_no_more_or_less() {
+                var hit = 0;
+                var nonhit = 0;
+                for (var i = 0; i < w; i++) {
+                    for (var j = 0; j < h; j++) {
+                        if (button[i][j].classList.contains('flag')) {
+                            if (stage[i][j] == 99) {
+                                hit++;
+                            } else {
+                                nonhit++;
+                            }
+                        }
+                    }
+                }
+                if (hit == m && nonhit == 0) {
+                    alert('你赢了');
+                    stopped = true;
+                }
+                if (hit + nonhit < m || (hit == m && nonhit == 0)) document.getElementById('mineCount').innerText = m - hit - nonhit;
+                else document.getElementById('mineCount').innerText = '?';
+            }
+            document.getElementById('mineCount').innerText = m;
+            function set_flag(x, y) {
+                function wrapper(e) {
+                    if (stopped) return;
+                    if (button[x][y].classList.contains('flag')) {
+                        button[x][y].classList.remove('flag');
+                    } else {
+                        button[x][y].classList.add('flag');
+                    }
+                    check_no_more_or_less();
+                    e.preventDefault();
+                }
+                return wrapper;
+            }
+            function pop_queue() {
+                var called = 0;
+                while (call_queue.length > 0 && called < call_queue.length) {
+                    call_queue.shift()();
+                    called++;
+                }
+            }
+            setInterval(pop_queue, 1);
+            // fill stage with 0
+            for (var i = 0; i < h; i++) {
+                var tmp = [];
+                var btnln = [];
+                for (var j = 0; j < w; j++) {
+                    tmp.push(0);
+                    var cur = document.createElement('button');
+                    cur.onclick = open_block(i, j);
+                    cur.oncontextmenu = set_flag(i, j);
+                    cur.classList.add('no_open');
+                    cur.classList.add('block');
+                    btnln.push(cur);
+                }
+                stage.push(tmp);
+                button.push(btnln);
+            }
+            function rand_between(min, max) {
+                return (Math.floor(Math.random() * (max - min + 1)) % (max - min + 1)) + min;
+            }
+            for (var i = 0; i < m; i++) {
+                var x = rand_between(0, w - 1);
+                var y = rand_between(0, h - 1);
+                if (stage[x][y] == 99) {
+                    i--;
+                }
+                stage[x][y] = 99;
+            }
+            // pre-process stage
+            for (var i = 0; i < h; i++) {
+                for (var j = 0; j < w; j++) {
+                    if (stage[i][j] != 99) {
+                        for (var k = 0; k < 8; k++) {
+                            var x = j + dirx[k];
+                            var y = i + diry[k];
+                            if (x >= 0 && x < w && y >= 0 && y < h) {
+                                stage[i][j] += stage[y][x] == 99 ? 1 : 0;
+                            }
+                        }
+                    }
+                }
+            }
+            // draw
+            var table = document.createElement('table');
+            for (var i = 0; i < h; i++) {
+                var tr = document.createElement('tr');
+                for (var j = 0; j < w; j++) {
+                    var td = document.createElement('td');
+                    td.appendChild(button[i][j]);
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+            document.body.appendChild(table);
+            async function play_again() {
+                document.body.classList.add('go_white');
+                await sleep(1000);
+                location.reload();
+            }
+            async function go_back(params) {
+                document.body.classList.add('go_white');
+                await sleep(1000);
+                location.href = 'index.html?fade';
+            }
+        </script>
+        <br>
+        <button onclick="play_again()" style="background: gray">再玩一次</button>
+        <br>
+        <br>
+        <form>
+            配置修改
+            <br>
+            <label for="w">宽度：</label>
+            <input style="background: gray" type="number" id="w" name="w" value="10">
+            <br>
+            <label for="h">高度：</label>
+            <input style="background: gray" type="number" id="h" name="h" value="10">
+            <br>
+
+            <label for="m">雷数：</label>
+            <input style="background: gray" type="number" id="m" name="m" value="10">
+            <br>
+
+            <input type="submit" style="background: gray" value="开始新游戏">
+        </form>
+
+        <br>
+        <button onclick="go_back()" style="background: gray">返回</button>
+    </body>
+</html>

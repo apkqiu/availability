@@ -1,0 +1,1 @@
+本来所有文档引入MenuA.js后，要在html里面添加两个div，id分别为MenuAPlace和MenuAArea，现在将这两个div在js里面添加，因而有些html没有跟上维护。将MenuA.js文件名称改为All.js，在所有html更新之前，保留原文件。

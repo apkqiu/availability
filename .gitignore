@@ -7,6 +7,4 @@ __pycache__/
 **/__pycache__/
 .gitignore
 dist
-web_dist
-docs
 *.log
