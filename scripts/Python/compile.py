@@ -2,19 +2,19 @@ import os
 import lib.compiler as compiler
 import lib.compiler.IndexCompiler as IndexCompiler
 import lib.stringlib as stringlib
-
+import lib.execlib as execlib
 
 old_dir = os.getcwd()
-os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/../..")
-os.system("rd /s /q docs")
-
+os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..",".."))
+execlib.remove_item("docs")
 cpool = compiler.CompilerPool(compiler.factory, max_workers=512)
 for dirpath, dirs, files in os.walk("templates"):
     for file in files:
         path = os.path.join(dirpath, file)
-        copy_path = path.replace("templates\\", "docs\\", 1)
+        relpath = os.path.relpath(path, "templates")
+        copy_path = os.path.join("docs", relpath)
         # ensure the directory exists
-        os.makedirs(os.path.dirname(copy_path), exist_ok=True)
+        execlib.ensure_item(os.path.dirname(copy_path), is_dir=True)
         cpool.add(path)
 cpool.waitall()
 

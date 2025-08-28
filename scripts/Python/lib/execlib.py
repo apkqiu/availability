@@ -1,6 +1,6 @@
 import subprocess
 import os
-from tabnanny import check
+import sys
 
 def check_exit(process:subprocess.Popen):
     if process.poll() is not None:
@@ -10,20 +10,64 @@ def check_exit(process:subprocess.Popen):
     return None
 
 
-def exec_cmd(cmd, *args, wait=True):
-    p = subprocess.check_output([cmd, *args], shell=True)
-    return p
+def exec_cmd(cmd, *args,console=False):
+    if console:
+        p = subprocess.call([cmd, *args], shell=True)
+        return p
+    else:
+        p = subprocess.check_output([cmd, *args], shell=True)
+        return p
 
-def exec_node(npm_tool:str, *args, wait=True):
+def exec_node(npm_tool:str, *args,console=False):
     if npm_tool.endswith(".js"):
-        npm_tool = os.path.abspath(".\\scripts\\node\\"+npm_tool)
+        npm_tool = os.path.abspath(os.path.join("scripts", "node", npm_tool))
         cmd = ["node", npm_tool, *args]
     else:
-        npm_tool = os.path.abspath(".\\node_modules\\.bin\\"+npm_tool+".CMD")
+        if sys.platform == "win32":
+            npm_tool = os.path.abspath(os.path.join("node_modules", ".bin", npm_tool+".cmd"))
+        else:
+            npm_tool = os.path.abspath(os.path.join("node_modules", ".bin", npm_tool))
         cmd = [npm_tool, *args]
-    p = subprocess.check_output(cmd, shell=True)
+    p = exec_cmd(*cmd,console=console)
     return p
 
-def exec_wsl(cmd, *args, wait=True):
-    p = subprocess.check_output(["wsl", cmd, *args], shell=True)
+def exec_wsl(cmd, *args, console=False):
+    if sys.platform == "win32":
+        p = exec_cmd("wsl", cmd, *args, console=console)
+    else:
+        p = exec_cmd(cmd, *args, console=console)
     return p
+
+def remove_item(file_or_dir):
+    if not os.path.exists(file_or_dir):
+        return
+    if os.path.isfile(file_or_dir):
+        os.remove(file_or_dir)
+    elif os.path.isdir(file_or_dir):
+        for i in os.listdir(file_or_dir):
+            remove_item(os.path.join(file_or_dir, i))
+        os.rmdir(file_or_dir)
+
+def ensure_item(file_or_dir, is_dir=False):
+    if not os.path.exists(file_or_dir):
+        if is_dir:
+            os.makedirs(file_or_dir)
+        else:
+            os.makedirs(os.path.dirname(file_or_dir))
+            open(file_or_dir, "w").close()
+
+def copy_item(src, dst):
+    if os.path.isfile(src):
+        rfd = open(src, "rb")
+        wfd = open(dst, "wb")
+        while True:
+            buf = rfd.read(1024)
+            if len(buf) == 0:
+                break
+            wfd.write(buf)
+        rfd.close()
+        wfd.close()
+    elif os.path.isdir(src):
+        ensure_item(os.path.join(dst, os.path.basename(src)), True)
+        for i in os.listdir(src):
+            copy_item(os.path.join(src, i), os.path.join(dst, os.path.basename(src), i))
