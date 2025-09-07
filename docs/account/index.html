@@ -39,20 +39,20 @@
 	<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001;backdrop-filter: blur(10px);">
 		<div class="container-fluid">
 			<div class="hide_on_large" id="nav_control">
-				<a class="btn" role="button" href="{root}">
+				<a class="btn" role="button" href="..">
 					<span class="bi-house"></span>
 				</a>
 			</div>
 			<span> 柳荫眠琴 | 账号管理 </span>
 			<ul class="navbar-nav hide_on_mobile hide_on_small" id="nav_left">
 				<li class="nav-item">
-					<a class="nav-link" href="{root}">首页</a>
+					<a class="nav-link" href="..">首页</a>
 					<script>
 						$(document).ready(function () {
 							if (is_electron()) {
-								$("#nav_left li:nth-child(1)").attr("href", "{root}");
+								$("#nav_left li:nth-child(1)").attr("href", "..");
 							}else if(is_using_fileuri()){
-								$("#nav_left li:nth-child(1)").attr("href", "{root}");
+								$("#nav_left li:nth-child(1)").attr("href", "..");
 							}
 						});
 					</script>
@@ -102,7 +102,7 @@
 		<div class="offcanvas-body">
 			<h3>导航</h3>
 			<div class="list-group">
-				<a class="list-group-item" href="{root}">首页</a>
+				<a class="list-group-item" href="..">首页</a>
 				<a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a>
 				<a class="list-group-item" href="../soil_grass/index.html">草皮土壤</a>
 				<a class="list-group-item" href="../text/index.html">文学创作</a>
