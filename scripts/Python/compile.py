@@ -15,10 +15,11 @@ for dirpath, dirs, files in os.walk("templates"):
         copy_path = os.path.join("docs", relpath)
         # ensure the directory exists
         execlib.ensure_item(os.path.dirname(copy_path), is_dir=True)
+        #open(path, "a").close()  # touch the file
         cpool.add(path)
 cpool.waitall()
 
-cpool.add(IndexCompiler.IndexCompiler())
+#cpool.add(IndexCompiler.IndexCompiler())
 cpool.waitall()
 
 os.chdir(old_dir)

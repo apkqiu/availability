@@ -39,6 +39,9 @@ def make_context(path, **ex):
     ret["list_newspaper"] = list_newspaper
 
     def get_title(path):
+        if not os.path.isfile(path):
+            return ""
+        print(path)
         soup = bs4.BeautifulSoup(open(path, "r", encoding="utf-8"), "html.parser")
         # first match title
         for i in soup.find_all("title"):
@@ -52,9 +55,8 @@ def make_context(path, **ex):
 
     ret.update(ex)
     return ret
-
 env = jinja2.Environment(
-    loader=jinja2.loaders.FileSystemLoader("templates", encoding="utf-8")
+    loader=jinja2.loaders.FileSystemLoader("templates", encoding="utf-8", followlinks=False),
 )
 
 

@@ -107,7 +107,8 @@ class CompilerPool:
             raise Exception("Invalid task type")
     def print_errors(self):
         for path, error in self.errors.items():
-            print(f"Error in {path}: {error}")
+            print(f"Error in {path}: {error.__class__.__name__} -> {error}")
+            traceback.print_exception(type(error), error, error.__traceback__)
 
     def waitfor(self, futures):
         if isinstance(futures, collections.abc.Iterable):
