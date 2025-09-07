@@ -92,7 +92,7 @@
 			$('#p' + p).addClass('active');
 			$('#content').html('<div class="spinner-border"></div>');
             $('#frame').addClass('little_bit_white');
-			$.get(true_root + '/news/zhoubao' + p + '.htm')
+			$.get(true_root + '/news/zhoubao' + p + '.html')
 				.then((data) => {
 					$('#content').html(data);
 				})

@@ -217,7 +217,7 @@
 			<a class="list-group-item" id="news-000wechat" href="#embed=000wechat">公众号简介</a>
 			  
 			<a class="list-group-item" id="news-1" href="#embed=1">我的一小步，暑假的一大步——我学生胜利完成本周暑假作业</a>
-			                                                 
+			                                                   
 		</ul>
 	</div>
 	<div class="col-md-10">
@@ -302,7 +302,7 @@
 			$('#p' + p).addClass('active');
 			$('#content').html('<div class="spinner-border"></div>');
             $('#frame').addClass('little_bit_white');
-			$.get(true_root + '/news/zhoubao' + p + '.htm')
+			$.get(true_root + '/news/zhoubao' + p + '.html')
 				.then((data) => {
 					$('#content').html(data);
 				})
