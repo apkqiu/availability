@@ -25,7 +25,6 @@
 	<script src="{{root}}/res/js/localforage.js"></script>
 	<script src="{{root}}/res/js/instant.mjs" type="module"></script>
 	<script src="{{root}}/res/js/utils.js"></script>
-	<script src="{{root}}/res/js/vconsole.js"></script>
 </head>
 <header>
 	<div id="script-mount-node"></div>
@@ -40,9 +39,21 @@
 		style="position: fixed; width: 100%; z-index: 1001;backdrop-filter: blur(10px);">
 		<div class="container-fluid">
 			<div class="hide_on_large" id="nav_control">
-				<a class="btn" role="button" href="{{root}}/home.html">
-					<span class="bi-house"></span>
+				<a class="btn" role="button" id="nav_back">
+					<span class="bi-chevron-left"></span>
 				</a>
+				<a class="btn" role="button" id="nav_home" href="{{root}}/home.html">
+					<span class="bi-house"></span>
+				
+				</a>
+				<script>
+					if(window.location.href.endsWith("/index.html")){
+						if(true_root=="..")	$("#nav_back").attr("href", "../home.html");
+						else $("#nav_back").attr("href", "../index.html");
+					}else{
+						$("#nav_back").attr("href", "./index.html");
+					}
+				</script>
 			</div>
 			<span>{%block title_in%}{%endblock%}</span>
 			<ul class="navbar-nav hide_on_mobile hide_on_small" id="nav_left">
@@ -115,7 +126,6 @@
 				<a class="list-group-item" href="{{root}}/school/index.html">一草种</a>
 				<a class="list-group-item" href="{{root}}/resource/index.html">资料</a>
 				<a class="list-group-item" href="{{root}}/game/index.html">小游戏</a>
-				<a class="list-group-item" href="{{root}}/debug.html">调试</a>
 			</div>
 			<br />
 			<h3>搜索</h3>
@@ -244,10 +254,6 @@
 		// parallax
 		var scene = document.getElementById('scene');
 		var parallax = new Parallax(scene);
-		// VConsole 默认会挂载到 `window.VConsole` 上
-		if (localStorage.getItem('vconsole') == 'true')
-			var vConsole = new window.VConsole();
-
 		function search() {
 			$('#searchResult').empty();
 			if ($('#searchInput').val() == '') {

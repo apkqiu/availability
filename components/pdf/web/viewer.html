@@ -127,6 +127,46 @@ See https://github.com/adobe-type-tools/cmap-resources
 					<div id="toolbarContainer">
 						<div id="toolbarViewer" class="toolbarHorizontalGroup">
 							<div id="toolbarViewerLeft" class="toolbarHorizontalGroup">
+								<style>
+									.no-before::before {
+										all: unset;
+									}
+								</style>
+								<button onclick="window.history.back()" class="toolbarButton no-before" style="width: auto" title="返回">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-chevron-left"
+										viewBox="0 0 16 16"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+										/>
+									</svg>
+								</button>
+								<button
+									onclick="window.location.href='../../../docs/home.html'"
+									class="toolbarButton no-before"
+									style="width: auto"
+									title="首页"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fill="currentColor"
+										class="bi bi-house"
+										viewBox="0 0 16 16"
+									>
+										<path
+											d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"
+										/>
+									</svg>
+								</button>
+								<div class="splitToolbarButtonSeparator"></div>
 								<button
 									id="sidebarToggleButton"
 									class="toolbarButton"
@@ -173,7 +213,6 @@ See https://github.com/adobe-type-tools/cmap-resources
 												>
 													<span data-l10n-id="pdfjs-find-previous-button-label"></span>
 												</button>
-												<div class="splitToolbarButtonSeparator"></div>
 												<button
 													id="findNextButton"
 													class="toolbarButton"
@@ -183,6 +222,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 												>
 													<span data-l10n-id="pdfjs-find-next-button-label"></span>
 												</button>
+												<div class="splitToolbarButtonSeparator"></div>
 											</div>
 										</div>
 
@@ -215,10 +255,10 @@ See https://github.com/adobe-type-tools/cmap-resources
 									<!-- findbar -->
 								</div>
 								<div class="toolbarHorizontalGroup hiddenSmallView">
+									<div class="splitToolbarButtonSeparator"></div>
 									<button class="toolbarButton" type="button" id="previous" tabindex="0" data-l10n-id="pdfjs-previous-button">
 										<span data-l10n-id="pdfjs-previous-button-label"></span>
 									</button>
-									<div class="splitToolbarButtonSeparator"></div>
 									<button class="toolbarButton" type="button" id="next" tabindex="0" data-l10n-id="pdfjs-next-button">
 										<span data-l10n-id="pdfjs-next-button-label"></span>
 									</button>
@@ -244,10 +284,6 @@ See https://github.com/adobe-type-tools/cmap-resources
 									<button id="zoomOutButton" class="toolbarButton" type="button" tabindex="0" data-l10n-id="pdfjs-zoom-out-button">
 										<span data-l10n-id="pdfjs-zoom-out-button-label"></span>
 									</button>
-									<div class="splitToolbarButtonSeparator"></div>
-									<button id="zoomInButton" class="toolbarButton" type="button" tabindex="0" data-l10n-id="pdfjs-zoom-in-button">
-										<span data-l10n-id="pdfjs-zoom-in-button-label"></span>
-									</button>
 								</div>
 								<span id="scaleSelectContainer" class="dropdownToolbarButton">
 									<select id="scaleSelect" tabindex="0" data-l10n-id="pdfjs-zoom-select">
@@ -256,12 +292,12 @@ See https://github.com/adobe-type-tools/cmap-resources
 										<option id="pageFitOption" value="page-fit" data-l10n-id="pdfjs-page-scale-fit"></option>
 										<option id="pageWidthOption" value="page-width" data-l10n-id="pdfjs-page-scale-width"></option>
 										<option
-											id="customScaleOption"
-											value="custom"
-											disabled="disabled"
-											hidden="true"
-											data-l10n-id="pdfjs-page-scale-percent"
-											data-l10n-args='{ "scale": 0 }'
+										id="customScaleOption"
+										value="custom"
+										disabled="disabled"
+										hidden="true"
+										data-l10n-id="pdfjs-page-scale-percent"
+										data-l10n-args='{ "scale": 0 }'
 										></option>
 										<option value="0.5" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 50 }'></option>
 										<option value="0.75" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 75 }'></option>
@@ -273,6 +309,9 @@ See https://github.com/adobe-type-tools/cmap-resources
 										<option value="4" data-l10n-id="pdfjs-page-scale-percent" data-l10n-args='{ "scale": 400 }'></option>
 									</select>
 								</span>
+								<button id="zoomInButton" class="toolbarButton" type="button" tabindex="0" data-l10n-id="pdfjs-zoom-in-button">
+									<span data-l10n-id="pdfjs-zoom-in-button-label"></span>
+								</button>
 							</div>
 							<div id="toolbarViewerRight" class="toolbarHorizontalGroup">
 								<div
@@ -561,7 +600,7 @@ See https://github.com/adobe-type-tools/cmap-resources
 												<span data-l10n-id="pdfjs-open-file-button-label"></span>
 											</button>
 
-											<div class="visibleMediumView" style="visibility: hidden; display: none; height:0">
+											<div class="visibleMediumView" style="visibility: hidden; display: none; height: 0">
 												<button
 													id="secondaryPrint"
 													class="toolbarButton labeled"
