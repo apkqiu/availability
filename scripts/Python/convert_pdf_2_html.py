@@ -5,6 +5,13 @@ for i in os.listdir("templates/news"):
         os.system(f"rmdir /s /q {os.path.join('templates\\news', i)}")
     elif i.startswith("zhoubao"):
         os.remove(os.path.join("templates\\news", i))
+def convert_pdf_2_html(path):
+    word = win32com.client.Dispatch("Word.Application")
+    word.Visible = False
+    doc = word.Documents.Open(path)
+    doc.SaveAs(os.path.join(os.path.dirname(path), os.path.basename(path).replace(".pdf", ".html")), FileFormat=17)
+    doc.Close()
+    word.Quit()
 for i in os.listdir("templates/res/pdf"):
     if i.startswith("~$"):
         continue
