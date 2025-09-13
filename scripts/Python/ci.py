@@ -1,7 +1,6 @@
 import lib.execlib as execlib
 import os
 execlib.exec_cmd("python", "-u", os.path.join("scripts", "Python", "convert_pdf_2_html.py"),console=True)
-execlib.exec_cmd("python", "-u", os.path.join("scripts", "Python", "fix_encoding.py"),console=True)
 execlib.exec_cmd("python", "-u", os.path.join("scripts", "Python", "compile.py"),console=True)
 execlib.exec_cmd("git", "add", ".",console=True)
 execlib.exec_cmd("git", "commit", "-m", "CI build",console=True)
