@@ -1,39 +1,38 @@
-{%extends "parts/main.html"%} {%block title%} 柳荫眠琴 | 账号管理 {%endblock%} {%block title_in%} 柳荫眠琴 | 账号管理 {%endblock%}
-{%block outbody%}
+{%extends "parts/main.html"%} {%block title%} 柳荫眠琴 | 账号管理 {%endblock%} {%block title_in%} 柳荫眠琴 | 账号管理 {%endblock%} {%block outbody%}
 <div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">检测到您没有账号，将跳转创建</div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary" href="register.html">前往</a>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">检测到您没有账号，将跳转创建</div>
+			<div class="modal-footer">
+				<a type="button" class="btn btn-primary" href="register.html">前往</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">
-                更新将清除所有用户数据，继续请输入密码
-                <br />
-                <input id="password" class="form-control" />
-            </div>
-            <div class="modal-footer">
-                <a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">
+				更新将清除所有用户数据，继续请输入密码
+				<br />
+				<input id="password" class="form-control" />
+			</div>
+			<div class="modal-footer">
+				<a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1">
-    <div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-body">密码错误</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-body">密码错误</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 {%endblock%} {%block body%}
@@ -41,165 +40,191 @@
 
 <h3>当前账号</h3>
 <p id="nowAccount">
-    当前账号：<span id="account"></span><br />
-    密码：***
+	当前账号：<span id="account"></span><br />
+	密码：***
 </p>
 
 <hr />
 <h3>账号设置</h3>
 <h4 id="personalization">个性化</h4>
 <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="adv_bg" onchange="save('adv_bg',this.checked)" />
-    <label class="form-check-label" for="adv_bg">高级背景</label>
+	<input class="form-check-input" type="checkbox" role="switch" id="adv_bg" onchange="save('adv_bg',this.checked)" />
+	<label class="form-check-label" for="adv_bg">高级背景</label>
 </div>
-<br>
+<br />
 <div id="basic_bg" class="mb-3 row">
-    <label class="col-form-label col-sm-2" for="color">背景颜色</label>
-    <div class="col-sm-10">
-        <input class="form-control form-control-color" type="color" id="color" onchange="save('color',this.value)"
-            style="display: inline-block;" />
-    </div>
+	<label class="col-form-label col-sm-2" for="color">背景颜色</label>
+	<div class="col-sm-10">
+		<input class="form-control form-control-color" type="color" id="color" onchange="save('color',this.value)" style="display: inline-block" />
+	</div>
 </div>
 <div id="advanced_bg">
-    <div class="mb-3 row">
-        <label class="col-form-label col-sm-2" for="bg">背景图片</label>
-        <div class="col-sm-10">
-            <select class="form-select" onchange="save('imgbg',this.value)" id="imgbg">
-                <option disabled>学校</option>
-                <option value="SchoolGate.jpg">校门口</option>
-                <option value="bg.jpg">后花园</option>
-                <option value="bg-1.jpg">惠阴园</option>
-                <hr>
-                <option disabled>城市</option>
-                <option value="bg-2.png">四川，成都 · 成都非遗博览园缇沃丽酒店</option>
-                <option value="bg-4.jpg">安徽，泾县 · 泾县汉唐纸坊景区</option>
-                <hr>
-                <option disabled>其他</option>
-                <option value="bg-17.1.jpg">未命名（和谐版）</option>
-                <hr>
-                <option disabled>自定义</option>
-                <option value="custom">自定义</option>
-                <hr>
-                <option disabled>禁用（你可以试试卡出来这些图片）</option>
-                <option disabled value="bg-3.jpg">未命名，bg-3.jpg</option>
-                <option disabled value="bg-7.jpg">未命名，bg-7.jpg</option>
-                <option disabled value="bg-10.jpg">未命名，bg-10.jpg</option>
-                <option disabled value="bg-13.jpg">未命名，bg-13.jpg</option>
-                <option disabled value="bg-16.jpg">未命名，bg-16.jpg</option>
-                <option disabled value="bg-17.jpg">未命名，bg-17.jpg</option>
-            </select>
-            <input class="form-control " type="file" id="imgbg_up" onchange="upload(this);save('imgbg','custom')"
-                accept="image/*" />
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="col-form-label col-sm-2" for="bgbrightness">背景亮度</label>
-        <div class="col-sm-8">
-            <input type="range" class="form-range" min="0" max="200" step="1" value="100" id="bgbrightness"
-                oninput="$('#bgbrightness_value').text(this.value)"
-                onchange="save('bgbrightness',this.value,false);save('dark', this.value < 100)" />
-        </div>
-        <div class="col-sm-2">
-            <span id="bgbrightness_value">100</span>
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="col-form-label col-sm-2" for="color">遮罩颜色</label>
-        <div class="col-sm-10">
-            <input class="form-control form-control-color" type="color" id="color2" onchange="save('color',this.value)"
-                style="display: inline-block;" />
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="col-form-label col-sm-2" for="bgbrightness">遮罩不透明度</label>
-        <div class="col-sm-8">
-            <input type="range" class="form-range" min="0" max="100" step="1" value="100" id="coloropacity"
-                oninput="$('#coloropacity_value').text(this.value)" onchange="save('coloropacity',this.value);" />
-
-        </div>
-        <div class="col-sm-2">
-            <span id="coloropacity_value">100</span>
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <label class="col-form-label col-sm-2" for="bgbrightness">背景模糊</label>
-        <div class="col-sm-8">
-            <input type="range" class="form-range" min="0" max="100" step="1" value="100" id="bgblur"
-                oninput="$('#bgblur_value').text(this.value)" onchange="save('bgblur',this.value);" />
-
-        </div>
-        <div class="col-sm-2">
-            <span id="bgblur_value">100</span>
-        </div>
-    </div>
+	<div class="mb-3 row">
+		<label class="col-form-label col-sm-2" for="bg">背景图片</label>
+		<div class="col-sm-10">
+			<select class="form-select" onchange="save('imgbg',this.value)" id="imgbg">
+				<option disabled>学校</option>
+				<option value="SchoolGate.jpg">校门口</option>
+				<option value="bg.jpg">后花园</option>
+				<option value="bg-1.jpg">惠阴园</option>
+				<hr />
+				<option disabled>城市</option>
+				<option value="bg-2.png">四川，成都 · 成都非遗博览园缇沃丽酒店</option>
+				<option value="bg-4.jpg">安徽，泾县 · 泾县汉唐纸坊景区</option>
+				<hr />
+				<option disabled>其他</option>
+				<option value="bg-17.1.jpg">未命名（和谐版）</option>
+				<hr />
+				<option disabled>自定义</option>
+				<option value="custom">自定义</option>
+				<hr />
+				<option disabled>禁用（你可以试试卡出来这些图片）</option>
+				<option disabled value="bg-3.jpg">未命名，bg-3.jpg</option>
+				<option disabled value="bg-7.jpg">未命名，bg-7.jpg</option>
+				<option disabled value="bg-10.jpg">未命名，bg-10.jpg</option>
+				<option disabled value="bg-13.jpg">未命名，bg-13.jpg</option>
+				<option disabled value="bg-16.jpg">未命名，bg-16.jpg</option>
+				<option disabled value="bg-17.jpg">未命名，bg-17.jpg</option>
+			</select>
+			<input class="form-control" type="file" id="imgbg_up" onchange="upload(this);save('imgbg','custom')" accept="image/*" />
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label class="col-form-label col-sm-2" for="bgbrightness">背景亮度</label>
+		<div class="col-sm-8">
+			<input
+				type="range"
+				class="form-range"
+				min="0"
+				max="200"
+				step="1"
+				value="100"
+				id="bgbrightness"
+				oninput="$('#bgbrightness_value').text(this.value)"
+				onchange="save('bgbrightness',this.value,false);save('dark', this.value < 100)"
+			/>
+		</div>
+		<div class="col-sm-2">
+			<span id="bgbrightness_value">100</span>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label class="col-form-label col-sm-2" for="color">遮罩颜色</label>
+		<div class="col-sm-10">
+			<input
+				class="form-control form-control-color"
+				type="color"
+				id="color2"
+				onchange="save('color',this.value)"
+				style="display: inline-block"
+			/>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label class="col-form-label col-sm-2" for="bgbrightness">遮罩不透明度</label>
+		<div class="col-sm-8">
+			<input
+				type="range"
+				class="form-range"
+				min="0"
+				max="100"
+				step="1"
+				value="100"
+				id="coloropacity"
+				oninput="$('#coloropacity_value').text(this.value)"
+				onchange="save('coloropacity',this.value);"
+			/>
+		</div>
+		<div class="col-sm-2">
+			<span id="coloropacity_value">100</span>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<label class="col-form-label col-sm-2" for="bgbrightness">背景模糊</label>
+		<div class="col-sm-8">
+			<input
+				type="range"
+				class="form-range"
+				min="0"
+				max="100"
+				step="1"
+				value="100"
+				id="bgblur"
+				oninput="$('#bgblur_value').text(this.value)"
+				onchange="save('bgblur',this.value);"
+			/>
+		</div>
+		<div class="col-sm-2">
+			<span id="bgblur_value">100</span>
+		</div>
+	</div>
 </div>
-<br>
+<br />
 <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="dark" onchange="save('dark',this.checked)" />
-    <label class="form-check-label" for="dark">深色模式</label>
+	<input class="form-check-input" type="checkbox" role="switch" id="dark" onchange="save('dark',this.checked)" />
+	<label class="form-check-label" for="dark">深色模式</label>
 </div>
 <div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="no-anim"
-        onchange="save('no-anim',this.checked)" />
-    <label class="form-check-label" for="no-anim">关闭元素动态效果</label>
+	<input class="form-check-input" type="checkbox" role="switch" id="no-anim" onchange="save('no-anim',this.checked)" />
+	<label class="form-check-label" for="no-anim">关闭元素动态效果</label>
 </div>
 <hr />
 <button type="button" class="btn btn-danger m-1" onclick="$('#password').val('');$('#Ask').modal('show')">注销</button>
 <a class="btn btn-primary m-1" href="register.html">注册</a>
 
 <script>
-    var usernameJSONValue = localStorage.getItem('username');
-    var accountBe = localStorage.getItem('accountBe');
-    var usernameValue = JSON.parse(usernameJSONValue);
-    $('#account').text(usernameValue);
-    $(document).ready(function () {
-        if (!accountBe) {
-            //$('#Error').modal('show');
-        }
-        $('#color').val(localStorage.getItem('color') || '#000000');
-        $('#color2').val(localStorage.getItem('color') || '#000000');
-        $('#no-anim').prop('checked', (localStorage.getItem('no-anim') || 'false') == 'true');
-        $('#adv_bg').prop('checked', (localStorage.getItem('adv_bg') || 'true') == 'true');
-        $('#dark').prop('checked', (localStorage.getItem('dark') || 'true') == 'true');
-        $('#imgbg').val(localStorage.getItem('imgbg') || '');
-        $("#bgbrightness").val(localStorage.getItem('bgbrightness') || '50');
-        $("#bgbrightness_value").text($("#bgbrightness").val());
-        $("#coloropacity").val(localStorage.getItem('coloropacity') || '0');
-        $("#coloropacity_value").text($("#coloropacity").val());
-        $("#bgblur").val(localStorage.getItem('bgblur') || '0');
-        $("#bgblur_value").text($("#bgblur").val());
-        
-        if (localStorage.getItem('adv_bg') == 'true') {
-            $('#basic_bg').addClass("hidden");
-        } else {
-            $("#advanced_bg").addClass("hidden");
-        }
-        if (localStorage.getItem('imgbg') != 'custom') {
-            $("#imgbg_up").addClass("hidden");
-        }
-    });
-    function save(name, value, reload = true) {
-        localStorage.setItem(name, value);
-        if (reload) location.reload();
-    }
-    function clear() {
-        var password = $('#password').val();
-        if (password == '密码') {
-            localStorage.clear();
-            location.href = '../home.html';
-        } else {
-            $('#Ask').modal('hide');
-            $('#Error2').modal('show');
-        }
-    }
-    function upload(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                localforage.setItem('imgbg', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+	var usernameJSONValue = localStorage.getItem('username');
+	var accountBe = localStorage.getItem('accountBe');
+	var usernameValue = JSON.parse(usernameJSONValue);
+	$('#account').text(usernameValue);
+	if (!accountBe) {
+		//$('#Error').modal('show');
+	}
+	$('#color').val(localStorage.getItem('color') || '#000000');
+	$('#color2').val(localStorage.getItem('color') || '#000000');
+	$('#no-anim').prop('checked', (localStorage.getItem('no-anim') || 'false') == 'true');
+	$('#adv_bg').prop('checked', (localStorage.getItem('adv_bg') || 'true') == 'true');
+	$('#dark').prop('checked', (localStorage.getItem('dark') || 'true') == 'true');
+	$('#imgbg').val(localStorage.getItem('imgbg') || '');
+	$('#bgbrightness').val(localStorage.getItem('bgbrightness') || '50');
+	$('#bgbrightness_value').text($('#bgbrightness').val());
+	$('#coloropacity').val(localStorage.getItem('coloropacity') || '0');
+	$('#coloropacity_value').text($('#coloropacity').val());
+	$('#bgblur').val(localStorage.getItem('bgblur') || '0');
+	$('#bgblur_value').text($('#bgblur').val());
+
+	if (localStorage.getItem('adv_bg') == 'true') {
+		$('#basic_bg').addClass('hidden');
+	} else {
+		$('#advanced_bg').addClass('hidden');
+	}
+	if (localStorage.getItem('imgbg') != 'custom') {
+		$('#imgbg_up').addClass('hidden');
+	}
+</script>
+<script global>
+	function save(name, value, reload = true) {
+		localStorage.setItem(name, value);
+		if (reload) location.reload();
+	}
+	function clear() {
+		var password = $('#password').val();
+		if (password == '密码') {
+			localStorage.clear();
+			location.href = '../home.html';
+		} else {
+			$('#Ask').modal('hide');
+			$('#Error2').modal('show');
+		}
+	}
+	function upload(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				localforage.setItem('imgbg', e.target.result);
+			};
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>
 {%endblock%}

@@ -28,5 +28,7 @@
     "uglify-js": "3.19.3",
     "webpack": "5.101.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lzma": "^2.3.2"
+  }
 }

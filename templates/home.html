@@ -7,9 +7,7 @@
 				<h1 class="modal-title fs-5" id="exampleModalLabel">公众号</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
-			<div class="modal-body">
-				{%include "news/000wechat.html"%}
-			</div>
+			<div class="modal-body">{%include "news/000wechat.html"%}</div>
 		</div>
 	</div>
 </div>
@@ -91,9 +89,7 @@
 				<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
 				<a class="btn" href="{{root}}/contact.html">联系我们</a>
 				<span width="20px"></span>
-                <a class="btn" href="https://github.com/apkqiu/availability/releases/latest" id="desktop-client-download-sm">
-                    下载电脑客户端
-                </a>
+				<a class="btn" href="https://github.com/apkqiu/availability/releases/latest" id="desktop-client-download-sm"> 下载电脑客户端 </a>
 				<script>
 					$('#release').click(function () {
 						window.location.href = root + '/home.html';
@@ -118,16 +114,12 @@
 				<a class="btn release-only" href="{{root}}/../old/zhuye.html">前往旧版</a>
 				<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
 				<a class="btn" href="{{root}}/contact.html">联系我们</a>
-                <a class="btn" href="javascript:alert('请进群下载安装包，iOS暂未开放下载。')" id="desktop-client-download-sm">
-                    下载手机客户端
-                </a>
+				<a class="btn" href="javascript:alert('请进群下载安装包，iOS暂未开放下载。')" id="desktop-client-download-sm"> 下载手机客户端 </a>
 				<script>
-					$(document).ready(function () {
-						if (is_electron()) {
-                            $('#desktop-client-download-sm').addClass('hidden');
-                            $('#desktop-client-download').addClass('hidden');
-						}
-					});
+					if (is_electron()) {
+						$('#desktop-client-download-sm').addClass('hidden');
+						$('#desktop-client-download').addClass('hidden');
+					}
 					$('#release').click(function () {
 						window.location.href = root + '/home.html';
 					});
@@ -137,21 +129,12 @@
 	</div>
 </div>
 <script>
-	$(document).ready(function () {
-		if (root != true_root) {
-			$('#nav_left').hide(100);
-			$('#nav_control').hide(100);
-			$('#nav').css('backdropFilter', 'none');
-			$('#footer').addClass('hide_on_large hide_on_small');
-		} else {
-			$('#nav_left').addClass('hidden');
-			$('#nav_control').addClass('hidden');
-			$('#nav').css('backdropFilter', 'none');
-			$('#footer').addClass('hide_on_large hide_on_small');
-		}
-		if (is_using_fileuri() && !is_electron()) {
-			$('#fileuri_warn').modal('show');
-		}
-	});
+	$('#nav_left').hide();
+	$('#nav_control').hide();
+	$('#nav').css('backdropFilter', 'none');
+	$('#footer').addClass('hide_on_large hide_on_small');
+	if (is_using_fileuri() && !is_electron()) {
+		$('#fileuri_warn').modal('show');
+	}
 </script>
 {%endblock%}

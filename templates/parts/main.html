@@ -1,299 +1,310 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" style="min-height: 100vh" id="html-root">
-
-<head>
-
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>{%block title%}{%endblock%}</title>
-
-	<link rel="stylesheet" href="{{root}}/res/css/bootstrap.css" />
-	<link rel="stylesheet" href="{{root}}/res/css/bootstrap-icons.css" />
-	<link rel="stylesheet" href="{{root}}/res/css/utils.css" />
-
-	<script>
-		var root = '{{root}}';
-		var true_root = '{{root}}';
-	</script>
-	<!--script src="{{root}}/res/js/F12-detect.js" async></script>
-	<script src="{{root}}/res/js/contextmenu.js" async></script-->
-	<script src="{{root}}/res/js/bootstrap.bundle.js" defer></script>
-	<script src="{{root}}/res/js/levenshetin.js"></script>
-	<script src="{{root}}/res/js/jquery-3.6.0.js"></script>
-	<script src="{{root}}/res/js/parallax.js"></script>
-	<script src="{{root}}/res/js/obj_index.js"></script>
-	<script src="{{root}}/res/js/localforage.js"></script>
-	<script src="{{root}}/res/js/instant.mjs" type="module"></script>
-	<script src="{{root}}/res/js/utils.js"></script>
-</head>
-<header>
-	<div id="script-mount-node"></div>
-
-	<div id="customMenu" class="dropdown-menu" style="z-index: 50000;">
-		<button class="dropdown-item" id="cut">剪切</button>
-		<button class="dropdown-item" id="copy">复制</button>
-		<button class="dropdown-item" id="paste">粘贴</button>
-	</div>
-
-	<nav class="navbar navbar-expand-sm" id="nav"
-		style="position: fixed; width: 100%; z-index: 1001;backdrop-filter: blur(10px);">
-		<div class="container-fluid">
-			<div class="hide_on_large" id="nav_control">
-				<a class="btn" role="button" id="nav_back">
-					<span class="bi-chevron-left"></span>
-				</a>
-				<a class="btn" role="button" id="nav_home" href="{{root}}/home.html">
-					<span class="bi-house"></span>
-				
-				</a>
-				<script>
-					if(window.location.href.endsWith("/index.html")){
-						if(true_root=="..")	$("#nav_back").attr("href", "../home.html");
-						else $("#nav_back").attr("href", "../index.html");
-					}else{
-						$("#nav_back").attr("href", "./index.html");
-					}
-				</script>
-			</div>
-			<span>{%block title_in%}{%endblock%}</span>
-			<ul class="navbar-nav hide_on_mobile hide_on_small" id="nav_left">
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/home.html">首页</a>
-					<script>
-						$(document).ready(function () {
-							if (is_electron()) {
-								$("#nav_left li:nth-child(1)").attr("href", "{{root}}/home.html");
-							}else if(is_using_fileuri()){
-								$("#nav_left li:nth-child(1)").attr("href", "{{root}}/home.html");
-							}
-						});
-					</script>
-				</li>
-				<li class="nav-item">
-					<button type="button" class="nav-link" data-bs-toggle="modal"
-						data-bs-target="#exampleModal">公告</button>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/soil_grass/index.html">草皮土壤</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/text/index.html">文学创作</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/web_maker/index.html">自制网页</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/account/index.html">账号管理</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/news/index.html">周报</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/school/index.html">一草种</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/resource/index.html">资料</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{root}}/game/index.html">小游戏</a>
-				</li>
-			</ul>
-			<div class="d-flex">
-				<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
-					<span class="navbar-toggler-icon"></span>
-				</a>
-			</div>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>
+			<!-- block title -->
+			{%block title%}{%endblock%}
+			<!-- endblock -->
+		</title>
+		<script>
+			if (typeof root == 'undefined') {
+				globalThis.root = '{{root}}';
+				globalThis.true_root = '{{root}}';
+			}
+		</script>
+        {% for i in listdir("res/js")%}
+        <script src="{{root}}/res/js/{{i[0]}}.js"></script>
+        {% endfor %}
+        {% for i in listdir("res/css")%}
+        <link rel="stylesheet" href="{{root}}/res/css/{{i[0]}}.css">
+        {% endfor %}
+        {% for i in listdir("res/modules")%}
+        <script src="{{root}}/res/modules/{{i[0]}}.mjs"></script>
+        {% endfor %}
+		<!--script src="{{root}}/res/start/js_loader.js"></script-->
+        <!--Still Imcomplete-->
+	</head>
+	<header>
+		<div id="metadata" style="display: none; width:0; height:0;overflow: hidden;">
+			<!-- block rootdef -->
+			{% block rootdef %}
+			{{root}}
+			{% endblock %}
+			<!-- endblock -->
 		</div>
-	</nav>
+		<div id="script-mount-node"></div>
+		
+		<div id="customMenu" class="dropdown-menu" style="z-index: 50000">
+			<button class="dropdown-item" id="cut">剪切</button>
+			<button class="dropdown-item" id="copy">复制</button>
+			<button class="dropdown-item" id="paste">粘贴</button>
+		</div>
 
-	<!-- Offcanvas -->
-	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
-		<div class="offcanvas-header">
-			<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
-			<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-		</div>
-		<div class="offcanvas-body">
-			<h3>导航</h3>
-			<div class="list-group">
-				<a class="list-group-item" href="{{root}}/home.html">首页</a>
-				<a type="button" href="#" class="list-group-item" data-bs-toggle="modal"
-					data-bs-target="#exampleModal">公告</a>
-				<a class="list-group-item" href="{{root}}/soil_grass/index.html">草皮土壤</a>
-				<a class="list-group-item" href="{{root}}/text/index.html">文学创作</a>
-				<a class="list-group-item" href="{{root}}/web_maker/index.html">自制网页</a>
-				<a class="list-group-item" href="{{root}}/account/index.html">账号管理</a>
-				<a class="list-group-item" href="{{root}}/news/index.html">周报</a>
-				<a class="list-group-item" href="{{root}}/school/index.html">一草种</a>
-				<a class="list-group-item" href="{{root}}/resource/index.html">资料</a>
-				<a class="list-group-item" href="{{root}}/game/index.html">小游戏</a>
-			</div>
-			<br />
-			<h3>搜索</h3>
-			<ul class="list-group">
-				<li class="input-group clearfix">
-					<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
-					<button class="btn btn-outline-secondary" type="button" id="button-addon2"
-						onclick="search()">搜索</button>
-				</li>
-				<div id="searchResult"></div>
-			</ul>
-		</div>
-	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1">
-		<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
+			<div class="container-fluid">
+				<div class="hide_on_large" id="nav_control">
+					<a class="btn" role="button" id="nav_back">
+						<span class="bi-chevron-left"></span>
+					</a>
+					<a class="btn" role="button" id="nav_home" href="{{root}}/home.html">
+						<span class="bi-house"></span>
+					</a>
 				</div>
-				<div class="modal-body">
-					<h2>v2.6.1 版本更新</h2>
-					<h3>功能改进</h3>
-					<ol>
-						<li>将所有的data URI的图片全部实体化进入res/img文件夹</li>
-					</ol>
-					<h3>内容上新</h3>
-					<ol>
-						<li>新增第10期周报</li>
-					</ol>
-					<hr>
-					<h2>v2.6.0 版本更新</h2>
-					<h3>漏洞修复</h3>
-					<ol>
-						<li>修复<a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79 (网页生成期间输入的不当中和)</a></li>
-					</ol>
-					<h3>Bug修复</h3>
-					<ol>
-						<li>修复了背景的bug</li>
-						<li>修复了在手机浏览器不能查看PDF的Bug</li>
-						<li>修复了页面的死链接、404的Bug</li>
-						<li>修复了背景视差图像显示黑（白）边的Bug</li>
-						<li>修复了导航栏层级错误的Bug</li>
-						<li>修复了搜索框结果过于死板的Bug</li>
-						<li>修复了文章页面默认没有选中任何文章的Bug</li>
-					</ol>
-					<h3>功能改进</h3>
-					<ol>
-						<li>个性化设置内容重新分类</li>
-						<li>使用AJAX加载文章，确保“框架优先”原则</li>
-						<li>为HTML、CSS、JS的编译进行压缩，提高加载速度</li>
-						<li>将文章展示页的ID参数由“?”转为“#”，提高加载速度</li>
-						<li>使用完整的导航条</li>
-					</ol>
+				<span id="PART_title_in">
+					<!-- block title_in -->
+					{%block title_in%}{%endblock%}
+					<!-- endblock -->
+				</span>
+				<ul class="navbar-nav hide_on_mobile hide_on_small me-auto" id="nav_left">
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/home.html">首页</a>
+					</li>
+					<li class="nav-item">
+						<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/soil_grass/index.html">草皮土壤</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/text/index.html">文学创作</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/web_maker/index.html">自制网页</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/account/index.html">账号管理</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/news/index.html">周报</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/school/index.html">一草种</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/resource/index.html">资料</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link need-update-root" href="{{root}}/game/index.html">小游戏</a>
+					</li>
+				</ul>
+				<div class="d-flex">
+					<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
+						<span class="navbar-toggler-icon"></span>
+					</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Offcanvas -->
+		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
+			<div class="offcanvas-header">
+				<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+			</div>
+			<div class="offcanvas-body">
+				<h3>导航</h3>
+				<div class="list-group">
+					<a class="list-group-item need-update-root" href="{{root}}/home.html">首页</a>
+					<a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a>
+					<a class="list-group-item need-update-root" href="{{root}}/soil_grass/index.html">草皮土壤</a>
+					<a class="list-group-item need-update-root" href="{{root}}/text/index.html">文学创作</a>
+					<a class="list-group-item need-update-root" href="{{root}}/web_maker/index.html">自制网页</a>
+					<a class="list-group-item need-update-root" href="{{root}}/account/index.html">账号管理</a>
+					<a class="list-group-item need-update-root" href="{{root}}/news/index.html">周报</a>
+					<a class="list-group-item need-update-root" href="{{root}}/school/index.html">一草种</a>
+					<a class="list-group-item need-update-root" href="{{root}}/resource/index.html">资料</a>
+					<a class="list-group-item need-update-root" href="{{root}}/game/index.html">小游戏</a>
+				</div>
+				<br />
+				<h3>搜索</h3>
+				<ul class="list-group">
+					<li class="input-group clearfix">
+						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
+						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
+					</li>
+					<div id="searchResult"></div>
+				</ul>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">公告</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<h2>v2.6.1 版本更新</h2>
+						<h3>功能改进</h3>
+						<ol>
+							<li>将所有的data URI的图片全部实体化进入res/img文件夹</li>
+						</ol>
+						<h3>内容上新</h3>
+						<ol>
+							<li>新增第10期周报</li>
+						</ol>
+						<hr />
+						<h2>v2.6.0 版本更新</h2>
+						<h3>漏洞修复</h3>
+						<ol>
+							<li>修复<a href="https://cwe.mitre.org/data/definitions/79.html">CWE-79 (网页生成期间输入的不当中和)</a></li>
+						</ol>
+						<h3>Bug修复</h3>
+						<ol>
+							<li>修复了背景的bug</li>
+							<li>修复了在手机浏览器不能查看PDF的Bug</li>
+							<li>修复了页面的死链接、404的Bug</li>
+							<li>修复了背景视差图像显示黑（白）边的Bug</li>
+							<li>修复了导航栏层级错误的Bug</li>
+							<li>修复了搜索框结果过于死板的Bug</li>
+							<li>修复了文章页面默认没有选中任何文章的Bug</li>
+						</ol>
+						<h3>功能改进</h3>
+						<ol>
+							<li>个性化设置内容重新分类</li>
+							<li>使用AJAX加载文章，确保“框架优先”原则</li>
+							<li>为HTML、CSS、JS的编译进行压缩，提高加载速度</li>
+							<li>将文章展示页的ID参数由“?”转为“#”，提高加载速度</li>
+							<li>使用完整的导航条</li>
+						</ol>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</header>
+	</header>
 
-<body style="min-height: 100vh">
-	<div
-		style="position: fixed; left: 50vw; top: 50vh; right: 50vw; bottom: 50vh; transform: translate(-50%, -50%); width:130vw; height: 130vh; overflow: hidden; z-index: -10">
-		<ul id="scene" style="height: 100%; width: 100%;">
-			<li class="layer" data-depth="0.4" style="height: 100%; width: 100%;">
-				<img id="bg" style="height: 100%; width: 100%; object-fit:cover;" />
-			</li>
-		</ul>
-	</div>
-	{%block outbody%} {%endblock%}
-	<div id="mask" style="min-height: 100vh">
-		<div style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden;" id="mainbody">
-			<div style="min-height: calc(100vh - 58px); margin: 0 10px" id="app">{%block body%}{%endblock%}</div>
-			<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
-				<small>
-					如果你要提供意见，请 <a href="{{root}}/contact.html">联系我们</a>
-					<i> <br />电话：13270463238 <br />邮箱:Caixukun11451489@outlook.com </i>
-					<b> <br />版权所有 ©<span id="yr">2025</span> 洽隐山房，保留所有权利</b>
-				</small>
+	<body style="min-height: 100vh">
+		<div
+			style="
+				position: fixed;
+				left: 50vw;
+				top: 50vh;
+				right: 50vw;
+				bottom: 50vh;
+				transform: translate(-50%, -50%);
+				width: 130vw;
+				height: 130vh;
+				overflow: hidden;
+				z-index: -10;
+			"
+		>
+			<ul id="scene" style="height: 100%; width: 100%">
+				<li class="layer" data-depth="0.4" style="height: 100%; width: 100%">
+					<img id="bg" style="height: 100%; width: 100%; object-fit: cover" />
+				</li>
+			</ul>
+		</div>
+		<div id="PART_outbody">
+		<!-- block outbody -->
+		{%block outbody%} {%endblock%}
+		<!-- endblock -->
+		</div>
+		<div id="mask" style="min-height: 100vh">
+			<div style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden" id="mainbody">
+				<div id="loading-mask" style="position: fixed;left:50vw;top:50vh;transform: translate(-50%,-50%);z-index: 1000;display: none;">
+					<div class="spinner-border" style="width:50px;height:50px;"></div>
+				</div>
+				<div style="min-height: calc(100vh - 58px); margin: 0 10px" id="PART_body">
+					<!-- block body -->
+					{%block body%}{%endblock%}
+					<!-- endblock -->
+				</div>
+				<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
+					<small>
+						如果你要提供意见，请 <a href="{{root}}/contact.html">联系我们</a>
+						<i> <br />电话：13270463238 <br />邮箱:Caixukun11451489@outlook.com </i>
+						<b> <br />版权所有 ©<span id="yr">2025</span> 洽隐山房，保留所有权利</b>
+					</small>
+				</div>
 			</div>
 		</div>
-	</div>
-</body>
-<footer>
-	<script>
-		if (new Date().getFullYear() > 2025) {
-			$("#yr").text("2025-" + new Date().getFullYear());
-		}
-		// personalization
-		var color = localStorage.getItem('color') || '#000000';
-		if (localStorage.getItem('adv_bg') == 'false') {
-			$('#bg').css('display', 'none');
-			$('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
-		}
-		else {
-			var brightness = localStorage.getItem('bgbrightness') || 50;
-			if (brightness >= 100) $('#mask').css('background', 'rgba(255,255,255,' + ((brightness - 100) / 100) + ')');
-			else $('#mask').css('background', 'rgba(0,0,0,' + ((100 - brightness) / 100) + ')');
-			var coloropacity = localStorage.getItem('coloropacity') || 0;
-			$("#mainbody").css('background', 'rgba(' + hex2rgb(color).join(',') + ',' + (coloropacity / 100) + ')');
-			$("#bg").css("filter", "blur(" + (new Number(localStorage.getItem('bgblur')) || 0) + "px)");
-		}
-		if (localStorage.getItem('no-anim') == 'true') {
-			var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
-			$('#script-mount-node').append(style_noanim);
-		}
-		if ((localStorage.getItem('dark') || 'true') == 'true') {
-			$('#html-root').attr('data-bs-theme', 'dark');
-		}
-		var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
-		if (img == 'custom') {
-			localforage.getItem('imgbg').then(function (value) {
-				$('#bg').attr('src', value);
-			});
-		} else {
-			$('#bg').attr('src', root + '/res/img/' + img);
-		}
-		// search
-		$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
-		// navbar fix
-		$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-		$(window).resize(function () {
+	</body>
+	<footer>
+		<script>
+			if (is_electron()) {
+				$('#nav_left li:nth-child(1)').attr('href', '{{root}}/home.html');
+			} else if (is_using_fileuri()) {
+				$('#nav_left li:nth-child(1)').attr('href', '{{root}}/home.html');
+			}
+			if (window.location.href.endsWith('/index.html')) {
+				if (true_root == '..') $('#nav_back').attr('href', '../home.html');
+				else $('#nav_back').attr('href', '../index.html');
+			} else {
+				$('#nav_back').attr('href', './index.html');
+			}
+
+			if (new Date().getFullYear() > 2025) {
+				$('#yr').text('2025-' + new Date().getFullYear());
+			}
+			// personalization
+			var color = localStorage.getItem('color') || '#000000';
+			if (localStorage.getItem('adv_bg') == 'false') {
+				$('#bg').css('display', 'none');
+				$('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',1)');
+			} else {
+				var brightness = localStorage.getItem('bgbrightness') || 50;
+				if (brightness >= 100) $('#mask').css('background', 'rgba(255,255,255,' + (brightness - 100) / 100 + ')');
+				else $('#mask').css('background', 'rgba(0,0,0,' + (100 - brightness) / 100 + ')');
+				var coloropacity = localStorage.getItem('coloropacity') || 0;
+				$('#mainbody').css('background', 'rgba(' + hex2rgb(color).join(',') + ',' + coloropacity / 100 + ')');
+				$('#bg').css('filter', 'blur(' + (new Number(localStorage.getItem('bgblur')) || 0) + 'px)');
+			}
+			if (localStorage.getItem('no-anim') == 'true') {
+				var style_noanim = $('<style>*{transition: none !important;animation: none !important;}</style>');
+				$('#script-mount-node').append(style_noanim);
+			}
+			if ((localStorage.getItem('dark') || 'true') == 'true') {
+				$('#html-root').attr('data-bs-theme', 'dark');
+			}
+			var img = localStorage.getItem('imgbg') || 'bg-1.jpg';
+			if (img == 'custom') {
+				localforage.getItem('imgbg').then(function (value) {
+					$('#bg').attr('src', value);
+				});
+			} else {
+				$('#bg').attr('src', root + '/res/img/' + img);
+			}
+			// search
+			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+			// navbar fix
 			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-		});
-		// parallax
-		var scene = document.getElementById('scene');
-		var parallax = new Parallax(scene);
-		function search() {
-			$('#searchResult').empty();
-			if ($('#searchInput').val() == '') {
-				$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
-				return;
-			}
-			var res = search_document($('#searchInput').val());
-			res.forEach((res) => {
-				$('#searchResult').append(
-					$('<a class="list-group-item"></a>')
-						.attr('href', root + res.url)
-						.click(() => {
-							$("#offcanvasExample").offcanvas('hide');
-							$('#searchInput').val('');
-						})
-						.append(
-							$('<span></span>')
-								.css("float", "left")
-								.text(res.title)
-						)
-						.append(
-							$('<span></span>')
-								.css("float", "right")
-								.css("opacity", "0.5")
-								.text(res.tag)
-						).append(
-							$("<div></div>")
-								.css("clear", "both")
-						)
-				);
+			$(window).resize(function () {
+				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
 			});
-			if (res.length == 0) {
-				$('#searchResult').append(
-					$('<a class="list-group-item"></a>')
-						.attr('href', '#')
-						.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
-				);
+			// parallax
+			var scene = document.getElementById('scene');
+			var parallax = new Parallax(scene);
+			function search() {
+				$('#searchResult').empty();
+				if ($('#searchInput').val() == '') {
+					$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
+					return;
+				}
+				var res = search_document($('#searchInput').val());
+				res.forEach((res) => {
+					$('#searchResult').append(
+						$('<a class="list-group-item"></a>')
+							.attr('href', root + res.url)
+							.click(() => {
+								$('#offcanvasExample').offcanvas('hide');
+								$('#searchInput').val('');
+							})
+							.append($('<span></span>').css('float', 'left').text(res.title))
+							.append($('<span></span>').css('float', 'right').css('opacity', '0.5').text(res.tag))
+							.append($('<div></div>').css('clear', 'both'))
+					);
+				});
+				if (res.length == 0) {
+					$('#searchResult').append(
+						$('<a class="list-group-item"></a>')
+							.attr('href', '#')
+							.text('没有找到关于“' + $('#searchInput').val() + '”的结果')
+					);
+				}
 			}
-		}
-	</script>
-</footer>
-
+		</script>
+	</footer>
 </html>

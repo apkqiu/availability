@@ -9,18 +9,17 @@ const fileContent = fs.readFileSync(filePath, 'utf-8');
 
 // 压缩HTML
 const compressedContent = minify(fileContent, {
-    // collapseWhitespace: true,
-    // collapseBooleanAttributes: true,
-    // removeAttributeQuotes: true,
-    // removeComments: true,
-    // removeRedundantAttributes: true,
-    // removeScriptTypeAttributes: true,
-    // removeStyleLinkTypeAttributes: true,
-    // removeEmptyAttributes: true,
-    // useShortDoctype: true,
-    // minifyJS:true,
-    // minifyCSS:true,
-    // removeTagWhitespace: true,
-    // collapseBooleanAttributes: true,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true,
+    removeAttributeQuotes: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    removeEmptyAttributes: true,
+    useShortDoctype: true,
+    minifyJS:true,
+    minifyCSS:true,
+    removeTagWhitespace: true,
+    collapseBooleanAttributes: true,
 })
 console.log(compressedContent);
