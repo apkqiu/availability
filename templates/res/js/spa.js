@@ -18,6 +18,14 @@ function navigate(url, replace = false, anim = true) {
         $("#PART_body").addClass("fadeOut");
     }
     document.title = "正在加载...";
+
+    // RESET
+
+    $('#nav_left').show(100);
+    $('#nav_control').show(100);
+    $('#nav').css('backdropFilter', 'blur(10px)');
+    $('#footer').removeClass('hide_on_large hide_on_small');
+
     $("#loading-mask").show();
     $.get(urlpath + ".json").then((data) => {
         set_viewdata(data, url, replace, anim);
@@ -28,10 +36,13 @@ function navigate(url, replace = false, anim = true) {
             var title_str = xhr.responseText.substring(title + 7, title_end);
         else
             var title_str = "错误";
+        // 此处的body需要去除script和style标签
+        var body = xhr.responseText.replace(/<script.*?>.*?<\/script>/g, "").replace(/<style.*?>.*?<\/style>/g, "");
+        
         set_viewdata({
             title: title_str,
             title_in: title_str,
-            body: xhr.responseText,
+            body: body,
         }, url)
     });
 }
@@ -57,12 +68,6 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
         $("#PART_body").addClass("fadeIn");
     }
     $("#loading-mask").hide();
-    // RESET
-
-    $('#nav_left').show(100);
-    $('#nav_control').show(100);
-    $('#nav').css('backdropFilter', 'blur(10px)');
-    $('#footer').removeClass('hide_on_large hide_on_small');
 
     // EXECUTE SCRIPT AT OUTBODY AND BODY
     // find all script tags in outbody and body
