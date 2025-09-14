@@ -20,6 +20,7 @@ function navigate(url, replace = false, anim = true) {
     document.title = "正在加载...";
 
     // RESET
+    $("#offcanvasExample").offcanvas('hide');
 
     $('#nav_left').show(100);
     $('#nav_control').show(100);
@@ -50,7 +51,7 @@ function navigate(url, replace = false, anim = true) {
             body = body.substring(0, style_start) + body.substring(style_end + 8);
             style_start = xhr.responseText.indexOf("<style>", style_end);
         }
-        
+
 
         set_viewdata({
             title: title_str,
@@ -59,6 +60,20 @@ function navigate(url, replace = false, anim = true) {
         }, url)
     });
 }
+
+function update_element(e){
+    var element = $(e);
+    var style = getComputedStyle(element[0]);
+    // 遍历所有属性，只是为了刷新
+    var arr = []
+    for (var i = 0; i < style.length; i++) {
+        var property = style[i];
+        var value = style.getPropertyValue(property);
+        arr.push(property + ":" + value);
+    }
+    return arr;
+}
+
 function set_viewdata(data, url = null, replace = false, anim = true) {
     if (url) {
         if (replace)
@@ -73,6 +88,17 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
         root = data.rootdef;
         true_root = data.rootdef;
     }
+    if (root == ".") {
+        $('#nav_left').hide();
+        $('#nav_control').hide();
+        $('#nav').css('backdropFilter', 'none');
+        $('#footer').addClass('hide_on_large hide_on_small');
+    }
+    update_element($('#nav_left'));
+    update_element($('#nav_control'));
+    update_element($('#nav'));
+    update_element($('#footer'));
+    $("#PART_title").html(data.title ? data.title : "");
     $("#PART_title_in").html(data.title_in ? data.title_in : "");
     $("#PART_outbody").html(data.outbody ? data.outbody : "");
     $("#PART_body").html(data.body ? data.body : "");
@@ -103,7 +129,9 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
         $(this).attr("href", $(this).attr("href").replace(oldroot, root));
     });
     NProgress.done();
+window.dispatchEvent(new Event("spa_navigate"));
 }
+
 window.onpopstate = function (event) {
     if (event.state) {
         // 有eventdata
@@ -111,16 +139,17 @@ window.onpopstate = function (event) {
     } else {
         navigate(location.href, true, false);
     }
+    
     // browser changed the url
 }
 // 定位所有a标签
 $(document).on("click", "a", function (e) {
-    if ($(this).attr("href").startsWith("#") || $(this).attr("href").indexOf(":")!=-1 || $(this).attr("no-intercept") == "true") {
+    if ($(this).attr("href").startsWith("#") || $(this).attr("href").indexOf(":") != -1 || $(this).attr("no-intercept") == "true") {
         return;
     }
     e.preventDefault();
     navigate($(this).attr("href"));
 });
 $(document).ready(function () {
-    navigate(window.location.pathname, true);
+    navigate(window.location.pathname+window.location.search+window.location.hash, true);
 });

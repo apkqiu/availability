@@ -79,7 +79,7 @@
 				<a class="btn btn-lg m-1" href="{{root}}/text/index.html">石窦收云<br />文学创作</a>
 				<a class="btn btn-lg m-1" href="{{root}}/web_maker/index.html">棕亭霁雪<br />自制网页</a>
 				<a class="btn btn-lg m-1" href="{{root}}/account/index.html">柳荫眠琴<br />账号管理</a>
-				<a class="btn btn-lg m-1" href="{{root}}/news/index.html">屏山听瀑<br />周报</a>
+				<a class="btn btn-lg m-1" href="{{root}}/news/index.html">屏山听瀑<br />新闻</a>
 				<a class="btn btn-lg m-1" href="{{root}}/school/index.html">柳荫系舫<br />一草种</a>
 				<a class="btn btn-lg m-1" href="{{root}}/resource/index.html">林屋探奇<br />资料</a>
 				<a class="btn btn-lg m-1" href="{{root}}/game/index.html">荷岸观鱼<br />小游戏</a>
@@ -104,14 +104,14 @@
 				<a class="btn btn-lg m-1" href="{{root}}/text/index.html">石窦收云 文学创作</a><br />
 				<a class="btn btn-lg m-1" href="{{root}}/web_maker/index.html">棕亭霁雪 自制网页</a>
 				<a class="btn btn-lg m-1" href="{{root}}/account/index.html">柳荫眠琴 账号管理</a><br />
-				<a class="btn btn-lg m-1" href="{{root}}/news/index.html">屏山听瀑 周报</a>
+				<a class="btn btn-lg m-1" href="{{root}}/news/index.html">屏山听瀑 新闻</a>
 				<a class="btn btn-lg m-1" href="{{root}}/school/index.html">柳荫系舫 一草种</a><br />
 				<a class="btn btn-lg m-1" href="{{root}}/resource/index.html">林屋探奇 资料</a>
 				<a class="btn btn-lg m-1" href="{{root}}/game/index.html">荷岸观鱼 小游戏</a><br />
 				<br />
 				<br />
 				<br />
-				<a class="btn release-only" href="{{root}}/../old/zhuye.html">前往旧版</a>
+				<a class="btn release-only" href="{{root}}/../old/zhuye.html" no-intercept="true">前往旧版</a>
 				<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
 				<a class="btn" href="{{root}}/contact.html">联系我们</a>
 				<a class="btn" href="javascript:alert('请进群下载安装包，iOS暂未开放下载。')" id="desktop-client-download-sm"> 下载手机客户端 </a>
@@ -129,12 +129,9 @@
 	</div>
 </div>
 <script>
-	$('#nav_left').hide();
-	$('#nav_control').hide();
-	$('#nav').css('backdropFilter', 'none');
-	$('#footer').addClass('hide_on_large hide_on_small');
 	if (is_using_fileuri() && !is_electron()) {
-		$('#fileuri_warn').modal('show');
+		alert('请使用http或https协议访问本站');
+		window.close();
 	}
 </script>
 {%endblock%}

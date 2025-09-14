@@ -11,22 +11,18 @@
 			}
 		</script>
 
-        {% for i in listdir("res/js")%}
-        <script src="{{root}}/res/js/{{i[0]}}.js"></script>
-        {% endfor %}
-        {% for i in listdir("res/css")%}
-        <link rel="stylesheet" href="{{root}}/res/css/{{i[0]}}.css">
-        {% endfor %}
-        {% for i in listdir("res/modules")%}
-        <script src="{{root}}/res/modules/{{i[0]}}.mjs"></script>
-        {% endfor %}
-		<script>
-		</script>
+		{% for i in listdir("res/js")%}
+		<script src="{{root}}/res/js/{{i[0]}}.js"></script>
+		{% endfor %} {% for i in listdir("res/css")%}
+		<link rel="stylesheet" href="{{root}}/res/css/{{i[0]}}.css" />
+		{% endfor %} {% for i in listdir("res/modules")%}
+		<script src="{{root}}/res/modules/{{i[0]}}.mjs"></script>
+		{% endfor %}
 		<!--script src="{{root}}/res/start/js_loader.js"></script-->
-        <!--Still Imcomplete-->
+		<!--Still Imcomplete-->
 	</head>
 	<header>
-		<div id="metadata" style="display: none; width:0; height:0;overflow: hidden;">
+		<div id="metadata" style="display: none; width: 0; height: 0; overflow: hidden">
 			<!-- block rootdef -->
 			{% block rootdef %}{{root}}{% endblock %}
 			<!-- endblock -->
@@ -35,7 +31,7 @@
 			<!-- endblock -->
 		</div>
 		<div id="script-mount-node"></div>
-		
+
 		<div id="customMenu" class="dropdown-menu" style="z-index: 50000">
 			<button class="dropdown-item" id="cut">剪切</button>
 			<button class="dropdown-item" id="copy">复制</button>
@@ -48,7 +44,7 @@
 					<a class="btn" role="button" id="nav_back">
 						<span class="bi-chevron-left"></span>
 					</a>
-					<a class="btn" role="button" id="nav_home" href="{{root}}/home.html">
+					<a class="btn" role="button" id="nav_home need-update-root" href="{{root}}/home.html">
 						<span class="bi-house"></span>
 					</a>
 				</div>
@@ -77,7 +73,7 @@
 						<a class="nav-link need-update-root" href="{{root}}/account/index.html">账号管理</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link need-update-root" href="{{root}}/news/index.html">周报</a>
+						<a class="nav-link need-update-root" href="{{root}}/news/index.html">新闻</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/school/index.html">一草种</a>
@@ -112,7 +108,7 @@
 					<a class="list-group-item need-update-root" href="{{root}}/text/index.html">文学创作</a>
 					<a class="list-group-item need-update-root" href="{{root}}/web_maker/index.html">自制网页</a>
 					<a class="list-group-item need-update-root" href="{{root}}/account/index.html">账号管理</a>
-					<a class="list-group-item need-update-root" href="{{root}}/news/index.html">周报</a>
+					<a class="list-group-item need-update-root" href="{{root}}/news/index.html">新闻</a>
 					<a class="list-group-item need-update-root" href="{{root}}/school/index.html">一草种</a>
 					<a class="list-group-item need-update-root" href="{{root}}/resource/index.html">资料</a>
 					<a class="list-group-item need-update-root" href="{{root}}/game/index.html">小游戏</a>
@@ -198,14 +194,14 @@
 			</ul>
 		</div>
 		<div id="PART_outbody">
-		<!-- block outbody -->
-		{%block outbody%} {%endblock%}
-		<!-- endblock -->
+			<!-- block outbody -->
+			{%block outbody%} {%endblock%}
+			<!-- endblock -->
 		</div>
 		<div id="mask" style="min-height: 100vh">
 			<div style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden" id="mainbody">
-				<div id="loading-mask" style="position: fixed;left:50vw;top:50vh;transform: translate(-50%,-50%);z-index: 1000;display: none;">
-					<div class="spinner-border" style="width:50px;height:50px;"></div>
+				<div id="loading-mask" style="position: fixed; left: 50vw; top: 50vh; transform: translate(-50%, -50%); z-index: 1000; display: none">
+					<!--div class="spinner-border" style="width: 50px; height: 50px"></div-->
 				</div>
 				<div style="min-height: calc(100vh - 58px); margin: 0 10px" id="PART_body">
 					<!-- block body -->
@@ -229,12 +225,17 @@
 			} else if (is_using_fileuri()) {
 				$('#nav_left li:nth-child(1)').attr('href', '{{root}}/home.html');
 			}
-			if (window.location.href.endsWith('/index.html')) {
-				if (true_root == '..') $('#nav_back').attr('href', '../home.html');
-				else $('#nav_back').attr('href', '../index.html');
-			} else {
-				$('#nav_back').attr('href', './index.html');
+			function update_back_uri() {
+				if (window.location.href.endsWith('/index.html')) {
+					if (true_root == '..') $('#nav_back').attr('href', '../home.html');
+					else $('#nav_back').attr('href', '../index.html');
+				} else {
+					$('#nav_back').attr('href', './index.html');
+				}
 			}
+			update_back_uri();
+			
+			window.addEventListener("spa_navigate", update_back_uri);
 
 			if (new Date().getFullYear() > 2025) {
 				$('#yr').text('2025-' + new Date().getFullYear());

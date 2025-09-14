@@ -1,0 +1,109 @@
+{%extends "parts/main.html"%} {%block title%} 屏山听瀑 | 新闻 {%endblock%} {%block title_in%} 屏山听瀑 | 新闻 {%endblock%} {%block body%}
+<style>
+	.little_bit_white {
+		background-color: rgba(255, 255, 255, 0.5);
+		backdrop-filter: blur(10px);
+	}
+	.reset > * {
+		all: unset;
+	}
+	.h1 {
+		font-size: calc(1.375rem + 1.5vw);
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+		font-weight: 500;
+		line-height: 1.2;
+		font-family: var(--bs-body-font-family);
+		text-align: var(--bs-body-text-align);
+		color: var(--bs-heading-color);
+		box-sizing: border-box;
+	}
+</style>
+<div class="reset">
+	<h1 class="h1">新闻</h1>
+</div>
+
+<div class="row">
+	<div class="col-md-2">
+		<h3>热点新闻</h3>
+		<ul class="list-group" id="news-list">
+			{%for i in listdir("news")%} {%if i[0]!="index" and not i[0].startswith("zhoubao")%}
+			<a class="list-group-item" id="news-{{i[0]}}" href="#embed={{i[0]}}">{{get_title(i[1])}}</a>
+			{%endif%} {%endfor%}
+		</ul>
+	</div>
+	<div class="col-md-10">
+		<ul class="nav nav-tabs" id="news-tab">
+			<li class="nav-item nav-link disabled">周报出版</li>
+			{% for i in list_newspaper() %}
+			<li class="nav-item"><a class="nav-link" href="#p={{i}}" id="{{i}}">第{{i}}期</a></li>
+			{% endfor %}
+		</ul>
+
+		<div id="frame" style="width: 100%;overflow: hidden;">
+            <div id="toolbar-p" data-bs-theme="light" style="position: sticky;">
+                <a href="" class="btn" id="orig_pdf" no-intercept="true">查看原始PDF</a>
+                <a href="" class="btn" id="download_pdf" download no-intercept="true">下载PDF</a>
+                <hr>
+            </div>
+            
+			<div id="content"></div>
+		</div>
+	</div>
+</div>
+<br /><br />
+<script>
+	(window.onhashchange = function () {
+		var p = getarg('p');
+		var embed = getarg('embed');
+		var url = getarg('url');
+		if (url && should_load('/news/index.html')) {
+			load();
+			return;
+		}
+		if (p == null && embed == null) {
+			p = 1;
+		}
+		$('#news-tab>li>a').each((i, e) => {
+			$(e).removeClass('active');
+			if ($(e).attr('href').indexOf('url=') == -1) $(e).attr('href', $(e).attr('href') + '&url=' + url);
+		});
+		$('#news-list>a').each((i, e) => {
+			$(e).removeClass('active');
+			if ($(e).attr('href').indexOf('url=') == -1) $(e).attr('href', $(e).attr('href') + '&url=' + url);
+		});
+		$('#frame').removeClass('little_bit_white');
+		if (embed != null) {
+			$('#toolbar-p').addClass('hidden');
+			$('#news-' + embed).addClass('active');
+			$('#content').html('<div class="spinner-border"></div>');
+			$.get(true_root + '/news/' + embed + '.html')
+				.then((data) => {
+					$('#content').html(data);
+				})
+				.fail((err) => {
+					$('#content').html('加载失败');
+				});
+		}
+		if (p != null) {
+			$('#toolbar-p').removeClass('hidden');
+            $('#orig_pdf').attr('href', true_root + '/../components/pdf/web/viewer.html?file=../../../docs/res/pdf/zhoubao' + p + '.pdf');
+            $("#download_pdf").attr('href', true_root + '/res/pdf/zhoubao' + p + '.pdf');
+			$('#p' + p).addClass('active');
+			$('#content').html('<div class="spinner-border"></div>');
+            $('#frame').addClass('little_bit_white');
+			$.get(true_root + '/news/zhoubao' + p + '.html')
+				.then((data) => {
+					$('#content').html(data);
+				})
+				.fail((err) => {
+					$('#content').html('加载失败');
+				});
+			// $('#frame').addClass('hidden');
+			// $('#iframe').removeClass('hidden');
+			// $('#p' + p).addClass('active');
+			// $('#iframe').attr('src', true_root + '/../components/pdf/web/viewer.html?file=../../../docs/res/pdf/zhoubao' + p + '.pdf');
+		}
+	})();
+</script>
+{%endblock%}

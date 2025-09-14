@@ -1,0 +1,7 @@
+{
+    "rootdef": "..",
+    "title": "\u5c4f\u5c71\u542c\u7011 | \u65b0\u95fb",
+    "title_in": "\u5c4f\u5c71\u542c\u7011 | \u65b0\u95fb",
+    "outbody": "",
+    "body": "<br><a href=index.html>\u56de\u5230\u9996\u9875</a><hr><div class=row><div class=col-8 id=content></div><div class=col-4 id=ads><h4>\u4eba\u4eba\u5173\u6ce8</h4>\u63d0\u53d6\u4fe1\u606f\u51fa\u9519\uff0c\u8bf7\u7a0d\u540e\u518d\u8bd5</div></div><script>(()=>{var t=window.location.hash.substring(1);\"\"!==t?$.get(t).then(function(t){$(\"#content\").html(t)}):$(\"#content\").html(\"\u6ca1\u6709\u627e\u5230\u8d44\u6e90\uff0c\u8bf7\u68c0\u67e5URL\")})()</script>"
+}

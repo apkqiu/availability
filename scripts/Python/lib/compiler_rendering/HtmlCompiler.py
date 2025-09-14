@@ -95,7 +95,8 @@ class HtmlCompiler(CompilerBase.CompilerBase):
     def __init__(self, in_path):
         super().__init__(in_path)
         self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
-
+    def load_basic(self):
+        return env.get_template("parts/main.html").render(**make_context(self.in_path))
     def compile(self):
         template = env.get_template(
             os.path.relpath(self.in_path, "templates").replace("\\", "/"), 1
@@ -145,4 +146,13 @@ class HtmlCompiler(CompilerBase.CompilerBase):
             jsondata[name] = data[start:end].strip()
 
         json.dump(jsondata, open(self.copy_path + ".json", "w", encoding="utf-8"), ensure_ascii=True, indent=4)
-        
+        # 然后原始html文件就可以不要了
+        # 但是github pages的问题，得要留个基础架构
+        # 同时检查一下模板开头是否套用的SPA架构
+        SPA = False
+        with open(self.in_path, "r", encoding="utf-8") as f:
+            if f.readline().replace(" ", "").replace("'",'"').startswith('{%extends"parts/main.html"%}'):
+                SPA = True
+        if SPA:
+            with open(self.copy_path, "w", encoding="utf-8") as f:
+                f.write(self.load_basic())
