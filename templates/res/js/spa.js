@@ -18,9 +18,9 @@ function navigate(url) {
     }).fail((xhr) => {
         // check 404
         set_viewdata({
-            title: "404",
-            title_in: "Page not found",
-            body: "The page you are looking for does not exist.",
+            title: "undefined",
+            title_in: "未知页面",
+            body: xhr.responseText,
         }, url)
     });
 }
@@ -70,7 +70,8 @@ function set_viewdata(data, url = null) {
     });
 }
 window.onpopstate = function (event) {
-    set_viewdata(event.state, location.href);
+    set_viewdata(event.state, null);
+    // browser changed the url
 }
 // 定位所有a标签
 $(document).on("click", "a", function (e) {
