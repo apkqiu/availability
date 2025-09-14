@@ -115,7 +115,7 @@ window.onpopstate = function (event) {
 }
 // 定位所有a标签
 $(document).on("click", "a", function (e) {
-    if ($(this).attr("href").startsWith("#")) {
+    if ($(this).attr("href").startsWith("#") || $(this).attr("href").indexOf(":")!=-1) {
         return;
     }
     e.preventDefault();
