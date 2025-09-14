@@ -37,8 +37,21 @@ function navigate(url, replace = false, anim = true) {
         else
             var title_str = "错误";
         // 此处的body需要去除script和style标签
-        var body = xhr.responseText.replace(/<script.*?>.*?<\/script>/g, "").replace(/<style.*?>.*?<\/style>/g, "");
+        var body = xhr.responseText.substring(xhr.responseText.indexOf("<body>") + 6, xhr.responseText.indexOf("</body>"));
+        var script_start = xhr.responseText.indexOf("<script>");
+        while (script_start != -1) {
+            var script_end = xhr.responseText.indexOf("</script>");
+            body = body.substring(0, script_start) + body.substring(script_end + 9);
+            script_start = xhr.responseText.indexOf("<script>", script_end);
+        }
+        var style_start = xhr.responseText.indexOf("<style>");
+        while (style_start != -1) {
+            var style_end = xhr.responseText.indexOf("</style>");
+            body = body.substring(0, style_start) + body.substring(style_end + 8);
+            style_start = xhr.responseText.indexOf("<style>", style_end);
+        }
         
+
         set_viewdata({
             title: title_str,
             title_in: title_str,
