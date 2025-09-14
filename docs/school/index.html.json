@@ -1,6 +1,6 @@
 {
-    "title": "\u67f3\u836b\u7cfb\u822b | \u4e00\u8349\u79cd",
     "rootdef": "..",
+    "title": "\u67f3\u836b\u7cfb\u822b | \u4e00\u8349\u79cd",
     "title_in": "\u67f3\u836b\u7cfb\u822b | \u4e00\u8349\u79cd",
     "outbody": "",
     "body": "<h1>\u4e00\u8349\u79cd</h1><a href=https://sz1cz.gusuedu.cn/index.htm>\u5b66\u6821\u5b98\u7f51</a><h3>\u70ed\u70b9\u8d44\u8baf</h3><ul class=\"nav nav-tabs\"><li class=nav-item><a class=nav-link href=\"?p=1\"id=p1>\u5b66\u6821\u653b\u96322025.9.1</a></li></ul><div id=iframe style=width:100%;background-color:#000></div><script>(()=>{var t=getarg(\"p\");(t={1:\"v,../res/video/25.9.1xvexiaogongfang.mp4\"}[t]).startsWith(\"v,\")&&(t=t.substring(2),$(\"<video></video>\").attr(\"src\",t).attr(\"controls\",!0).attr(\"autoplay\",!0).css(\"width\",\"100%\").css(\"height\",\"90vh\").appendTo(\"#iframe\")),$(\"#p\"+getarg(\"p\")).addClass(\"active\")})()</script>"

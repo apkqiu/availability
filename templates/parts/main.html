@@ -3,17 +3,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>
-			<!-- block title -->
-			{%block title%}{%endblock%}
-			<!-- endblock -->
-		</title>
+		<title>正在加载...</title>
 		<script>
 			if (typeof root == 'undefined') {
 				globalThis.root = '{{root}}';
 				globalThis.true_root = '{{root}}';
 			}
 		</script>
+
         {% for i in listdir("res/js")%}
         <script src="{{root}}/res/js/{{i[0]}}.js"></script>
         {% endfor %}
@@ -29,9 +26,10 @@
 	<header>
 		<div id="metadata" style="display: none; width:0; height:0;overflow: hidden;">
 			<!-- block rootdef -->
-			{% block rootdef %}
-			{{root}}
-			{% endblock %}
+			{% block rootdef %}{{root}}{% endblock %}
+			<!-- endblock -->
+			<!-- block title -->
+			{%block title%}{%endblock%}
 			<!-- endblock -->
 		</div>
 		<div id="script-mount-node"></div>
@@ -214,7 +212,7 @@
 				</div>
 				<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
 					<small>
-						如果你要提供意见，请 <a href="{{root}}/contact.html">联系我们</a>
+						如果你要提供意见，请 <a class="need-update-root" href="{{root}}/contact.html">联系我们</a>
 						<i> <br />电话：13270463238 <br />邮箱:Caixukun11451489@outlook.com </i>
 						<b> <br />版权所有 ©<span id="yr">2025</span> 洽隐山房，保留所有权利</b>
 					</small>

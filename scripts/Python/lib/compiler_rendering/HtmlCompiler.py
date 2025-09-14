@@ -15,7 +15,7 @@ def make_context(path, **ex):
     # calculate the relative path to the root of the docs directory
     ret["root"] = "../" * (ret["relpath"].count("/"))
     ret["root"] = ret["root"][:-1] if ret["root"] else "."
-    ret["node_modules"] = os.path.join(ret["root"], "..", "node_modules")
+    node_modules = ret["node_modules"] = os.path.join(ret["root"], "..", "node_modules")
 
     ret["true_root"] = ret["root"]
     ret["breadcrumbs"] = ret["relpath"].split("/")
@@ -54,7 +54,35 @@ def make_context(path, **ex):
                 return j.text
         return "无标题"
     ret["get_title"] = get_title
-
+    def load_node_module(module, file=None, type_module=True):
+        # make a script tag with src="node_modules/"+module+"/"+[main file that defined in package.json]
+        # and append it to the head
+        node_module = os.path.join("node_modules", module, "package.json")
+        if not os.path.isfile(node_module):
+            return ""
+        if file:
+            main = file
+        else:
+            with open(node_module, "r", encoding="utf-8") as f:
+                package = json.load(f)
+            main = package.get("main", "index.js")
+        if type_module:
+            return f'<script type="module" src="{node_modules}/{module}/{main}"></script>'
+        
+        return f'<script src="{node_modules}/{module}/{main}"></script>'
+    ret["load_node_module"] = load_node_module
+    def get_node_module_file(module, file=None):
+        node_module = os.path.join("node_modules", module, "package.json")
+        if not os.path.isfile(node_module):
+            return ""
+        if file:
+            main = file
+        else:
+            with open(node_module, "r", encoding="utf-8") as f:
+                package = json.load(f)
+            main = package.get("main", "index.js")
+        return f"{node_modules}/{module}/{main}"
+    ret["get_node_module_file"] = get_node_module_file
     ret.update(ex)
     return ret
 env = jinja2.Environment(

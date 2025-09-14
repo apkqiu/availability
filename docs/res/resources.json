@@ -2,6 +2,7 @@
     "css": [
         "bootstrap-icons.css",
         "bootstrap.css",
+        "nprogress.css",
         "utils.css"
     ],
     "font": [
@@ -33,6 +34,7 @@
         "jquery-3.6.0.js",
         "levenshetin.js",
         "localforage.js",
+        "nprogress.js",
         "obj_index.js",
         "parallax.js",
         "spa.js",
