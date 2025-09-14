@@ -1,5 +1,10 @@
 {%extends "parts/main.html"%} {%block title%} 屏山听瀑 | 新闻 {%endblock%} {%block title_in%} 屏山听瀑 | 新闻 {%endblock%} {%block body%} 
-
+<style>
+    .list-group-item,
+    .list-group-item {
+        background: transparent;
+    }
+</style>
 <br>
 <a href="index.html">回到首页</a>
 <hr>
@@ -9,10 +14,12 @@
     </div>
     <div class="col-4" id="ads">
         <h4>人人关注</h4>
-        提取信息出错，请稍后再试
+        <ul class="list-group list-group-flush" id="recommend"></ul>
     </div>
 </div>
 <script>
+	$("#content").html('<div class="spinner-border"></div>');
+
     var resource = window.location.hash.substring(1);
     if (resource !== "") {
         $.get(resource).then(function (data) {
@@ -21,5 +28,19 @@
     }else{
         $("#content").html("没有找到资源，请检查URL");
     }
+	$("#recommend").html('<div class="spinner-border"></div>');
+    $.get("popular.json").then(function (data) {
+        $("#recommend").html("");
+        // key: title, value: url
+        for (var key in data) {
+            var url = data[key]
+            if(url.startsWith("!")){
+                url = "pdf_embed.html#" + url.substring(1)
+            }else{
+                url = "embed.html#" + url
+            }
+            $("#recommend").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
+        }
+    })
 </script>
 {%endblock%}

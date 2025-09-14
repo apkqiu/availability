@@ -40,6 +40,18 @@
 		</div>
 		<div class="carousel-item">
 			<a	class="news-bg d-block w-100"
+				style="background-image: url({{root}}/res/img/news/9clock_withsun.png);"
+				>
+				<div class="news-txt-box">
+					<div class="news-txt">
+						<h1>“九点钟出太阳”</h1>
+						<p>名人名言</p>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="carousel-item">
+			<a	class="news-bg d-block w-100"
 				style="background-image: url({{root}}/res/img/news/homeworkfinish.png);"
 				href="embed.html#1.html">
 				<div class="news-txt-box">
@@ -77,13 +89,8 @@
 <div style="clear: both; height: 25px"></div>
 <div style="float: left">
 	<h3>热点新闻</h3>
-	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<a href="embed.html#1.html">
-				我的一小步，暑假的一大步<br />
-				<small>——我学生胜利完成本周暑假作业</small>
-			</a>
-		</li>
+	<ul class="list-group list-group-flush" id="recommend">
+
 	</ul>
 </div>
 <div style="float: right" class="w-25">
@@ -128,5 +135,20 @@
 	</ul>
 </div>
 <div style="clear: both"></div>
-
+<script>
+	$("#recommend").html('<div class="spinner-border"></div>');
+	$.get("popular.json").then(function (data) {
+        $("#recommend").html("");
+        // key: title, value: url
+        for (var key in data) {
+            var url = data[key]
+            if(url.startsWith("!")){
+                url = "pdf_embed.html#" + url.substring(1)
+            }else{
+                url = "embed.html#" + url
+            }
+            $("#recommend").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
+        }
+    })
+</script>
 {%endblock%}
