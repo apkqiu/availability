@@ -4,7 +4,6 @@ execlib.exec_cmd("python", "-u", os.path.join("scripts", "Python", "convert_pdf_
 execlib.exec_cmd("python", "-u", os.path.join("scripts", "Python", "compile.py"),console=True)
 execlib.exec_cmd("git", "add", ".",console=True)
 execlib.exec_cmd("git", "commit", "-m", "CI build",console=True)
-execlib.exec_cmd("git", "tag", input("Tag: "),console=True)
 while True:
     # with proxy
     execlib.exec_cmd("git", "config", "set","http.proxy", "127.0.0.1:10808",console=True)
