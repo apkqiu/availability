@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "lzma": "^2.3.2",
+    "markdown-it": "^14.1.0",
     "nprogress": "^0.2.0"
   }
 }

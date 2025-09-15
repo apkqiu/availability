@@ -75,21 +75,31 @@
 			class="hide_on_mobile"
 		>
 			<center>
-				<a class="btn btn-lg m-1" href="{{root}}/soil_grass/index.html">藤崖伫月<br />草皮土壤</a>
-				<a class="btn btn-lg m-1" href="{{root}}/text/index.html">石窦收云<br />文学创作</a>
-				<a class="btn btn-lg m-1" href="{{root}}/web_maker/index.html">棕亭霁雪<br />自制网页</a>
-				<a class="btn btn-lg m-1" href="{{root}}/account/index.html">柳荫眠琴<br />账号管理</a>
-				<a class="btn btn-lg m-1" href="{{root}}/news/index.html">屏山听瀑<br />新闻</a>
-				<a class="btn btn-lg m-1" href="{{root}}/school/index.html">柳荫系舫<br />一草种</a>
-				<a class="btn btn-lg m-1" href="{{root}}/resource/index.html">林屋探奇<br />资料</a>
-				<a class="btn btn-lg m-1" href="{{root}}/game/index.html">荷岸观鱼<br />小游戏</a>
+				<style>
+					.shadow-on-hover{
+						box-shadow: 0 0 0px rgba(0, 0, 0, 0.5);
+						transition: 0.3s ease-in-out;
+					}
+					.shadow-on-hover:hover{
+						background: rgba(0, 0, 0, 0.5);
+						box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+					}
+				</style>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/soil_grass/index.html">藤崖伫月<br />草皮土壤</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/text/index.html">石窦收云<br />文学创作</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/web_maker/index.html">棕亭霁雪<br />自制网页</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/account/index.html">柳荫眠琴<br />账号管理</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/news/index.html">屏山听瀑<br />新闻</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/school/index.html">柳荫系舫<br />一草种</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/resource/index.html">林屋探奇<br />资料</a>
+				<a class="btn btn-lg m-1 shadow-on-hover" href="{{root}}/game/index.html">荷岸观鱼<br />小游戏</a>
 				<br />
 				<br />
-				<a class="btn release-only" href="{{root}}/../old/zhuye.html">前往旧版</a>
-				<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
-				<a class="btn" href="{{root}}/contact.html">联系我们</a>
+				<a class="btn release-only shadow-on-hover" href="{{root}}/../old/zhuye.html">前往旧版</a>
+				<button type="button" class="btn shadow-on-hover" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
+				<a class="btn shadow-on-hover" href="{{root}}/contact.html">联系我们</a>
 				<span width="20px"></span>
-				<a class="btn" href="https://github.com/apkqiu/availability/releases/latest" id="desktop-client-download-sm"> 下载电脑客户端 </a>
+				<a class="btn shadow-on-hover" href="https://github.com/apkqiu/availability/releases/latest" id="desktop-client-download-sm"> 下载电脑客户端 </a>
 				<script>
 					$('#release').click(function () {
 						window.location.href = root + '/home.html';
@@ -126,6 +136,7 @@
 				</script>
 			</center>
 		</div>
+		
 	</div>
 </div>
 <script>

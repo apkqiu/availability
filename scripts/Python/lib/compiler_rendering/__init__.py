@@ -6,6 +6,7 @@ from . import SvgCompiler
 from . import CopyCompiler
 from . import PngCompiler
 from . import JpgCompiler
+from . import MarkdownCompiler
 from . import PdfCompiler
 factory = CompilerBase.CompilerFactory()
 factory.set_fallback(CopyCompiler.CopyCompiler)
@@ -27,6 +28,8 @@ factory.register(".png", PngCompiler.PngCompiler)
 factory.register(".jpg", JpgCompiler.JpgCompiler)
 
 factory.register(".jpeg", JpgCompiler.JpgCompiler)
+
+factory.register(".md", MarkdownCompiler.MarkdownCompiler)
 
 # factory.register(".pdf", PdfCompiler.PdfCompiler) 
 # PdfCompiler is disabled because it needs wsl, but github actions does not support wsl

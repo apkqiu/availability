@@ -13,13 +13,15 @@
 <div class="row">
     <div class="col-8" id="content">
         <iframe class="hidden" id="realpdf" style="width:100%;height:100vh"></iframe>
-        <div id="pdf" style="background-color: rgba(255,255,255,0.5);backdrop-filter: blur(10px);overflow: hidden;"></div>
+        <div id="pdf" style="background-color: rgba(255,255,255,0.5);backdrop-filter: blur(10px);overflow:auto;"></div>
     </div>
     <div class="col-4" id="ads">
         <h4>人人关注</h4>
         <ul class="list-group list-group-flush" id="recommend"></ul>
     </div>
 </div>
+<br>
+<br>
 <script>
     var pdf_html_ver = getarg('html');
     var pdf_orig = getarg('pdf');
