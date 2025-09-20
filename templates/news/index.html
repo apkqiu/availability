@@ -24,7 +24,7 @@
 	}
 </style>
 <br>
-<div id="carouselExample" class="carousel slide w-100">
+<div id="carousel" class="carousel slide w-100">
 	<div class="carousel-inner">
 		<div class="carousel-item active">
 			<a	class="news-bg d-block w-100"
@@ -92,50 +92,26 @@
 	<ul class="list-group list-group-flush" id="recommend">
 
 	</ul>
+	<h3>全部文章</h3>
+	<ul class="list-group list-group-flush" id="articles">
+
+	</ul>
 </div>
 <div style="float: right" class="w-25">
 	<h3>周报出版</h3>
 	<ul class="list-group list-group-flush">
+		{% for id in list_newspaper()%}
 		<li class="list-group-item">
-			<a href="pdf_embed.html#p=1">周恩来周报 第一期</a>
+			<a href="pdf_embed.html#p={{id}}">周恩来周报 第{{id}}期</a>
 		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=2">周恩来周报 第二期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=3">周恩来周报 第三期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=4">周恩来周报 第四期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=5">周恩来周报 第五期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=6">周恩来周报 第六期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=7">周恩来周报 第七期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=8">周恩来周报 第八期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=9">周恩来周报 第九期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=10">周恩来周报 第十期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=11">周恩来周报 第十一期</a>
-		</li>
-		<li class="list-group-item">
-			<a href="pdf_embed.html#p=12">周恩来周报 第十二期</a>
-		</li>
-	</ul>
+		{% endfor %}
+
 </div>
 <div style="clear: both"></div>
 <script>
+	setInterval(() => {
+		$("#carousel").carousel("next")
+	}, 3*1000);
 	$("#recommend").html('<div class="spinner-border"></div>');
 	$.get("popular.json").then(function (data) {
         $("#recommend").html("");
@@ -148,6 +124,20 @@
                 url = "embed.html#" + url
             }
             $("#recommend").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
+        }
+    })
+	$("#articles").html('<div class="spinner-border"></div>');
+	$.get("articles.json").then(function (data) {
+        $("#articles").html("");
+        // key: title, value: url
+        for (var key in data) {
+            var url = data[key]
+            if(url.startsWith("!")){
+                url = "pdf_embed.html#" + url.substring(1)
+            }else{
+                url = "embed.html#" + url
+            }
+            $("#articles").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
         }
     })
 </script>

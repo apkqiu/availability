@@ -31,9 +31,6 @@ function hex2rgb(hex) {
     }
     return [r, g, b];
 }
-function load() { } // should be replaced in spa_index.html
-function should_load(url) { return false; } // should be replaced in spa_index.html
-
 
 function is_electron() {
     var userAgent = navigator.userAgent.toLowerCase();
@@ -64,3 +61,4 @@ function fetch_compressed_text(url) {
         });
     });
 }
+

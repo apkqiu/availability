@@ -81,7 +81,7 @@
                 $("#p" + i).attr("href", $("#p" + i).attr("href") + "&url=" + url);
         }
         $('#content').html('<div class="spinner-border"></div>');
-        $.get(true_root + "/text/" + p + ".html").then(
+        $.get(true_root + "/text/articles/" + p + ".html").then(
             function (data) {
                 $('#content').html(data);
             }

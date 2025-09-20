@@ -1,7 +1,0 @@
-{
-    "rootdef": "e(localStorage.getItem(\"code\")||\"\")</script>",
-    "title": "ite(localStorage.getItem(\"code\")||\"\")</script>",
-    "title_in": "(localStorage.getItem(\"code\")||\"\")</script>",
-    "outbody": "e(localStorage.getItem(\"code\")||\"\")</script>",
-    "body": "rite(localStorage.getItem(\"code\")||\"\")</script>"
-}

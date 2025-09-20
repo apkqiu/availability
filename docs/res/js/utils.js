@@ -1,1 +1,64 @@
-function urlarg(n){var r=new RegExp("(^|&)"+n+"=([^&]*)(&|$)"),t=window.location.search.substr(1).match(r);return t!=null?unescape(t[2]):null}function hasharg(n){var r=new RegExp("(^|&)"+n+"=([^&]*)(&|$)"),t=window.location.hash.substr(1).match(r);return t!=null?unescape(t[2]):null}function getarg(n){return hasharg(n)||urlarg(n)}function hex2rgb(n){let r=0,t=0,e=0;return n.length==4?(r=parseInt(n[1]+n[1],16),t=parseInt(n[2]+n[2],16),e=parseInt(n[3]+n[3],16)):n.length==7&&(r=parseInt(n[1]+n[2],16),t=parseInt(n[3]+n[4],16),e=parseInt(n[5]+n[6],16)),[r,t,e]}function load(){}function should_load(n){return!1}function is_electron(){var n=navigator.userAgent.toLowerCase();return n.indexOf("electron")!=-1}function is_using_fileuri(){return window.location.href.indexOf("file://")!=-1}function is_http(){return window.location.href.indexOf("http://")!=-1||window.location.href.indexOf("https://")!=-1}function fetch_text(n){return new Promise((r,t)=>{$.get(root+n).then(e=>{r(e)}).catch(e=>{t(e)})})}function fetch_compressed_text(n){return new Promise((r,t)=>{fetch_text(root+"/../../../zipped"+n+".7z").then(e=>{r(pako.ungzip(e,{to:"string"}))}).catch(e=>{t(e)})})}
+function urlarg(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+function hasharg(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+    var r = window.location.hash.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+function getarg(name) {
+    return hasharg(name) || urlarg(name);
+}
+function hex2rgb(hex) {
+    let r = 0,
+        g = 0,
+        b = 0;
+    // 3 digits
+    if (hex.length == 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+    }
+    // 6 digits
+    else if (hex.length == 7) {
+        r = parseInt(hex[1] + hex[2], 16);
+        g = parseInt(hex[3] + hex[4], 16);
+        b = parseInt(hex[5] + hex[6], 16);
+    }
+    return [r, g, b];
+}
+
+function is_electron() {
+    var userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.indexOf('electron') != -1;
+}
+function is_using_fileuri() {
+    return window.location.href.indexOf("file://") != -1;
+}
+function is_http() {
+    return window.location.href.indexOf("http://") != -1 || window.location.href.indexOf("https://") != -1;
+}
+
+function fetch_text(url) {
+    return new Promise((resolve, reject) => {
+        $.get(root+url).then((data) => {
+            resolve(data);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+function fetch_compressed_text(url) {
+    return new Promise((resolve, reject) => {
+        fetch_text(root+"/../../../zipped"+url+".7z").then((data) => {
+            resolve(pako.ungzip(data, { to: 'string' }));
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+

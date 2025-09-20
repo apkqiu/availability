@@ -1,2 +1,160 @@
-function navigate(e,r=!1,i=!0){NProgress.start(),document.body.scrollTo(0,0),document.documentElement.scrollTo(0,0);var n=e.indexOf("#"),o=e.indexOf("?");if(n!=-1&&o!=-1)var s=e.substring(0,Math.min(n,o));else if(n!=-1)var s=e.substring(0,n);else if(o!=-1)var s=e.substring(0,o);else var s=e;console.log(s),i&&($("#PART_body").removeClass("fadeIn"),$("#PART_body").addClass("fadeOut")),document.title="\u6B63\u5728\u52A0\u8F7D...",$("#offcanvasExample").offcanvas("hide"),$("#nav_left").show(100),$("#nav_control").show(100),$("#nav").css("backdropFilter","blur(10px)"),$("#footer").removeClass("hide_on_large hide_on_small"),$("#loading-mask").show(),$.get(s+".json").then(t=>{set_viewdata(t,e,r,i)}).fail(t=>{var l=t.responseText.indexOf("<title>"),d=t.responseText.indexOf("</title>");if(l!=-1&&d!=-1)var f=t.responseText.substring(l+7,d);else var f="\u9519\u8BEF";for(var a=t.responseText.substring(t.responseText.indexOf("<body>")+6,t.responseText.indexOf("</body>")),c=t.responseText.indexOf("<script>");c!=-1;){var p=t.responseText.indexOf("<\/script>");a=a.substring(0,c)+a.substring(p+9),c=t.responseText.indexOf("<script>",p)}for(var u=t.responseText.indexOf("<style>");u!=-1;){var v=t.responseText.indexOf("</style>");a=a.substring(0,u)+a.substring(v+8),u=t.responseText.indexOf("<style>",v)}set_viewdata({title:f,title_in:f,body:a},e)})}function update_element(e){for(var r=$(e),i=getComputedStyle(r[0]),n=[],o=0;o<i.length;o++){var s=i[o],t=i.getPropertyValue(s);n.push(s+":"+t)}return n}function set_viewdata(e,r=null,i=!1,n=!0){r&&(i?history.replaceState(e,null,r):history.pushState(e,null,r)),e.title&&(document.title=e.title);var o=root;e.rootdef&&(root=e.rootdef,true_root=e.rootdef),root=="."&&($("#nav_left").hide(),$("#nav_control").hide(),$("#nav").css("backdropFilter","none"),$("#footer").addClass("hide_on_large hide_on_small")),update_element($("#nav_left")),update_element($("#nav_control")),update_element($("#nav")),update_element($("#footer")),$("#PART_title").html(e.title?e.title:""),$("#PART_title_in").html(e.title_in?e.title_in:""),$("#PART_outbody").html(e.outbody?e.outbody:""),$("#PART_body").html(e.body?e.body:""),n&&($("#PART_body").removeClass("fadeOut"),$("#PART_body").addClass("fadeIn")),$("#loading-mask").hide();var s=$("#PART_outbody, #PART_body").find("script");$("#script-mount-node").html("");var t=[];s.each(function(){t.push($(this).text())});var l=document.createElement("script");l.text=t.join(`
-`),$("#script-mount-node").append(l);var d=$(".need-update-root");d.each(function(){$(this).attr("href",$(this).attr("href").replace(o,root))}),NProgress.done(),window.dispatchEvent(new Event("spa_navigate"))}window.onpopstate=function(e){e.state?set_viewdata(e.state,null):navigate(location.href,!0,!1)},$(document).on("click","a",function(e){$(this).attr("href").startsWith("#")||$(this).attr("href").indexOf(":")!=-1||$(this).attr("no-intercept")=="true"||(e.preventDefault(),navigate($(this).attr("href")))}),$(document).ready(function(){navigate(window.location.pathname+window.location.search+window.location.hash,!0)});
+function navigate(url, replace = false, anim = true) {
+    NProgress.start();
+    document.body.scrollTo(0, 0);
+    document.documentElement.scrollTo(0, 0);
+    var hashpos = url.indexOf("#");
+    var querypos = url.indexOf("?");
+    if (hashpos != -1 && querypos != -1)
+        var urlpath = url.substring(0, Math.min(hashpos, querypos));
+    else if (hashpos != -1)
+        var urlpath = url.substring(0, hashpos);
+    else if (querypos != -1)
+        var urlpath = url.substring(0, querypos);
+    else
+        var urlpath = url;
+    console.log(urlpath);
+    if (anim) {
+        $("#PART_body").removeClass("fadeIn");
+        $("#PART_body").addClass("fadeOut");
+    }
+    document.title = "正在加载...";
+
+    // RESET
+    $("#offcanvasExample").offcanvas('hide');
+
+    $('#nav_left').show(100);
+    $('#nav_control').show(100);
+    $('#nav').css('backdropFilter', 'blur(10px)');
+    $('#footer').removeClass('hide_on_large hide_on_small');
+
+    $("#loading-mask").show();
+    $.get(urlpath + ".json").then((data) => {
+        set_viewdata(data, url, replace, anim);
+    }).fail((xhr) => {
+        if(!xhr.responseText){
+            // 一般性错误
+            set_viewdata({title: "加载失败", title_in: "加载失败", body: "<h1>加载失败</h1>加载失败，但是没有收到服务器返回的错误信息。"}, url, replace, anim);
+            return;
+        }
+        var title = xhr.responseText.indexOf("<title>");
+        var title_end = xhr.responseText.indexOf("</title>");
+        if (title != -1 && title_end != -1)
+            var title_str = xhr.responseText.substring(title + 7, title_end);
+        else
+            var title_str = "错误";
+        // 此处的body需要去除script和style标签
+        var body = xhr.responseText.substring(xhr.responseText.indexOf("<body>") + 6, xhr.responseText.indexOf("</body>"));
+        var script_start = xhr.responseText.indexOf("<script>");
+        while (script_start != -1) {
+            var script_end = xhr.responseText.indexOf("</script>");
+            body = body.substring(0, script_start) + body.substring(script_end + 9);
+            script_start = xhr.responseText.indexOf("<script>", script_end);
+        }
+        var style_start = xhr.responseText.indexOf("<style>");
+        while (style_start != -1) {
+            var style_end = xhr.responseText.indexOf("</style>");
+            body = body.substring(0, style_start) + body.substring(style_end + 8);
+            style_start = xhr.responseText.indexOf("<style>", style_end);
+        }
+
+
+        set_viewdata({
+            title: title_str,
+            title_in: title_str,
+            body: body,
+        }, url, replace,anim)
+    });
+}
+
+function update_element(e){
+    var element = $(e);
+    var style = getComputedStyle(element[0]);
+    // 遍历所有属性，只是为了刷新
+    var arr = []
+    for (var i = 0; i < style.length; i++) {
+        var property = style[i];
+        var value = style.getPropertyValue(property);
+        arr.push(property + ":" + value);
+    }
+    return arr;
+}
+
+function set_viewdata(data, url = null, replace = false, anim = true) {
+    if (url) {
+        if (replace)
+            history.replaceState(data, null, url);
+        else
+            history.pushState(data, null, url);
+    }
+    if (data.title)
+        document.title = data.title;
+    var oldroot = root;
+    if (data.rootdef) {
+        root = data.rootdef;
+        true_root = data.rootdef;
+    }
+    if (root == ".") {
+        $('#nav_left').hide();
+        $('#nav_control').hide();
+        $('#nav').css('backdropFilter', 'none');
+        $('#footer').addClass('hide_on_large hide_on_small');
+    }
+    update_element($('#nav_left'));
+    update_element($('#nav_control'));
+    update_element($('#nav'));
+    update_element($('#footer'));
+    $("#PART_title").html(data.title ? data.title : "");
+    $("#PART_title_in").html(data.title_in ? data.title_in : "");
+    $("#PART_outbody").html(data.outbody ? data.outbody : "");
+    $("#PART_body").html(data.body ? data.body : "");
+    if (anim) {
+        $("#PART_body").removeClass("fadeOut");
+        $("#PART_body").addClass("fadeIn");
+    }
+    $("#loading-mask").hide();
+
+    // EXECUTE SCRIPT AT OUTBODY AND BODY
+    // find all script tags in outbody and body
+    var scripts = $("#PART_outbody, #PART_body").find("script");
+    $("#script-mount-node").html("");
+    // execute each script
+    var delayed = [];
+    scripts.each(function () {
+        delayed.push($(this).text());
+    });
+    // create a new script tag
+    var script = document.createElement("script");
+    // set the text of the script tag
+    script.text = delayed.join("\n");
+    // append the script tag to the body
+    $("#script-mount-node").append(script);
+
+    var updates = $(".need-update-root");
+    updates.each(function () {
+        $(this).attr("href", $(this).attr("href").replace(oldroot, root));
+    });
+    NProgress.done();
+window.dispatchEvent(new Event("spa_navigate"));
+}
+
+window.onpopstate = function (event) {
+    if (event.state) {
+        // 有eventdata
+        set_viewdata(event.state, null);
+    } else {
+        navigate(location.href, true, false);
+    }
+    
+    // browser changed the url
+}
+// 定位所有a标签
+$(document).on("click", "a", function (e) {
+    if ($(this).attr("href").startsWith("#") || $(this).attr("href").indexOf(":") != -1 || $(this).attr("no-intercept") == "true") {
+        return;
+    }
+    e.preventDefault();
+    navigate($(this).attr("href"));
+});
+$(document).ready(function () {
+    navigate(window.location.pathname+window.location.search+window.location.hash, true);
+});

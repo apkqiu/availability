@@ -24,7 +24,8 @@
 
     var resource = window.location.hash.substring(1);
     if (resource !== "") {
-        $.get(resource).then(function (data) {
+        $.get("content/"+resource).then(function (data) {
+            data = data.replace(/(.+).files/g, "newspaper/$1.files");
             $("#content").html(data);
         })
     }else{

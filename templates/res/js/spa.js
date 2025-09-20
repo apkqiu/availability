@@ -31,6 +31,11 @@ function navigate(url, replace = false, anim = true) {
     $.get(urlpath + ".json").then((data) => {
         set_viewdata(data, url, replace, anim);
     }).fail((xhr) => {
+        if(!xhr.responseText){
+            // 一般性错误
+            set_viewdata({title: "加载失败", title_in: "加载失败", body: "<h1>加载失败</h1>加载失败，但是没有收到服务器返回的错误信息。"}, url, replace, anim);
+            return;
+        }
         var title = xhr.responseText.indexOf("<title>");
         var title_end = xhr.responseText.indexOf("</title>");
         if (title != -1 && title_end != -1)
@@ -57,7 +62,7 @@ function navigate(url, replace = false, anim = true) {
             title: title_str,
             title_in: title_str,
             body: body,
-        }, url)
+        }, url, replace,anim)
     });
 }
 
