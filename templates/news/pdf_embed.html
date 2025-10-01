@@ -33,7 +33,7 @@
 	$('#realpdf').attr('src', pdf_orig);
 	$('#pdf').html('<div class="spinner-border"></div>');
 	$.get(pdf_html_ver, function (data) {
-		data = data.replace(/"(\S+).files/g, '"newspaper/$1.files'); // regex太好用了
+		data = data.replaceAll("zhoubao"+p+".files", 'newspaper/zhoubao'+p+'.files'); // regex太好用了
 		$('#pdf').html(data);
 	});
 	var currentshow = 'html';

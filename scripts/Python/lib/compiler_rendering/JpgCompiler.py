@@ -10,4 +10,4 @@ class JpgCompiler(CompilerBase.CompilerBase):
 
     def compile(self):
         img = PIL.Image.open(self.in_path)
-        img.save(self.copy_path, quality=100, optimize=True, progressive=True)
+        img.save(self.copy_path, quality=80, optimize=True, progressive=True)

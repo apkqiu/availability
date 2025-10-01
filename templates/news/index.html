@@ -45,7 +45,7 @@
 				<div class="news-txt-box">
 					<div class="news-txt">
 						<h1>“九点钟出太阳”</h1>
-						<p>名人名言</p>
+						<p>——俞梓涵 | 名人名言</p>
 					</div>
 				</div>
 			</a>
@@ -64,6 +64,18 @@
 		</div>
 		<div class="carousel-item">
 			<a	class="news-bg d-block w-100"
+				style="background-image: url({{root}}/res/img/news/微信图片_20251001100626_83_43.jpg);"
+				>
+				<div class="news-txt-box">
+					<div class="news-txt">
+						<h1>“老母鸡变鸭了啊”</h1>
+						<p>——顾晓雯 | 名人名言</p>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="carousel-item">
+			<a	class="news-bg d-block w-100"
 				style="background-image: url({{root}}/res/img/wechat.png);"
 				href="embed.html#000wechat.html">
 				<div class="news-txt-box">
@@ -75,11 +87,11 @@
 			</a>
 		</div>
 	</div>
-	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+	<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Previous</span>
 	</button>
-	<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+	<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Next</span>
 	</button>
@@ -109,9 +121,6 @@
 </div>
 <div style="clear: both"></div>
 <script>
-	setInterval(() => {
-		$("#carousel").carousel("next")
-	}, 3*1000);
 	$("#recommend").html('<div class="spinner-border"></div>');
 	$.get("popular.json").then(function (data) {
         $("#recommend").html("");

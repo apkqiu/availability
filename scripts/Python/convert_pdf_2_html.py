@@ -10,12 +10,12 @@ for i in os.listdir("templates/res/pdf"):
     if i.startswith("~$"):
         continue
     fulpath = os.path.abspath(os.path.join("templates\\res\\pdf", i))
-    if os.path.exists(os.path.join("templates\\news", os.path.basename(fulpath).replace(".pdf", ".html"))):
+    if os.path.exists(os.path.join("templates\\news\\newspaper", os.path.basename(fulpath).replace(".pdf", ".html"))):
         continue
     print("OPEN\t",i)
     doc = word.Documents.Open(fulpath,ReadOnly=True)
     print("SAVE\t", i)
-    doc.SaveAs(os.path.abspath(os.path.join("templates\\news", os.path.basename(fulpath).replace(".pdf", ".html"))), FileFormat=8)
+    doc.SaveAs(os.path.abspath(os.path.join("templates\\news\\newspaper", os.path.basename(fulpath).replace(".pdf", ".html"))), FileFormat=8)
     print("CLOSE\t", i)
     doc.Close()
     print("OK\t",i)

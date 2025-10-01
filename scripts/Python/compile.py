@@ -1,7 +1,5 @@
 import os
-import lib.compiler_inplace as compiler_inplace
 import lib.compiler_rendering as compiler_rendering
-import lib.compiler_docs_zipping as compiler_docs_zipping
 import lib.compiler_indexing as compiler_indexing
 from lib.CompilerBase import CompilerPool
 import lib.stringlib as stringlib
@@ -19,15 +17,6 @@ old_dir = os.getcwd()
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..",".."))
 os.system("del /f /s /q ~$*")
 execlib.remove_item("docs")
-execlib.remove_item("zipped")
-
-cpool = CompilerPool(compiler_inplace.factory)
-for dirpath, dirs, files in os.walk("templates"):
-    for file in files:
-        path = os.path.join(dirpath, file)
-        cpool.add(path)
-cpool.waitall()
-show_error()
 
 cpool = CompilerPool(compiler_rendering.factory)
 for dirpath, dirs, files in os.walk("templates"):

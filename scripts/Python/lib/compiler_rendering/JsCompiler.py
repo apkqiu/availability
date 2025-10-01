@@ -1,5 +1,6 @@
 from .. import CompilerBase
 from .. import execlib
+from .. import templib
 import os
 
 class JsCompiler(CompilerBase.CompilerBase):
@@ -9,8 +10,9 @@ class JsCompiler(CompilerBase.CompilerBase):
         self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
 
     def compile(self):
-        code = execlib.exec_node("esbuild", self.in_path, "--minify")
+        code = execlib.exec_node("esbuild", self.in_path, "--minify").decode()
 
-        with open(self.copy_path, "wb") as f:
+
+        with open(self.copy_path, "w") as f:
             f.write(code)
         

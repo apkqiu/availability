@@ -10,4 +10,6 @@ class PngCompiler(CompilerBase.CompilerBase):
 
     def compile(self):
         img = PIL.Image.open(self.in_path)
+        # 简略化调色盘
+        img = img.convert("P", palette=PIL.Image.ADAPTIVE)
         img.save(self.copy_path, optimize=True)
