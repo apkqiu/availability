@@ -22,21 +22,7 @@
 		<!--Still Imcomplete-->
 	</head>
 	<header>
-		<div id="metadata" style="display: none; width: 0; height: 0; overflow: hidden">
-			<!-- block rootdef -->
-			{% block rootdef %}{{root}}{% endblock %}
-			<!-- endblock -->
-			<!-- block title -->
-			{%block title%}{%endblock%}
-			<!-- endblock -->
-		</div>
 		<div id="script-mount-node"></div>
-
-		<div id="customMenu" class="dropdown-menu" style="z-index: 50000">
-			<button class="dropdown-item" id="cut">剪切</button>
-			<button class="dropdown-item" id="copy">复制</button>
-			<button class="dropdown-item" id="paste">粘贴</button>
-		</div>
 
 		<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
 			<div class="container-fluid">
@@ -50,36 +36,36 @@
 				</div>
 				<span id="PART_title_in">{%block title_in%}{%endblock%}</span>
 				<ul class="navbar-nav hide_on_mobile hide_on_small me-auto" id="nav_left">
-					<li class="nav-item">
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/home.html">首页</a>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</button>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/soil_grass/index.html">草皮土壤</a>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/text/index.html">文学创作</a>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/web_maker/index.html">自制网页</a>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/account/index.html">账号管理</a>
-					</li>
-					<li class="nav-item">
+					</li>-->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/news/index.html">新闻</a>
-					</li>
-					<li class="nav-item">
+					</li>  -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/school/index.html">一草种</a>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/resource/index.html">资料</a>
-					</li>
-					<li class="nav-item">
+					</li> -->
+					<!-- <li class="nav-item">
 						<a class="nav-link need-update-root" href="{{root}}/game/index.html">小游戏</a>
-					</li>
+					</li> -->
 				</ul>
 				<div class="d-flex">
 					<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button">
@@ -98,30 +84,30 @@
 			<div class="offcanvas-body">
 				<h3>导航</h3>
 				<div class="list-group">
-					<a class="list-group-item need-update-root" href="{{root}}/home.html">首页</a>
-					<a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a>
-					<a class="list-group-item need-update-root" href="{{root}}/soil_grass/index.html">草皮土壤</a>
-					<a class="list-group-item need-update-root" href="{{root}}/text/index.html">文学创作</a>
-					<a class="list-group-item need-update-root" href="{{root}}/web_maker/index.html">自制网页</a>
-					<a class="list-group-item need-update-root" href="{{root}}/account/index.html">账号管理</a>
-					<a class="list-group-item need-update-root" href="{{root}}/news/index.html">新闻</a>
-					<a class="list-group-item need-update-root" href="{{root}}/school/index.html">一草种</a>
-					<a class="list-group-item need-update-root" href="{{root}}/resource/index.html">资料</a>
-					<a class="list-group-item need-update-root" href="{{root}}/game/index.html">小游戏</a>
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/home.html">首页</a> -->
+					<!-- <a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/soil_grass/index.html">草皮土壤</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/text/index.html">文学创作</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/web_maker/index.html">自制网页</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/account/index.html">设置</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/news/index.html">新闻</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/school/index.html">一草种</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/resource/index.html">资料</a> -->
+					<!-- <a class="list-group-item need-update-root" href="{{root}}/game/index.html">小游戏</a> -->
 				</div>
 				<br />
-				<h3>搜索</h3>
+				<!-- <h3>搜索</h3>
 				<ul class="list-group">
 					<li class="input-group clearfix">
 						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
 						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
 					</li>
 					<div id="searchResult"></div>
-				</ul>
+				</ul> -->
 			</div>
 		</div>
 		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1">
+		<!-- <div class="modal fade" id="exampleModal" tabindex="-1">
 			<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -165,7 +151,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</header>
 
 	<body style="min-height: 100vh">

@@ -1,0 +1,49 @@
+{%extends "parts/main.html"%} {%block title%} 洽隐山房 | 新闻 {%endblock%} {%block title_in%} 洽隐山房 | 新闻 {%endblock%} {%block body%} 
+<style>
+    .list-group-item,
+    .list-group-item {
+        background: transparent;
+    }
+</style>
+<br>
+<a href="home.html" class="btn">回到首页</a>
+<hr>
+<div class="row">
+    <div class="col-8" id="content" style="backdrop-filter: blur(10px);">
+
+    </div>
+    <div class="col-4" id="ads">
+        <h4>人人关注</h4>
+        <ul class="list-group list-group-flush" id="recommend"></ul>
+    </div>
+</div>
+<br>
+<br>
+<script>
+	$("#content").html('<div class="spinner-border"></div>');
+
+    var resource = window.location.hash.substring(1);
+    if (resource !== "") {
+        $.get("news/content/"+resource).then(function (data) {
+            data = data.replace(/(.+).files/g, "news/newspaper/$1.files");
+            $("#content").html(data);
+        })
+    }else{
+        $("#content").html("没有找到资源，请检查URL");
+    }
+	$("#recommend").html('<div class="spinner-border"></div>');
+    $.get("popular.json").then(function (data) {
+        $("#recommend").html("");
+        // key: title, value: url
+        for (var key in data) {
+            var url = data[key]
+            if(url.startsWith("!")){
+                url = "pdf_embed.html#" + url.substring(1)
+            }else{
+                url = "embed.html#" + url
+            }
+            $("#recommend").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
+        }
+    })
+</script>
+{%endblock%}

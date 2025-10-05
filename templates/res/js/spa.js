@@ -93,12 +93,6 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
         root = data.rootdef;
         true_root = data.rootdef;
     }
-    if (root == ".") {
-        $('#nav_left').hide();
-        $('#nav_control').hide();
-        $('#nav').css('backdropFilter', 'none');
-        $('#footer').addClass('hide_on_large hide_on_small');
-    }
     update_element($('#nav_left'));
     update_element($('#nav_control'));
     update_element($('#nav'));

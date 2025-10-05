@@ -22,7 +22,6 @@
     "esbuild": "0.25.9",
     "html-minifier": "4.0.0",
     "node-minify": "3.6.0",
-    "npx": "^10.2.2",
     "stylecow": "7.4.0",
     "svgo": "^4.0.0",
     "uglify-js": "3.19.3",

@@ -75,7 +75,8 @@ class CompilerPool:
         else:
             self.print(sname, stringlib.special_text("ERROR", "31m"), spath, "\n", error, sep="\t")
             
-
+    def skip(self, task):
+        self.add(Skip(task))
     def add(self, task):
         self.total += 1
         if isinstance(task, str):  # Use default compiler

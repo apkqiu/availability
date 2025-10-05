@@ -2,6 +2,7 @@ from .. import CompilerBase
 from . import ResourceIndexer
 from . import WebIndexer
 from . import NewsArticlesIndexer
+from . import StudentCreationIndexer
 factory = CompilerBase.CompilerFactory()
 def start(pool):
     # 为什么要在这里创建start函数，而不是使用factory.register()函数？
@@ -9,3 +10,4 @@ def start(pool):
     pool.add(ResourceIndexer.ResourceIndexer())
     pool.add(WebIndexer.WebIndexer())
     pool.add(NewsArticlesIndexer.NewsArticlesIndexer())
+    pool.add(StudentCreationIndexer.StudentCreationIndexer())

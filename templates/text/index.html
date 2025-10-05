@@ -62,8 +62,9 @@
         </div>
     </div>
     <div class="col-md-6"  style="backdrop-filter: blur(10px);">
-        <h3 id="title"></h3>
-        <div id="content"></div>
+        <div id="content" style="margin-top: 10px;">
+
+        </div>
     </div>
 </div>
 <script>
@@ -90,11 +91,6 @@
                 $('#content').html('<div class="alert alert-danger">加载失败</div>');
             }
         )
-        $('#title').text(
-            $('#p' + p)
-                .text()
-                .split(' ')[0]
-        );
         for (var i = 1; i <= 100; i++) {
             $('#p' + i).removeClass('active');
         }

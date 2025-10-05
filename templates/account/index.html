@@ -1,51 +1,5 @@
-{%extends "parts/main.html"%} {%block title%} 柳荫眠琴 | 账号管理 {%endblock%} {%block title_in%} 柳荫眠琴 | 账号管理 {%endblock%} {%block outbody%}
-<div class="modal fade" data-bs-backdrop="static" id="Error" tabindex="-1">
-	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-body">检测到您没有账号，将跳转创建</div>
-			<div class="modal-footer">
-				<a type="button" class="btn btn-primary" href="register.html">前往</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" data-bs-backdrop="static" id="Ask" tabindex="-1">
-	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-body">
-				更新将清除所有用户数据，继续请输入密码
-				<br />
-				<input id="password" class="form-control" />
-			</div>
-			<div class="modal-footer">
-				<a type="button" class="btn btn-primary" href="javascript:clear()">继续</a>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal fade" data-bs-backdrop="static" id="Error2" tabindex="-1">
-	<div class="modal-dialog modal-dialog modal-dialog-centered modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-body">密码错误</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">确定</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-{%endblock%} {%block body%}
-<h1>账号管理</h1>
-
-<h3>当前账号</h3>
-<p id="nowAccount">
-	当前账号：<span id="account"></span><br />
-	密码：***
-</p>
-
-<hr />
-<h3>账号设置</h3>
+{%extends "parts/main.html"%} {%block title%} 柳荫眠琴 | 设置 {%endblock%} {%block title_in%} 柳荫眠琴 | 设置 {%endblock%}{%block body%}
+<h1>设置</h1>
 <h4 id="personalization">个性化</h4>
 <div class="form-check form-switch">
 	<input class="form-check-input" type="checkbox" role="switch" id="adv_bg" onchange="save('adv_bg',this.checked)" />
@@ -169,17 +123,7 @@
 	<label class="form-check-label" for="no-anim">关闭元素动态效果</label>
 </div>
 <hr />
-<button type="button" class="btn btn-danger m-1" onclick="$('#password').val('');$('#Ask').modal('show')">注销</button>
-<a class="btn btn-primary m-1" href="register.html">注册</a>
-
 <script>
-	var usernameJSONValue = localStorage.getItem('username');
-	var accountBe = localStorage.getItem('accountBe');
-	var usernameValue = JSON.parse(usernameJSONValue);
-	$('#account').text(usernameValue);
-	if (!accountBe) {
-		//$('#Error').modal('show');
-	}
 	$('#color').val(localStorage.getItem('color') || '#000000');
 	$('#color2').val(localStorage.getItem('color') || '#000000');
 	$('#no-anim').prop('checked', (localStorage.getItem('no-anim') || 'false') == 'true');

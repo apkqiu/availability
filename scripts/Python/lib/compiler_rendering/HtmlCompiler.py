@@ -1,5 +1,4 @@
 import json
-from multiprocessing import context
 from .. import CompilerBase
 import jinja2
 from .. import execlib
@@ -7,7 +6,7 @@ import os
 import logging as log
 import bs4
 from .. import templib
-
+from bs4 import BeautifulSoup
 env = jinja2.Environment(
     loader=jinja2.loaders.FileSystemLoader(
         "templates", encoding="utf-8", followlinks=False
@@ -178,9 +177,8 @@ class HtmlCompiler(CompilerBase.CompilerBase):
         template = env.from_string(template_data)
         ctx = self.make_context(self.in_path)
         # 检查是否包含SPA标记
-        self.jsondata = None
+        self.jsondata = {}
         if self.is_spa(self.in_path):
-            self.jsondata = {}
             for name, data in template.blocks.items():
                 context = template.new_context(ctx)
                 blockdata = "".join(data(context))
@@ -189,17 +187,20 @@ class HtmlCompiler(CompilerBase.CompilerBase):
                     blockdata
                 )  # 不知道为什么，如果直接用blockdata，会报错
             self.jsondata["rootdef"] = ctx["root"]
-            json.dump(
-                self.jsondata,
-                open(self.copy_path + ".json", "w", encoding="utf-8"),
-                ensure_ascii=True,
-            )
+
             temp = templib.TemproaryFile()
             temp.write(self.load_basic())
             temp.close()
             minified_html = execlib.exec_node("compress_html.js", temp.name).decode()
             with open(self.copy_path, "w", encoding="utf-8") as f:
                 f.write(minified_html)
+            json.dump(
+                self.jsondata,
+                open(self.copy_path + ".json", "w", encoding="utf-8"),
+                ensure_ascii=True,
+            )
         else:
+            main_content = self.post_render(template.render(ctx))
             with open(self.copy_path, "w", encoding="utf-8") as f:
-                f.write(self.post_render(template.render(ctx)))
+                f.write(main_content)
+            bs = BeautifulSoup(main_content, "lxml")

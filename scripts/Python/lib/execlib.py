@@ -10,15 +10,14 @@ def check_exit(process:subprocess.Popen):
     return None
 
 
-def exec_cmd(cmd, *args,console=False):
-    if console:
-        p = subprocess.call([cmd, *args], shell=True)
-        return p
-    else:
+def exec_cmd(cmd, *args):
+    try:
         p = subprocess.check_output([cmd, *args], shell=True)
-        return p
+    except subprocess.CalledProcessError as e:
+        raise Exception(f"Command \"{" ".join(e.cmd)}\" failed with code {e.returncode}", e.output,e.stderr.read() if e.stderr else None, e.stdout.read() if e.stdout else None)
+    return p
 
-def exec_node(npm_tool:str, *args,console=False):
+def exec_node(npm_tool:str, *args):
     if npm_tool.endswith(".js"):
         npm_tool = os.path.abspath(os.path.join("scripts", "node", npm_tool))
         cmd = ["node", npm_tool, *args]
@@ -28,14 +27,14 @@ def exec_node(npm_tool:str, *args,console=False):
         else:
             npm_tool = os.path.abspath(os.path.join("node_modules", ".bin", npm_tool))
         cmd = [npm_tool, *args]
-    p = exec_cmd(*cmd,console=console)
+    p = exec_cmd(*cmd)
     return p
 
-def exec_wsl(cmd, *args, console=False):
+def exec_wsl(cmd, *args):
     if sys.platform == "win32":
-        p = exec_cmd("wsl", cmd, *args, console=console)
+        p = exec_cmd("wsl", cmd, *args)
     else:
-        p = exec_cmd(cmd, *args, console=console)
+        p = exec_cmd(cmd, *args)
     return p
 
 def remove_item(file_or_dir):
