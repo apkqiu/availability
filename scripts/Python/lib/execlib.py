@@ -11,10 +11,7 @@ def check_exit(process:subprocess.Popen):
 
 
 def exec_cmd(cmd, *args):
-    try:
-        p = subprocess.check_output([cmd, *args], shell=True)
-    except subprocess.CalledProcessError as e:
-        raise Exception(f"Command \"{" ".join(e.cmd)}\" failed with code {e.returncode}", e.output,e.stderr.read() if e.stderr else None, e.stdout.read() if e.stdout else None)
+    p = subprocess.check_output([cmd, *args], shell=True)
     return p
 
 def exec_node(npm_tool:str, *args):

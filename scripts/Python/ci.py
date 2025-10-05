@@ -7,11 +7,15 @@ execlib.exec_cmd("git", "commit", "-m", "build")
 while True:
     # with proxy
     execlib.exec_cmd("git", "config", "set","http.proxy", "127.0.0.1:10808")
-    ret = execlib.exec_cmd("git", "push")
-    if ret == 0:
+    try:
+        execlib.exec_cmd("git", "push")
         break
+    except:
+        pass
     # without proxy
     execlib.exec_cmd("git", "config", "unset","http.proxy")
-    ret = execlib.exec_cmd("git", "push")
-    if ret == 0:
+    try:
+        execlib.exec_cmd("git", "push")
         break
+    except:
+        pass
