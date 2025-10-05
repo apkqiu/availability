@@ -9,6 +9,10 @@ def check_exit(process:subprocess.Popen):
         return 0
     return None
 
+def run(cmd, *args):
+    p = subprocess.run([cmd, *args])
+    p.check_returncode()
+    return p
 
 def exec_cmd(cmd, *args):
     p = subprocess.check_output([cmd, *args], shell=True)
