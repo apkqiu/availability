@@ -1,0 +1,26 @@
+<div id="x">
+
+</div>
+<script>
+    var x = document.getElementById("x");
+    function show_all(obj,name,dep){
+        if (dep==0){
+            return document.createTextNode(name+": "+obj);
+        }
+        var details = document.createElement("details");
+
+        var summary = document.createElement("summary");
+        summary.innerText = name+": "+obj;
+        details.appendChild(summary);
+
+        var ul = document.createElement("ul");
+        for(var i in obj){
+            var li = document.createElement("li");
+            li.appendChild(show_all(obj[i],i,dep-1));
+            ul.appendChild(li);
+        }
+        details.appendChild(ul);
+        return details;
+    }
+    x.appendChild(show_all(wc, "wc",4));
+</script>
