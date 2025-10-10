@@ -1,7 +1,9 @@
 import flask
 import os
 app = flask.Flask(__name__)
-
+@app.route("/")
+def index():
+    return flask.redirect("/docs/home.html")
 @app.route("/<path:path>")
 def hello(path):
     if os.path.isdir(path):
@@ -12,4 +14,4 @@ def hello(path):
     return resp
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=80, debug=True)

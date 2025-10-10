@@ -22,5 +22,9 @@
         details.appendChild(ul);
         return details;
     }
-    x.appendChild(show_all(wc, "wc",4));
+    if(typeof wc != "undefined"){
+        x.appendChild(show_all(wc, "wc",1));
+    }else{
+        x.appendChild(document.createTextNode("wc is not defined"));
+    }
 </script>

@@ -52,8 +52,8 @@ if args.recompile or args.compile:
     should_all_change = {}
     # 先检查所有基础架构没有修改
     for file, hash in filehash.items():
-        new_hash = calc_hash(open("templates/"+file, "rb").read()).hexdigest()
-        if str(file).startswith("parts\\"):
+        if file.startswith("parts\\"):
+            new_hash = calc_hash(open("templates/"+file, "rb").read()).hexdigest()
             if hash != new_hash:
                 should_all_change[".html"] = True
     for dirpath, dirs, files in os.walk("templates"):

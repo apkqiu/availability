@@ -107,6 +107,14 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     }
     $("#loading-mask").hide();
 
+    if (data.rootdef=='.'&&location.href.indexOf("home.html")!=-1) {
+        $("#nav_back").hide();
+        $("#nav_home").hide();
+    }else{
+        $("#nav_back").show();
+        $("#nav_home").show();
+    }
+
     // EXECUTE SCRIPT AT OUTBODY AND BODY
     // find all script tags in outbody and body
     var scripts = $("#PART_outbody, #PART_body").find("script");
