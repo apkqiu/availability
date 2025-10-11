@@ -14,10 +14,10 @@ class MarkdownCompiler(HtmlCompiler.HtmlCompiler):
         temp = templib.TemproaryFile()
         temp.write(data)
         temp.close()
-        data = execlib.exec_node("markdown-it", temp.name).decode()
+        data = execlib.exec_node("markdown-it", temp.name)
         temp.reopen() # 重用（嘿嘿）
         temp.clear()
         temp.write(data)
         temp.close()
-        data = execlib.exec_node("compress_html.js", temp.name).decode()
+        data = execlib.exec_node("compress_html.js", temp.name)
         return data

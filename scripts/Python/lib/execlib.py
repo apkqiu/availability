@@ -15,7 +15,7 @@ def run(cmd, *args):
     return p
 
 def exec_cmd(cmd, *args):
-    p = subprocess.check_output([cmd, *args], shell=True)
+    p = subprocess.getoutput([cmd, *args], encoding="utf-8")
     return p
 
 def exec_node(npm_tool:str, *args):

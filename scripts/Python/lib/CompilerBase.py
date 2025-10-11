@@ -36,7 +36,7 @@ class CompilerFactory:
 
 
 class CompilerPool:
-    def __init__(self, factory: CompilerFactory, max_workers=512, log = True):
+    def __init__(self, factory: CompilerFactory, max_workers=1024):
         self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
         self.max_workers = max_workers
         self.factory = factory

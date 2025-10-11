@@ -1,6 +1,6 @@
 import lib.execlib as execlib
 import os
-execlib.run("python", os.path.join("scripts", "Python", "convert_pdf_2_html.py"))
+# execlib.run("python", os.path.join("scripts", "Python", "convert_pdf_2_html.py"))
 execlib.run("python", os.path.join("scripts", "Python", "compile.py"), "--recompile")
 execlib.run("git", "add", ".")
 execlib.run("git", "commit", "-m", "build")

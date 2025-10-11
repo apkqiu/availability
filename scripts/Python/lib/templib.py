@@ -7,6 +7,11 @@ class TemproaryFile:
         self.file = tempfile.NamedTemporaryFile(mode="w", delete=False, encoding=self.encoding)
         # 至于为什么delete=False，是因为这个文件要被编译器、npm等程序读取
 
+    def __del__(self):
+        self.close()
+        os.remove(self.file.name)
+        # 生命周期结束（现在没有任何Python对象能够访问），删除文件
+
     def clear(self):
         self.file.truncate(0)
         self.file.seek(0)
@@ -21,6 +26,14 @@ class TemproaryFile:
 
     def reopen(self):
         self.file = open(self.file.name, "a",encoding=self.encoding)
+
+    def read(self):
+        self.file.close()
+        self.file = open(self.file.name, "r", encoding=self.encoding)
+        content = self.file.read()
+        self.file.close()
+        self.file = open(self.file.name, "a", encoding=self.encoding)
+        return content
 
     @property
     def name(self):

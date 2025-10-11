@@ -3,10 +3,10 @@ from .. import CompilerBase
 import jinja2
 from .. import execlib
 import os
-import logging as log
 import bs4
 from .. import templib
 from bs4 import BeautifulSoup
+from . import JsCompiler
 env = jinja2.Environment(
     loader=jinja2.loaders.FileSystemLoader(
         "templates", encoding="utf-8", followlinks=False
@@ -119,7 +119,6 @@ class HtmlCompiler(CompilerBase.CompilerBase):
             # 外部script：跳过
             if i.get("src"):
                 continue
-
             # 事件绑定
             if i.get("when") and i.get("target"):
                 if i.get("global"):
@@ -133,7 +132,6 @@ class HtmlCompiler(CompilerBase.CompilerBase):
                 del i.attrs["target"]
             elif i.get("when") or i.get("target"):
                 raise Exception("script标签的when和target属性必须同时存在")
-
             # 全局script
             if "global" in i.attrs:
                 del i.attrs["global"]
@@ -143,12 +141,14 @@ class HtmlCompiler(CompilerBase.CompilerBase):
                         {i.string}
                     }})();
                 """
+            # 然后然后解决所有CJS的问题
+            i.string = JsCompiler.compile_js(i.string)
         data = soup.prettify()
         if compress:
             temp = templib.TemproaryFile()
             temp.write(data)
             temp.close()
-            data = execlib.exec_node("compress_html.js", temp.name).decode()
+            data = execlib.exec_node("compress_html.js", temp.name)
         return data
 
     def is_spa(self, file):
@@ -191,7 +191,7 @@ class HtmlCompiler(CompilerBase.CompilerBase):
             temp = templib.TemproaryFile()
             temp.write(self.load_basic())
             temp.close()
-            minified_html = execlib.exec_node("compress_html.js", temp.name).decode()
+            minified_html = execlib.exec_node("compress_html.js", temp.name)
             with open(self.copy_path, "w", encoding="utf-8") as f:
                 f.write(minified_html)
             json.dump(
@@ -203,4 +203,3 @@ class HtmlCompiler(CompilerBase.CompilerBase):
             main_content = self.post_render(template.render(ctx))
             with open(self.copy_path, "w", encoding="utf-8") as f:
                 f.write(main_content)
-            bs = BeautifulSoup(main_content, "lxml")

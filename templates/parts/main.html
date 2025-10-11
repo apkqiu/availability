@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" style="min-height: 100vh" id="html-root">
+<html lang="zh-hans" style="min-height: 100vh" id="html-root">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>正在加载...</title>
 		<script>
+			// polyfill
+			if(typeof globalThis == 'undefined') {
+				window.globalThis = window;
+			}
 			if (typeof root == 'undefined') {
-				globalThis.root = '{{root}}';
-				globalThis.true_root = '{{root}}';
+				window.root = '{{root}}';
+				window.true_root = '{{root}}';
 			}
 		</script>
 

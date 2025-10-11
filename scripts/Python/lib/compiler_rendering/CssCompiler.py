@@ -11,5 +11,5 @@ class CssCompiler(CompilerBase.CompilerBase):
     def compile(self):
         code = execlib.exec_node("esbuild", self.in_path, "--minify")
 
-        with open(self.copy_path, "wb") as f:
+        with open(self.copy_path, "w") as f:
             f.write(code)
