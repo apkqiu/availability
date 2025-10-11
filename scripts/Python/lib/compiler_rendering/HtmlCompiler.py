@@ -142,13 +142,13 @@ class HtmlCompiler(CompilerBase.CompilerBase):
                     }})();
                 """
             # 然后然后解决所有CJS的问题
-            i.string = JsCompiler.compile_js(i.string)
+            #i.string = JsCompiler.compile_js(i.string)
         data = soup.prettify()
         if compress:
             temp = templib.TemproaryFile()
             temp.write(data)
             temp.close()
-            data = execlib.exec_node("compress_html.js", temp.name)
+            #data = execlib.exec_node("compress_html.js", temp.name)
         return data
 
     def is_spa(self, file):

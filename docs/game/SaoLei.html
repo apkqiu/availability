@@ -1,1 +1,318 @@
-<!doctypehtml><html lang=en><head><meta charset=utf-8><meta content="width=device-width,initial-scale=1"name=viewport><title>扫雷</title><style>.go_black{background-color:#000;animation:go_black 1s ease-in-out}.go_white{background-color:#fff;opacity:0;animation:go_white 1s ease-in-out}@keyframes go_black{0%{background-color:#fff;opacity:0}100%{background-color:#000;opacity:1}}@keyframes go_white{0%{background-color:#000;opacity:1}100%{background-color:#fff;opacity:0}}*{color:#fff}.block{width:2em;height:2em}.no_open{background-color:#a9a9a9}.open{background-color:#fff}.mine{background-color:red}.mine_nonclick{background-color:orange}.flag{background-color:#00f!important}.num1{color:#00f}.num2{color:red}.num3{color:purple}.num4{color:orange}.num5{color:brown}.num6{color:gray}.num7{color:#000}.num8{color:#fff}</style></head><body class=go_black><center><h1>扫雷</h1></center><span>剩余雷数： </span><span id=mineCount></span><script>(()=>{var i=parseInt(location.search.split("=")[1]),c=parseInt(location.search.split("=")[2]),l=parseInt(location.search.split("=")[3]),f=[],d=[],n=[-1,-1,-1,0,0,1,1,1],t=[-1,0,1,-1,1,-1,0,1],u=[1,0,-1,0],p=[0,1,0,-1],m=[],v=!1;function h(s,o){return async function(n=!0){if(!v&&!(s<0||i<=s||o<0||c<=o)&&!d[s][o].classList.contains("open"))if(d[s][o].classList.add("open"),0==f[s][o])for(var t=0;t<4;t++){var e=s+u[t],a=o+p[t];e<-1||i<=e||a<0||c<=a||m.push(h(e,a))}else if(99==f[s][o]){if(d[s][o].classList.add("mine"),n){alert("你输了");for(t=0;t<i;t++)for(var r=0;r<c;r++)if(99==f[t][r]){if(t==s&&r==o)continue;d[t][r].classList.add("mine_nonclick")}v=!0}}else d[s][o].classList.add("num"+f[s][o]),d[s][o].innerText=f[s][o]}}function e(s,o){return function(n){if(!v){d[s][o].classList.contains("flag")?d[s][o].classList.remove("flag"):d[s][o].classList.add("flag");for(var t=0,e=0,a=0;a<i;a++)for(var r=0;r<c;r++)d[a][r].classList.contains("flag")&&(99==f[a][r]?t++:e++);t==l&&0==e&&(alert("你赢了"),v=!0),document.getElementById("mineCount").innerText=t+e<l||t==l&&0==e?l-t-e:"?",n.preventDefault()}}}document.getElementById("mineCount").innerText=l,setInterval(function(){for(var n=0;0<m.length&&n<m.length;)m.shift()(),n++},1);for(var a=0;a<c;a++){for(var r=[],s=[],o=0;o<i;o++){r.push(0);var L=document.createElement("button");L.onclick=h(a,o),L.oncontextmenu=e(a,o),L.classList.add("no_open"),L.classList.add("block"),s.push(L)}f.push(r),d.push(s)}function g(n,t){return Math.floor(Math.random()*(t-n+1))%(t-n+1)+n}for(a=0;a<l;a++){var C=g(0,i-1),E=g(0,c-1);99==f[C][E]&&a--,f[C][E]=99}for(a=0;a<c;a++)for(o=0;o<i;o++)if(99!=f[a][o])for(var I=0;I<8;I++){C=o+n[I],E=a+t[I];0<=C&&C<i&&0<=E&&E<c&&(f[a][o]+=99==f[E][C]?1:0)}for(var b=document.createElement("table"),a=0;a<c;a++){for(var x=document.createElement("tr"),o=0;o<i;o++){var y=document.createElement("td");y.appendChild(d[a][o]),x.appendChild(y)}b.appendChild(x)}document.body.appendChild(b)})()</script><br><button onclick=play_again() style=background:gray>再玩一次</button><br><br><form>配置修改<br><label for=w>宽度：</label> <input id=w name=w style=background:gray type=number value=10><br><label for=h>高度：</label> <input id=h name=h style=background:gray type=number value=10><br><label for=m>雷数：</label> <input id=m name=m style=background:gray type=number value=10><br><input style=background:gray type=submit value=开始新游戏></form><br><button onclick=go_back() style=background:gray>返回</button></body></html>
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   扫雷
+  </title>
+  <style>
+   .go_black {
+                background-color: black;
+                animation: go_black 1s ease-in-out;
+            }
+
+            .go_white {
+                background-color: white;
+                opacity: 0;
+                animation: go_white 1s ease-in-out;
+            }
+
+            @keyframes go_black {
+                0% {
+                    background-color: white;
+                    opacity: 0;
+                }
+
+                100% {
+                    background-color: black;
+                    opacity: 1;
+                }
+            }
+
+            @keyframes go_white {
+                0% {
+                    background-color: black;
+                    opacity: 1;
+                }
+
+                100% {
+                    background-color: white;
+                    opacity: 0;
+                }
+            }
+
+            * {
+                color: white;
+            }
+
+            .block {
+                width: 2em;
+                height: 2em;
+            }
+
+            .no_open {
+                background-color: darkgray;
+            }
+
+            .open {
+                background-color: white;
+            }
+
+            .mine {
+                background-color: red;
+            }
+
+            .mine_nonclick {
+                background-color: orange;
+            }
+
+            .flag {
+                background-color: blue !important;
+            }
+
+            .num1 {
+                color: blue;
+            }
+
+            .num2 {
+                color: red;
+            }
+
+            .num3 {
+                color: purple;
+            }
+
+            .num4 {
+                color: orange;
+            }
+
+            .num5 {
+                color: brown;
+            }
+
+            .num6 {
+                color: gray;
+            }
+
+            .num7 {
+                color: black;
+            }
+
+            .num8 {
+                color: white;
+            }
+  </style>
+ </head>
+ <body class="go_black">
+  <center>
+   <h1>
+    扫雷
+   </h1>
+  </center>
+  <span>
+   剩余雷数：
+  </span>
+  <span id="mineCount">
+  </span>
+  <script>
+   !(function() {
+                        
+            // game.html?w=10&h=10&m=10
+            var w = parseInt(location.search.split('=')[1]);
+            var h = parseInt(location.search.split('=')[2]);
+            var m = parseInt(location.search.split('=')[3]);
+            var stage = [];
+            var button = [];
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            var dirx = [-1, -1, -1, 0, 0, 1, 1, 1];
+            var diry = [-1, 0, 1, -1, 1, -1, 0, 1];
+            var puredirx = [1, 0, -1, 0];
+            var purediry = [0, 1, 0, -1];
+            var call_queue = [];
+            var stopped = false;
+
+            function open_block(x, y) {
+                async function wrapper(human = true) {
+                    if (stopped) {
+                        return;
+                    }
+                    if (x < 0 || x >= w || y < 0 || y >= h) {
+                        return;
+                    }
+                    if (button[x][y].classList.contains('open')) {
+                        return;
+                    }
+                    button[x][y].classList.add('open');
+                    if (stage[x][y] == 0) {
+                        for (var i = 0; i < 4; i++) {
+                            var tx = x + puredirx[i];
+                            var ty = y + purediry[i];
+                            if (tx < -1 || tx >= w || ty < 0 || ty >= h) {
+                                continue;
+                            }
+                            call_queue.push(open_block(tx, ty));
+                        }
+                    } else if (stage[x][y] == 99) {
+                        button[x][y].classList.add('mine');
+                        if (!human) return;
+                        alert('你输了');
+                        // open every block
+                        for (var i = 0; i < w; i++) {
+                            for (var j = 0; j < h; j++) {
+                                if (stage[i][j] == 99) {
+                                    if (i == x && j == y) continue;
+                                    button[i][j].classList.add('mine_nonclick');
+                                }
+                            }
+                        }
+                        stopped = true;
+                    } else {
+                        button[x][y].classList.add('num' + stage[x][y]);
+                        button[x][y].innerText = stage[x][y];
+                    }
+                }
+                return wrapper;
+            }
+            function check_no_more_or_less() {
+                var hit = 0;
+                var nonhit = 0;
+                for (var i = 0; i < w; i++) {
+                    for (var j = 0; j < h; j++) {
+                        if (button[i][j].classList.contains('flag')) {
+                            if (stage[i][j] == 99) {
+                                hit++;
+                            } else {
+                                nonhit++;
+                            }
+                        }
+                    }
+                }
+                if (hit == m && nonhit == 0) {
+                    alert('你赢了');
+                    stopped = true;
+                }
+                if (hit + nonhit < m || (hit == m && nonhit == 0)) document.getElementById('mineCount').innerText = m - hit - nonhit;
+                else document.getElementById('mineCount').innerText = '?';
+            }
+            document.getElementById('mineCount').innerText = m;
+            function set_flag(x, y) {
+                function wrapper(e) {
+                    if (stopped) return;
+                    if (button[x][y].classList.contains('flag')) {
+                        button[x][y].classList.remove('flag');
+                    } else {
+                        button[x][y].classList.add('flag');
+                    }
+                    check_no_more_or_less();
+                    e.preventDefault();
+                }
+                return wrapper;
+            }
+            function pop_queue() {
+                var called = 0;
+                while (call_queue.length > 0 && called < call_queue.length) {
+                    call_queue.shift()();
+                    called++;
+                }
+            }
+            setInterval(pop_queue, 1);
+            // fill stage with 0
+            for (var i = 0; i < h; i++) {
+                var tmp = [];
+                var btnln = [];
+                for (var j = 0; j < w; j++) {
+                    tmp.push(0);
+                    var cur = document.createElement('button');
+                    cur.onclick = open_block(i, j);
+                    cur.oncontextmenu = set_flag(i, j);
+                    cur.classList.add('no_open');
+                    cur.classList.add('block');
+                    btnln.push(cur);
+                }
+                stage.push(tmp);
+                button.push(btnln);
+            }
+            function rand_between(min, max) {
+                return (Math.floor(Math.random() * (max - min + 1)) % (max - min + 1)) + min;
+            }
+            for (var i = 0; i < m; i++) {
+                var x = rand_between(0, w - 1);
+                var y = rand_between(0, h - 1);
+                if (stage[x][y] == 99) {
+                    i--;
+                }
+                stage[x][y] = 99;
+            }
+            // pre-process stage
+            for (var i = 0; i < h; i++) {
+                for (var j = 0; j < w; j++) {
+                    if (stage[i][j] != 99) {
+                        for (var k = 0; k < 8; k++) {
+                            var x = j + dirx[k];
+                            var y = i + diry[k];
+                            if (x >= 0 && x < w && y >= 0 && y < h) {
+                                stage[i][j] += stage[y][x] == 99 ? 1 : 0;
+                            }
+                        }
+                    }
+                }
+            }
+            // draw
+            var table = document.createElement('table');
+            for (var i = 0; i < h; i++) {
+                var tr = document.createElement('tr');
+                for (var j = 0; j < w; j++) {
+                    var td = document.createElement('td');
+                    td.appendChild(button[i][j]);
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+            document.body.appendChild(table);
+            async function play_again() {
+                document.body.classList.add('go_white');
+                await sleep(1000);
+                location.reload();
+            }
+            async function go_back(params) {
+                document.body.classList.add('go_white');
+                await sleep(1000);
+                location.href = 'index.html?fade';
+            }
+        
+                    })();
+  </script>
+  <br/>
+  <button onclick="play_again()" style="background: gray">
+   再玩一次
+  </button>
+  <br/>
+  <br/>
+  <form>
+   配置修改
+   <br/>
+   <label for="w">
+    宽度：
+   </label>
+   <input id="w" name="w" style="background: gray" type="number" value="10"/>
+   <br/>
+   <label for="h">
+    高度：
+   </label>
+   <input id="h" name="h" style="background: gray" type="number" value="10"/>
+   <br/>
+   <label for="m">
+    雷数：
+   </label>
+   <input id="m" name="m" style="background: gray" type="number" value="10"/>
+   <br/>
+   <input style="background: gray" type="submit" value="开始新游戏"/>
+  </form>
+  <br/>
+  <button onclick="go_back()" style="background: gray">
+   返回
+  </button>
+ </body>
+</html>

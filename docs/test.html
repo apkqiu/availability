@@ -1,1 +1,33 @@
-<div id=x></div><script>(()=>{var e=document.getElementById("x");typeof wc<"u"?e.appendChild(function e(t,n,d){if(0==d)return document.createTextNode(n+": "+t);var c,a=document.createElement("details"),r=document.createElement("summary"),i=(r.innerText=n+": "+t,a.appendChild(r),document.createElement("ul"));for(c in t){var l=document.createElement("li");l.appendChild(e(t[c],c,d-1)),i.appendChild(l)}return a.appendChild(i),a}(wc,"wc",1)):e.appendChild(document.createTextNode("wc is not defined"))})()</script>
+<div id="x">
+</div>
+<script>
+ !(function() {
+                        
+    var x = document.getElementById("x");
+    function show_all(obj,name,dep){
+        if (dep==0){
+            return document.createTextNode(name+": "+obj);
+        }
+        var details = document.createElement("details");
+
+        var summary = document.createElement("summary");
+        summary.innerText = name+": "+obj;
+        details.appendChild(summary);
+
+        var ul = document.createElement("ul");
+        for(var i in obj){
+            var li = document.createElement("li");
+            li.appendChild(show_all(obj[i],i,dep-1));
+            ul.appendChild(li);
+        }
+        details.appendChild(ul);
+        return details;
+    }
+    if(typeof wc != "undefined"){
+        x.appendChild(show_all(wc, "wc",1));
+    }else{
+        x.appendChild(document.createTextNode("wc is not defined"));
+    }
+
+                    })();
+</script>
