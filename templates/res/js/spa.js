@@ -122,16 +122,23 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     var scripts = $("#PART_outbody, #PART_body").find("script");
     $("#script-mount-node").html("");
     // execute each script
-    var delayed = [];
+
     scripts.each(function () {
         $("#script-mount-node").append(this);
     });
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ''
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
     // create a new script tag
     // var script = document.createElement("script");
     // // set the text of the script tag
     // script.text = delayed.join("\n");
     // // append the script tag to the body
-    
+
 
     var updates = $(".need-update-root");
     updates.each(function () {
@@ -140,16 +147,16 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     NProgress.done();
     window.dispatchEvent(new Event("spa_navigate"));
 }
-var prev_page = location.pathname+this.location.search;
+var prev_page = location.pathname + this.location.search;
 window.onpopstate = function (event) {
     // browser changed the url
-    if(prev_page == location.pathname+this.location.search) return;
+    if (prev_page == location.pathname + this.location.search) return;
     if (event.state) {
-        prev_page = location.pathname+this.location.search;
+        prev_page = location.pathname + this.location.search;
         // 有eventdata
         set_viewdata(event.state, null);
     } else {
-        navigate(prev_page=location.pathname+this.location.search, true, false);
+        navigate(prev_page = location.pathname + this.location.search, true, false);
     }
 }
 // 定位所有a标签

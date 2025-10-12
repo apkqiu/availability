@@ -25,10 +25,11 @@
 			data-reactions-enabled="1"
 			data-emit-metadata="1"
 			data-input-position="top"
-			data-theme="preferred_color_scheme"
+			data-theme="dark"
 			data-lang="zh-CN"
 			crossorigin="anonymous"
 			async
+			data-pjax
 		></script>
 		{% for i in listdir("res/js")%}
 		<script src="{{root}}/res/js/{{i[0]}}.js"></script>
