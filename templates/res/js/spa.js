@@ -124,7 +124,12 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     // execute each script
 
     scripts.each(function () {
-        $("#script-mount-node").append(this);
+        var item = this;
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ''
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
     });
     document.querySelectorAll('script[data-pjax]').forEach(item => {
         const newScript = document.createElement('script')
