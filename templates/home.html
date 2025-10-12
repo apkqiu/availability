@@ -30,6 +30,16 @@
 <div id="carousel" class="carousel slide w-100">
 	<div class="carousel-inner">
 		<div class="carousel-item active">
+			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/ccnews/013.1.01.jpeg);" href="embed.html?news013.1.html">
+				<div class="news-txt-box">
+					<div class="news-txt">
+						<h1>传承中华体育魂</h1>
+						<p>运动会快讯</p>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="carousel-item">
 			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/news/birdinclass.png);" href="pdf_embed.html#p=11">
 				<div class="news-txt-box">
 					<div class="news-txt">
@@ -50,7 +60,7 @@
 			</a>
 		</div>
 		<div class="carousel-item">
-			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/news/homeworkfinish.png);" href="embed.html#1.html">
+			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/news/homeworkfinish.png);" href="embed.html?1.html">
 				<div class="news-txt-box">
 					<div class="news-txt">
 						<h1>我的一小步，暑假的一大步 <small>——我学生胜利完成本周暑假作业</small></h1>
@@ -70,7 +80,7 @@
 			</a>
 		</div>
 		<div class="carousel-item">
-			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/wechat.png);" href="embed.html#000wechat.html">
+			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/wechat.png);" href="embed.html?000wechat.html">
 				<div class="news-txt-box">
 					<div class="news-txt">
 						<h1>“一班报”</h1>
@@ -163,7 +173,7 @@
 			if (url.startsWith('!')) {
 				url = 'pdf_embed.html#' + url.substring(1);
 			} else {
-				url = 'embed.html#' + url;
+				url = 'embed.html?' + url;
 			}
 			$('#recommend').append("<li class='list-group-item'><a href='" + url + "'>" + key + '</a></li>');
 		}
@@ -174,7 +184,7 @@
 		// key: title, value: url
 		for (var key in data) {
 			var url = data[key];
-			url = 'embed.html#' + url;
+			url = 'embed.html?' + url;
 			$('#articles').append("<li class='list-group-item'><a href='" + url + "'>" + key + '</a></li>');
 		}
 	});

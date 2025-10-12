@@ -31,9 +31,9 @@ function navigate(url, replace = false, anim = true) {
     $.get(urlpath + ".json").then((data) => {
         set_viewdata(data, url, replace, anim);
     }).fail((xhr) => {
-        if(!xhr.responseText){
+        if (!xhr.responseText) {
             // 一般性错误
-            set_viewdata({title: "加载失败", title_in: "加载失败", body: "<h1>加载失败</h1>加载失败，但是没有收到服务器返回的错误信息。"}, url, replace, anim);
+            set_viewdata({ title: "加载失败", title_in: "加载失败", body: "<h1>加载失败</h1>加载失败，但是没有收到服务器返回的错误信息。" }, url, replace, anim);
             return;
         }
         var title = xhr.responseText.indexOf("<title>");
@@ -62,11 +62,11 @@ function navigate(url, replace = false, anim = true) {
             title: title_str,
             title_in: title_str,
             body: body,
-        }, url, replace,anim)
+        }, url, replace, anim)
     });
 }
 
-function update_element(e){
+function update_element(e) {
     var element = $(e);
     var style = getComputedStyle(element[0]);
     // 遍历所有属性，只是为了刷新
@@ -107,10 +107,10 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     }
     $("#loading-mask").hide();
 
-    if (data.rootdef=='.'&&location.href.indexOf("home.html")!=-1) {
+    if (data.rootdef == '.' && location.href.indexOf("home.html") != -1) {
         $("#nav_back").hide();
         $("#nav_home").hide();
-    }else{
+    } else {
         $("#nav_back").show();
         $("#nav_home").show();
     }
@@ -136,27 +136,30 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
         $(this).attr("href", $(this).attr("href").replace(oldroot, root));
     });
     NProgress.done();
-window.dispatchEvent(new Event("spa_navigate"));
+    window.dispatchEvent(new Event("spa_navigate"));
 }
-
+var prev_page = location.pathname+this.location.search;
 window.onpopstate = function (event) {
+    // browser changed the url
+    if(prev_page == location.pathname+this.location.search) return;
     if (event.state) {
+        prev_page = location.pathname+this.location.search;
         // 有eventdata
         set_viewdata(event.state, null);
     } else {
-        navigate(location.href, true, false);
+        navigate(prev_page=location.pathname+this.location.search, true, false);
     }
-    
-    // browser changed the url
 }
 // 定位所有a标签
 $(document).on("click", "a", function (e) {
     if ($(this).attr("href").startsWith("#") || $(this).attr("href").indexOf(":") != -1 || $(this).attr("no-intercept") == "true") {
+        console.log("skip: " + $(this).attr("href"));
         return;
     }
+    console.log("navigate: " + $(this).attr("href"));
     e.preventDefault();
     navigate($(this).attr("href"));
 });
 $(document).ready(function () {
-    navigate(window.location.pathname+window.location.search+window.location.hash, true);
+    navigate(window.location.pathname + window.location.search + window.location.hash, true);
 });

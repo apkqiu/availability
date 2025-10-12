@@ -1,55 +1,130 @@
-{%extends "parts/main.html"%} {%block title%} 洽隐山房 | 新闻 {%endblock%} {%block title_in%} 洽隐山房 | 新闻 {%endblock%} {%block body%} 
+{%extends "parts/main.html"%} {%block title%} 洽隐山房 | 新闻 {%endblock%} {%block title_in%} 洽隐山房 | 新闻 {%endblock%} {%block body%}
 <style>
-    img{
-        width:80%;
-        display:inline-block;
-    }
-    .list-group-item,
-    .list-group-item {
-        background: transparent;
-    }
+	img {
+		width: 80%;
+		display: inline-block;
+		image-orientation: from-image;
+	}
+	.list-group-item,
+	.list-group-item {
+		background: transparent;
+	}
 </style>
-<br>
-<a href="home.html" class="btn">回到首页</a>
-<hr>
+<br />
 <div class="row">
-    <div class="col-8">
-        <div id="content" style="backdrop-filter: blur(10px);padding:10px">
-    </div>
-
-    </div>
-    <div class="col-4" id="ads">
-        <h4>人人关注</h4>
-        <ul class="list-group list-group-flush" id="recommend"></ul>
-    </div>
+	<div class="col-md-8">
+		<div id="content" style="backdrop-filter: blur(10px); padding: 10px"></div>
+	</div>
+	<div class="col-md-4" id="ads">
+		<h4>人人关注</h4>
+		<ul class="list-group list-group-flush" id="recommend"></ul>
+	</div>
 </div>
-<br>
-<br>
-<script>
-	$("#content").html('<div class="spinner-border"></div>');
+<br />
+<br />
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-fullscreen">
+		<div class="modal-content">
+			<div class="modal-header" style="height: 3rem">
+				<span class="me-2">图片查看</span>
+				<a href="" id="newtab" target="_blank" class="me-2" no-intercept="true">用浏览器查看</a>
+				<a href="" id="download" download class="me-2" no-intercept="true">下载</a>
 
-    var resource = window.location.hash.substring(1);
-    if (resource !== "") {
-        $.get("news/content/"+resource).then(function (data) {
-            data = data.replace(/(.+).files/g, "news/newspaper/$1.files");
-            $("#content").html(data);
-        })
-    }else{
-        $("#content").html("没有找到资源，请检查URL");
-    }
-	$("#recommend").html('<div class="spinner-border"></div>');
-    $.get("popular.json").then(function (data) {
-        $("#recommend").html("");
-        // key: title, value: url
-        for (var key in data) {
-            var url = data[key]
-            if(url.startsWith("!")){
-                url = "pdf_embed.html#" + url.substring(1)
-            }else{
-                url = "embed.html#" + url
-            }
-            $("#recommend").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
-        }
-    })
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-header" style="height: 1rem">
+				<span class="me-1">缩放</span>
+				<button class="btn" id="zoomIn">
+					<i class="bi bi-zoom-in"></i>
+				</button>
+				<button class="btn" id="zoomOut">
+					<i class="bi bi-zoom-out"></i>
+				</button>
+				<button class="btn" id="aspect">
+					<i class="bi bi-aspect-ratio"></i>
+				</button>
+				<input type="range" min="20" max="500" value="100" class="form-range" id="zoom" style="width: 200px" class="me-1" />
+				<span id="zoomValue" class="me-1"></span>
+			</div>
+			<div class="modal-header" style="height: 1rem">
+				<span class="me-1">旋转</span>
+				<button class="btn" id="rotateLeft">
+					<i class="bi bi-arrow-counterclockwise"></i>
+				</button>
+				<button class="btn" id="rotateRight">
+					<i class="bi bi-arrow-clockwise"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<img id="image" src="" alt="" style="width: 100%; object-fit: contain" id="image" />
+			</div>
+			<!--div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+			</div-->
+		</div>
+	</div>
+</div>
+<script>
+	$('#content').html('<div class="spinner-border"></div>');
+	function update_image_by_range() {
+		$('#image').css('width', $('#zoom').val() + '%');
+		$('#zoomValue').text($('#zoom').val() + '%');
+	}
+	$('#zoom').on('change', update_image_by_range).on('input', update_image_by_range);
+	var rotation = 0n;
+	$('#rotateLeft').click(function () {
+		rotation -= 90n;
+		$('#image').css('transform', 'rotate(' + rotation + 'deg)');
+	});
+	$('#rotateRight').click(function () {
+		rotation += 90n;
+		$('#image').css('transform', 'rotate(' + rotation + 'deg)');
+	});
+	$('#zoomIn').on('click', function () {
+		$('#zoom').val(parseInt(parseInt($('#zoom').val()) / 10) * 10 + 10);
+		update_image_by_range();
+	});
+	$('#zoomOut').on('click', function () {
+		$('#zoom').val(parseInt(parseInt($('#zoom').val()) / 10) * 10 - 10);
+		update_image_by_range();
+	});
+	$('#aspect').on('click', function () {
+		$('#zoom').val(100);
+		update_image_by_range();
+	});
+	var resource = window.location.search.substring(1);
+	if (resource !== '') {
+		$.get('news/content/' + resource).then(function (data) {
+			data = data.replace(/(.+).files/g, 'news/newspaper/$1.files');
+			$('#content').html(data);
+			$('#content img').click(function () {
+				$('#image').attr('src', $(this).attr('src'));
+				$('#newtab').attr('href', $(this).attr('src'));
+				$('#download').attr('href', $(this).attr('src'));
+				$('#imageModal').modal('show');
+				$('#zoom').val('100').trigger('input');
+				rotation = 0n;
+				$('#image').css('transform', 'rotate(0deg)');
+			});
+			$('.footnote-ref>a').attr('no-intercept', 'true');
+			$('.footnote-backref').attr('no-intercept', 'true');
+		});
+	} else {
+		$('#content').html('没有找到资源，请检查URL');
+	}
+	$('#recommend').html('<div class="spinner-border"></div>');
+	$.get('popular.json').then(function (data) {
+		$('#recommend').html('');
+		// key: title, value: url
+		for (var key in data) {
+			var url = data[key];
+			if (url.startsWith('!')) {
+				url = 'pdf_embed.html#' + url.substring(1);
+			} else {
+				url = 'embed.html?' + url;
+			}
+			$('#recommend').append("<li class='list-group-item'><a href='" + url + "'>" + key + '</a></li>');
+		}
+	});
 </script>
 {%endblock%}

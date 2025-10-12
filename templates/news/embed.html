@@ -40,7 +40,7 @@
             if(url.startsWith("!")){
                 url = "pdf_embed.html#" + url.substring(1)
             }else{
-                url = "embed.html#" + url
+                url = "embed.html?" + url
             }
             $("#recommend").append("<li class='list-group-item'><a href='" + url + "'>" + key + "</a></li>");
         }

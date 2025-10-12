@@ -10,4 +10,14 @@ class JpgCompiler(CompilerBase.CompilerBase):
 
     def compile(self):
         img = PIL.Image.open(self.in_path)
+        # 获取EXIF朝向
+        exif = img.getexif()
+        if exif is not None:
+            orientation = exif.get(274)
+            if orientation == 3:
+                img = img.rotate(180, expand=True)
+            elif orientation == 6:
+                img = img.rotate(270, expand=True)
+            elif orientation == 8:
+                img = img.rotate(90, expand=True)
         img.save(self.copy_path, quality=80, optimize=True, progressive=True)

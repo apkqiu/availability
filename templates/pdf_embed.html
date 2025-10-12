@@ -7,15 +7,14 @@
 </style>
 
 <br />
-<a class="btn" href="home.html">回到首页</a>
 <button class="btn" id="changeview">切换到PDF视图</button>
 <hr />
 <div class="row">
-	<div class="col-8" id="content">
+	<div class="col-md-8" id="content">
 		<iframe class="hidden" id="realpdf" style="width: 100%; height: 100vh"></iframe>
 		<div id="pdf" style="background-color: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); overflow: auto"></div>
 	</div>
-	<div class="col-4" id="ads">
+	<div class="col-md-4" id="ads">
 		<h4>人人关注</h4>
 		<ul class="list-group list-group-flush" id="recommend"></ul>
 	</div>
@@ -59,7 +58,7 @@
 			if (url.startsWith('!')) {
 				url = 'pdf_embed.html#' + url.substring(1);
 			} else {
-				url = 'embed.html#' + url;
+				url = 'embed.html?' + url;
 			}
 			$('#recommend').append("<li class='list-group-item'><a href='" + url + "'>" + key + '</a></li>');
 		}
