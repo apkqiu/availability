@@ -1,7 +1,7 @@
 import subprocess
 import os
 import sys
-
+import warnings
 def check_exit(process:subprocess.Popen):
     if process.poll() is not None:
         if process.poll() != 0:
@@ -15,7 +15,7 @@ def run(cmd, *args):
     return p
 
 def exec_cmd(cmd, *args):
-    p = subprocess.getoutput([cmd, *args], encoding="utf-8")
+    p = subprocess.check_output([cmd, *args], encoding="utf-8", stderr=subprocess.PIPE)
     return p
 
 def exec_node(npm_tool:str, *args):

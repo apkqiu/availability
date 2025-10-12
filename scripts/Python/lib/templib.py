@@ -8,8 +8,14 @@ class TemproaryFile:
         # 至于为什么delete=False，是因为这个文件要被编译器、npm等程序读取
 
     def __del__(self):
-        self.close()
-        os.remove(self.file.name)
+        try:
+            self.close()
+        except:
+            pass
+        try:
+            os.remove(self.file.name)
+        except:
+            pass
         # 生命周期结束（现在没有任何Python对象能够访问），删除文件
 
     def clear(self):

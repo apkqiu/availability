@@ -36,7 +36,7 @@ class CompilerFactory:
 
 
 class CompilerPool:
-    def __init__(self, factory: CompilerFactory, max_workers=1024):
+    def __init__(self, factory: CompilerFactory, max_workers=512):
         self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
         self.max_workers = max_workers
         self.factory = factory
@@ -52,6 +52,11 @@ class CompilerPool:
         print(*data, **kwargs)
         # To prevent the output from being mixed up
         self.io_lock.release()
+    def wrap_func2(self,context, func, *args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except BaseException as e:
+            self.errors[context["path"]] = e
     def warp_func(self, context, func, *args, **kwargs):
         self.started += 1
         start = time.time()
@@ -59,8 +64,8 @@ class CompilerPool:
         try:
             func(*args, **kwargs)
         except BaseException as e:
-            error = e
             self.errors[context["path"]] = e
+            error = e
         end = time.time()
         self.finished += 1
         
@@ -73,7 +78,7 @@ class CompilerPool:
         if error is None:
             self.print(sname, stime, spath,sep="\t")
         else:
-            self.print(sname, stringlib.special_text("ERROR", "31m"), spath, "\n", error, sep="\t")
+            self.print(sname, stringlib.special_text("ERROR", "31m"), spath, "\n", "".join(traceback.format_exception(e)), sep="\t")
             
     def skip(self, task):
         self.add(Skip(task))

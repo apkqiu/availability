@@ -28,7 +28,10 @@
 		const stack = [];
 		const output = [];
 		for (let i = 0; i < exp.length; i++) {
-			// 算式里面包含2位数以上的数字，运算优先级存在level里面
+			// 算式里面包含2位数以上的数字，运算优先级存在level里面，然后为“+-”特判是否为开头的符号（比如“-1”转换为“0-1”）
+			if (level[exp[i]] == 1 && (i == 0 || level[exp[i - 1]] == 0)) {
+				output.push('0');
+			}
 			if (level[exp[i]] == -1) {
 				let num = exp[i];
 				while (i + 1 < exp.length && level[exp[i + 1]] == -1) {
@@ -40,20 +43,44 @@
 				if (exp[i] == '(') {
 					stack.push(exp[i]);
 				} else if (exp[i] == ')') {
-					while (stack.length > 0 && stack[stack.length - 1] != '(') {
+					while (stack[stack.length - 1] != '(') {
 						output.push(stack.pop());
 					}
 					stack.pop();
 				} else {
-					while (
-						stack.length > 0 &&
-						level[stack[stack.length - 1]] >= level[exp[i]]
-					) {
+					while (stack.length != 0 && level[stack[stack.length - 1]] >= level[exp[i]]) {
 						output.push(stack.pop());
 					}
 					stack.push(exp[i]);
 				}
 			}
+
+
+			// if (level[exp[i]] == -1) {
+			// 	let num = exp[i];
+			// 	while (i + 1 < exp.length && level[exp[i + 1]] == -1) {
+			// 		num += exp[i + 1];
+			// 		i++;
+			// 	}
+			// 	output.push(num);
+			// } else {
+			// 	if (exp[i] == '(') {
+			// 		stack.push(exp[i]);
+			// 	} else if (exp[i] == ')') {
+			// 		while (stack.length > 0 && stack[stack.length - 1] != '(') {
+			// 			output.push(stack.pop());
+			// 		}
+			// 		stack.pop();
+			// 	} else {
+			// 		while (
+			// 			stack.length > 0 &&
+			// 			level[stack[stack.length - 1]] >= level[exp[i]]
+			// 		) {
+			// 			output.push(stack.pop());
+			// 		}
+			// 		stack.push(exp[i]);
+			// 	}
+			// }
 		}
 		while (stack.length > 0) {
 			output.push(stack.pop());

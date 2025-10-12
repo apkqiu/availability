@@ -2,6 +2,7 @@ from .. import execlib
 from .. import templib
 from . import HtmlCompiler
 
+
 class MarkdownCompiler(HtmlCompiler.HtmlCompiler):
     name = "Markdown渲染"
 
@@ -14,7 +15,7 @@ class MarkdownCompiler(HtmlCompiler.HtmlCompiler):
         temp = templib.TemproaryFile()
         temp.write(data)
         temp.close()
-        data = execlib.exec_node("markdown-it", temp.name)
+        data = execlib.exec_node("render_markdown.js", temp.name)
         temp.reopen() # 重用（嘿嘿）
         temp.clear()
         temp.write(data)

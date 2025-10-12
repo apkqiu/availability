@@ -17,7 +17,6 @@ parser.add_argument('--configure', help='配置', action='store_true')
 parser.add_argument('--compile', help='编译', action='store_true')
 parser.add_argument('--run', help='运行', action='store_true')
 args = parser.parse_args()
-    
 def show_error():
     if len(cpool.errors):
         os.chdir(old_dir)
