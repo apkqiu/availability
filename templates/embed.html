@@ -93,7 +93,7 @@
 		$('#zoom').val(100);
 		update_image_by_range();
 	});
-	var resource = window.location.search.substring(1);
+	var resource = window.location.search.substring(1).replaceAll("=", "");
 	if (resource !== '') {
         var url;
         if(resource.startsWith("!")){
