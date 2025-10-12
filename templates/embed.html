@@ -56,7 +56,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<img id="image" src="" alt="" style="width: 100%; object-fit: contain" id="image" />
+				<img id="image" src="" alt="" style="width: 100%; object-fit: contain ;" id="image" />
 			</div>
 			<!--div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
@@ -74,11 +74,11 @@
 	var rotation = 0n;
 	$('#rotateLeft').click(function () {
 		rotation -= 90n;
-		$('#image').css('transform', 'rotate(' + rotation + 'deg)');
+		$('#image').css('image-orientation', rotation + 'deg');
 	});
 	$('#rotateRight').click(function () {
 		rotation += 90n;
-		$('#image').css('transform', 'rotate(' + rotation + 'deg)');
+		$('#image').css('image-orientation', rotation + 'deg');
 	});
 	$('#zoomIn').on('click', function () {
 		$('#zoom').val(parseInt(parseInt($('#zoom').val()) / 10) * 10 + 10);
@@ -94,7 +94,22 @@
 	});
 	var resource = window.location.search.substring(1);
 	if (resource !== '') {
-		$.get('news/content/' + resource).then(function (data) {
+        var url;
+        if(resource.startsWith("!")){
+            resource = resource.substring(1);
+            type = resource[0];
+            resource = resource.substring(1).replaceAll('.md', '.html');
+            type = {
+                p: 'poems',
+                w: 'words',
+                s: 'songs',
+                c: 'writings',
+            }[type];
+            url = 'text/' + type + '/' + resource;
+        }else{
+            url = 'news/content/' + resource
+        }
+		$.get(url).then(function (data) {
 			data = data.replace(/(.+).files/g, 'news/newspaper/$1.files');
 			$('#content').html(data);
 			$('#content img').click(function () {

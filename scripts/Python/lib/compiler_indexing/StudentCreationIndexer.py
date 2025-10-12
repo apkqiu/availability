@@ -19,6 +19,9 @@ class StudentCreationIndexer(CompilerBase.CompilerBase):
         for song in os.listdir("templates/text/songs"):
             lines = drop_empty_item(open("templates/text/songs/"+song, "r", encoding="utf-8").readlines())
             index["s"+song] = f"<b>曲</b> {lines[0].replace("#","").strip()} <small>作者：{lines[1].strip()}</small>"
+        for writing in os.listdir("templates/text/writings"):
+            lines = drop_empty_item(open("templates/text/writings/"+writing, "r", encoding="utf-8").readlines())
+            index["c"+writing] = f"<b>书法</b> {lines[0].replace("#","").strip()} <small>作者：{lines[1].strip()}</small>"
         # reverse key-value
         index = {v: k for k, v in index.items()}
         json.dump(index, open("docs/text/index.json", "w", encoding="utf-8"), ensure_ascii=False, indent=4)

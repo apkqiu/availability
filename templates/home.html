@@ -194,7 +194,7 @@
 		// key: title, value: url
 		for (var key in data) {
 			var url = data[key];
-			url = 'text_embed.html#' + url;
+			url = 'embed.html?!' + url;
 			$('#students_text').append("<li class='list-group-item'><a href='" + url + "'>" + key + '</a></li>');
 		}
 	});
