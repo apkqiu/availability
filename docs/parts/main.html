@@ -10,7 +10,7 @@
    !(function() {
                         
 			// polyfill
-			if(typeof globalThis == 'undefined') {
+			if (typeof globalThis == 'undefined') {
 				window.globalThis = window;
 			}
 			if (typeof root == 'undefined') {
@@ -19,6 +19,8 @@
 			}
 		
                     })();
+  </script>
+  <script async="" crossorigin="anonymous" data-category="General" data-category-id="DIC_kwDOOQrolc4Colvm" data-emit-metadata="1" data-input-position="top" data-lang="zh-CN" data-mapping="url" data-reactions-enabled="1" data-repo="apkqiu/apkqiu.github.io" data-repo-id="R_kgDOOQrolQ" data-strict="1" data-theme="preferred_color_scheme" src="https://giscus.app/client.js">
   </script>
   <script src="/res/js/bootstrap.bundle.js">
   </script>
@@ -217,9 +219,11 @@
     <div id="loading-mask" style="position: fixed; left: 50vw; top: 50vh; transform: translate(-50%, -50%); z-index: 1000; display: none">
      <!--div class="spinner-border" style="width: 50px; height: 50px"></div-->
     </div>
-    <div id="PART_body" style="min-height: calc(100vh - 58px); margin: 0 10px">
-     <!-- block body -->
-     <!-- endblock -->
+    <div style="min-height: calc(100vh - 58px); margin: 0 10px">
+     <div id="PART_body">
+      <!-- block body -->
+      <!-- endblock -->
+     </div>
     </div>
     <div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
      <small>
@@ -264,8 +268,8 @@
 				}
 			}
 			update_back_uri();
-			
-			window.addEventListener("spa_navigate", update_back_uri);
+
+			window.addEventListener('spa_navigate', update_back_uri);
 
 			if (new Date().getFullYear() > 2025) {
 				$('#yr').text('2025-' + new Date().getFullYear());

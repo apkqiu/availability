@@ -6,7 +6,7 @@
 		<title>正在加载...</title>
 		<script>
 			// polyfill
-			if(typeof globalThis == 'undefined') {
+			if (typeof globalThis == 'undefined') {
 				window.globalThis = window;
 			}
 			if (typeof root == 'undefined') {
@@ -14,7 +14,22 @@
 				window.true_root = '{{root}}';
 			}
 		</script>
-
+		<script
+			src="https://giscus.app/client.js"
+			data-repo="apkqiu/apkqiu.github.io"
+			data-repo-id="R_kgDOOQrolQ"
+			data-category="General"
+			data-category-id="DIC_kwDOOQrolc4Colvm"
+			data-mapping="url"
+			data-strict="1"
+			data-reactions-enabled="1"
+			data-emit-metadata="1"
+			data-input-position="top"
+			data-theme="preferred_color_scheme"
+			data-lang="zh-CN"
+			crossorigin="anonymous"
+			async
+		></script>
 		{% for i in listdir("res/js")%}
 		<script src="{{root}}/res/js/{{i[0]}}.js"></script>
 		{% endfor %} {% for i in listdir("res/css")%}
@@ -190,11 +205,15 @@
 				<div id="loading-mask" style="position: fixed; left: 50vw; top: 50vh; transform: translate(-50%, -50%); z-index: 1000; display: none">
 					<!--div class="spinner-border" style="width: 50px; height: 50px"></div-->
 				</div>
-				<div style="min-height: calc(100vh - 58px); margin: 0 10px" id="PART_body">
-					<!-- block body -->
-					{%block body%}{%endblock%}
-					<!-- endblock -->
+				<div style="min-height: calc(100vh - 58px); margin: 0 10px">
+					<div id="PART_body">
+						<!-- block body -->
+						{%block body%}{%endblock%}
+						<!-- endblock -->
+					</div>
+					
 				</div>
+
 				<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
 					<small>
 						如果你要提供意见，请 <a class="need-update-root" href="{{root}}/contact.html">联系我们</a>
@@ -221,8 +240,8 @@
 				}
 			}
 			update_back_uri();
-			
-			window.addEventListener("spa_navigate", update_back_uri);
+
+			window.addEventListener('spa_navigate', update_back_uri);
 
 			if (new Date().getFullYear() > 2025) {
 				$('#yr').text('2025-' + new Date().getFullYear());

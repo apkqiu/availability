@@ -97,6 +97,8 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     update_element($('#nav_control'));
     update_element($('#nav'));
     update_element($('#footer'));
+    $("#comments").hide();
+
     $("#PART_title").html(data.title ? data.title : "");
     $("#PART_title_in").html(data.title_in ? data.title_in : "");
     $("#PART_outbody").html(data.outbody ? data.outbody : "");
@@ -122,14 +124,14 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     // execute each script
     var delayed = [];
     scripts.each(function () {
-        delayed.push($(this).text());
+        $("#script-mount-node").append(this);
     });
     // create a new script tag
-    var script = document.createElement("script");
-    // set the text of the script tag
-    script.text = delayed.join("\n");
-    // append the script tag to the body
-    $("#script-mount-node").append(script);
+    // var script = document.createElement("script");
+    // // set the text of the script tag
+    // script.text = delayed.join("\n");
+    // // append the script tag to the body
+    
 
     var updates = $(".need-update-root");
     updates.each(function () {
