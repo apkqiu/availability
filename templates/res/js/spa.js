@@ -147,7 +147,9 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
 
     var updates = $(".need-update-root");
     updates.each(function () {
+        console.log("old: %s", $(this).attr("href"));
         $(this).attr("href", $(this).attr("href").replace(oldroot, root));
+        console.log("new: %s", $(this).attr("href"));
     });
     NProgress.done();
     window.dispatchEvent(new Event("spa_navigate"));

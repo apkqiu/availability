@@ -62,7 +62,7 @@
      <!--a class="btn" role="button" id="nav_back">
 						<span class="bi-chevron-left"></span>
 					</a-->
-     <a class="need-update-root" href="/home.html" id="nav_home" role="button">
+     <a class="btn need-update-root" href="/home.html" id="nav_home" role="button">
       <span class="bi-chevron-left">
       </span>
       <!--span class="bi-house"></span-->
@@ -114,15 +114,13 @@
   <div class="offcanvas offcanvas-start" id="offcanvasExample" tabindex="-1">
    <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasExampleLabel">
-     菜单
+     搜索
     </h5>
     <button class="btn-close" data-bs-dismiss="offcanvas" type="button">
     </button>
    </div>
    <div class="offcanvas-body">
-    <h3>
-     导航
-    </h3>
+    <!--h3>导航</h3-->
     <div class="list-group">
      <!-- <a class="list-group-item need-update-root" href="/home.html">首页</a> -->
      <!-- <a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a> -->
@@ -135,15 +133,18 @@
      <!-- <a class="list-group-item need-update-root" href="/resource/index.html">资料</a> -->
      <!-- <a class="list-group-item need-update-root" href="/game/index.html">小游戏</a> -->
     </div>
-    <br/>
-    <!-- <h3>搜索</h3>
-				<ul class="list-group">
-					<li class="input-group clearfix">
-						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
-						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
-					</li>
-					<div id="searchResult"></div>
-				</ul> -->
+    <!--br /-->
+    <!-- <h3>搜索</h3> -->
+    <ul class="list-group">
+     <li class="input-group clearfix">
+      <input class="form-control" id="searchInput" oninput="search()" placeholder="搜索" type="text"/>
+      <button class="btn btn-outline-secondary" id="button-addon2" onclick="search()" type="button">
+       搜索
+      </button>
+     </li>
+     <div id="searchResult">
+     </div>
+    </ul>
    </div>
   </div>
   <!-- Modal -->
@@ -324,10 +325,11 @@
 				res.forEach((res) => {
 					$('#searchResult').append(
 						$('<a class="list-group-item"></a>')
-							.attr('href', root + res.url)
+							.attr('href', root + "/" + res.url)
 							.click(() => {
 								$('#offcanvasExample').offcanvas('hide');
 								$('#searchInput').val('');
+								search();
 							})
 							.append($('<span></span>').css('float', 'left').text(res.title))
 							.append($('<span></span>').css('float', 'right').css('opacity', '0.5').text(res.tag))

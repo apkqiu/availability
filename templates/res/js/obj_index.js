@@ -15,3 +15,4 @@ function search_document(string) {
     }
     return result;
 }
+var documents = [];

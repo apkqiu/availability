@@ -50,7 +50,7 @@
 					<!--a class="btn" role="button" id="nav_back">
 						<span class="bi-chevron-left"></span>
 					</a-->
-					<a class="btn" role="button" id="nav_home" class="need-update-root" href="{{root}}/home.html">
+					<a class="btn need-update-root" role="button" id="nav_home" href="{{root}}/home.html">
 						<span class="bi-chevron-left"></span>
 						<!--span class="bi-house"></span-->
 					</a>
@@ -99,11 +99,11 @@
 		<!-- Offcanvas -->
 		<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample">
 			<div class="offcanvas-header">
-				<h5 class="offcanvas-title" id="offcanvasExampleLabel">菜单</h5>
+				<h5 class="offcanvas-title" id="offcanvasExampleLabel">搜索</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
 			</div>
 			<div class="offcanvas-body">
-				<h3>导航</h3>
+				<!--h3>导航</h3-->
 				<div class="list-group">
 					<!-- <a class="list-group-item need-update-root" href="{{root}}/home.html">首页</a> -->
 					<!-- <a type="button" href="#" class="list-group-item" data-bs-toggle="modal" data-bs-target="#exampleModal">公告</a> -->
@@ -116,15 +116,15 @@
 					<!-- <a class="list-group-item need-update-root" href="{{root}}/resource/index.html">资料</a> -->
 					<!-- <a class="list-group-item need-update-root" href="{{root}}/game/index.html">小游戏</a> -->
 				</div>
-				<br />
-				<!-- <h3>搜索</h3>
+				<!--br /-->
+				<!-- <h3>搜索</h3> -->
 				<ul class="list-group">
 					<li class="input-group clearfix">
 						<input type="text" class="form-control" placeholder="搜索" id="searchInput" oninput="search()" />
 						<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">搜索</button>
 					</li>
 					<div id="searchResult"></div>
-				</ul> -->
+				</ul>
 			</div>
 		</div>
 		<!-- Modal -->
@@ -295,10 +295,11 @@
 				res.forEach((res) => {
 					$('#searchResult').append(
 						$('<a class="list-group-item"></a>')
-							.attr('href', root + res.url)
+							.attr('href', root + "/" + res.url)
 							.click(() => {
 								$('#offcanvasExample').offcanvas('hide');
 								$('#searchInput').val('');
+								search();
 							})
 							.append($('<span></span>').css('float', 'left').text(res.title))
 							.append($('<span></span>').css('float', 'right').css('opacity', '0.5').text(res.tag))
