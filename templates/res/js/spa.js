@@ -80,6 +80,7 @@ function update_element(e) {
 }
 
 function set_viewdata(data, url = null, replace = false, anim = true) {
+
     if (url) {
         if (replace)
             history.replaceState(data, null, url);
@@ -154,16 +155,16 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     NProgress.done();
     window.dispatchEvent(new Event("spa_navigate"));
 }
-var prev_page = location.pathname + this.location.search;
+var prev_page = "";
 window.onpopstate = function (event) {
-    // browser changed the url
     if (prev_page == location.pathname + this.location.search) return;
+    prev_page = location.pathname + this.location.search;
+    // browser changed the url
     if (event.state) {
-        prev_page = location.pathname + this.location.search;
         // 有eventdata
         set_viewdata(event.state, null);
     } else {
-        navigate(prev_page = location.pathname + this.location.search, true, false);
+        navigate(location.pathname + this.location.search, true, false);
     }
 }
 // 定位所有a标签

@@ -14,7 +14,6 @@
 	    text-decoration: none;
 	}
 </style>
-<br />
 <div class="row">
 	<div class="col-md-8">
 		<div style="backdrop-filter: blur(10px); padding: 10px">
@@ -34,8 +33,6 @@
 		</div>
 	</div>
 </div>
-<br />
-<br />
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-fullscreen">
 		<div class="modal-content">
@@ -107,6 +104,7 @@
 		update_image_by_range();
 	});
 	var resource = window.location.search.substring(1).replaceAll('=', '');
+	window.location.hash = "#"; // fix some problem with hash
 	if (resource.startsWith('!')) {
 		$('#same_author').show();
 		$('#same_author_list').html('<div class="spinner-border"></div>');

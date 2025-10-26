@@ -34,7 +34,15 @@
 		{% for i in listdir("res/js")%}
 		<script src="{{root}}/res/js/{{i[0]}}.js"></script>
 		{% endfor %} {% for i in listdir("res/css")%}
-		<link rel="stylesheet" href="{{root}}/res/css/{{i[0]}}.css" />
+		<script>
+			(()=>{
+				const link = document.createElement('link');
+				link.href = '{{root}}/res/css/{{i[0]}}.css';
+				link.rel = 'stylesheet';
+
+				document.head.appendChild(link);
+			})();
+		</script>
 		{% endfor %} {% for i in listdir("res/modules")%}
 		<script src="{{root}}/res/modules/{{i[0]}}.mjs"></script>
 		{% endfor %}
@@ -42,6 +50,28 @@
 		<!--Still Imcomplete-->
 	</head>
 	<header>
+		<noscript>
+			<div style="background-color: #ffff00; border: 1px solid #ffaa00; border-radius: 5px; padding: 0 10px">
+				<p><b style="color: #ffaa00">重要警告</b></p>
+				<p>您的浏览器不支持JavaScript，请开启JavaScript功能才可以浏览。</p>
+				<p>如果您的浏览器不支持JavaScript，请使用其他浏览器访问。</p>
+			</div>
+		</noscript>
+		<script>
+			// check IE
+			var is_IE = !!window.ActiveXObject || "ActiveXObject" in window;
+			if (is_IE) {
+				document.write("<div style=\"background-color: #ffff00; border: 1px solid #ffaa00; border-radius: 5px; padding: 0 10px\">");
+				document.write("<p><b style=\"color: #ffaa00\">重要警告</b></p>");
+				document.write("<p>您的浏览器版本过低，请使用最新版本的浏览器访问。</p>");
+				document.write("<p>如果您的浏览器版本过低，请使用其他浏览器访问。</p>");
+				document.write("</div>");
+			}
+
+		</script>
+	</header>
+	<body>
+		<div id="view-mount-node"></div>
 		<div id="script-mount-node"></div>
 
 		<nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
@@ -206,13 +236,12 @@
 				<div id="loading-mask" style="position: fixed; left: 50vw; top: 50vh; transform: translate(-50%, -50%); z-index: 1000; display: none">
 					<!--div class="spinner-border" style="width: 50px; height: 50px"></div-->
 				</div>
-				<div style="min-height: calc(100vh - 58px); margin: 0 10px">
+				<div style="min-height: calc(100vh - 58px); margin: 10px">
 					<div id="PART_body">
 						<!-- block body -->
 						{%block body%}{%endblock%}
 						<!-- endblock -->
 					</div>
-					
 				</div>
 
 				<div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
@@ -278,10 +307,10 @@
 			// search
 			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
 			// navbar fix
-			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-			$(window).resize(function () {
+			setInterval(() => {
+				
 				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-			});
+			}, 10);
 			// parallax
 			var scene = document.getElementById('scene');
 			var parallax = new Parallax(scene);
@@ -295,7 +324,7 @@
 				res.forEach((res) => {
 					$('#searchResult').append(
 						$('<a class="list-group-item"></a>')
-							.attr('href', root + "/" + res.url)
+							.attr('href', root + '/' + res.url)
 							.click(() => {
 								$('#offcanvasExample').offcanvas('hide');
 								$('#searchInput').val('');

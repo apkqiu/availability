@@ -46,14 +46,97 @@
   </script>
   <script src="/res/js/utils.js">
   </script>
-  <link href="/res/css/bootstrap-icons.css" rel="stylesheet"/>
-  <link href="/res/css/bootstrap.css" rel="stylesheet"/>
-  <link href="/res/css/nprogress.css" rel="stylesheet"/>
-  <link href="/res/css/utils.css" rel="stylesheet"/>
+  <script>
+   !(function() {
+                        
+			(()=>{
+				const link = document.createElement('link');
+				link.href = '/res/css/bootstrap-icons.css';
+				link.rel = 'stylesheet';
+
+				document.head.appendChild(link);
+			})();
+		
+                    })();
+  </script>
+  <script>
+   !(function() {
+                        
+			(()=>{
+				const link = document.createElement('link');
+				link.href = '/res/css/bootstrap.css';
+				link.rel = 'stylesheet';
+
+				document.head.appendChild(link);
+			})();
+		
+                    })();
+  </script>
+  <script>
+   !(function() {
+                        
+			(()=>{
+				const link = document.createElement('link');
+				link.href = '/res/css/nprogress.css';
+				link.rel = 'stylesheet';
+
+				document.head.appendChild(link);
+			})();
+		
+                    })();
+  </script>
+  <script>
+   !(function() {
+                        
+			(()=>{
+				const link = document.createElement('link');
+				link.href = '/res/css/utils.css';
+				link.rel = 'stylesheet';
+
+				document.head.appendChild(link);
+			})();
+		
+                    })();
+  </script>
   <!--script src="/res/start/js_loader.js"></script-->
   <!--Still Imcomplete-->
  </head>
  <header>
+  <noscript>
+   <div style="background-color: #ffff00; border: 1px solid #ffaa00; border-radius: 5px; padding: 0 10px">
+    <p>
+     <b style="color: #ffaa00">
+      重要警告
+     </b>
+    </p>
+    <p>
+     您的浏览器不支持JavaScript，请开启JavaScript功能才可以浏览。
+    </p>
+    <p>
+     如果您的浏览器不支持JavaScript，请使用其他浏览器访问。
+    </p>
+   </div>
+  </noscript>
+  <script>
+   !(function() {
+                        
+			// check IE
+			var is_IE = !!window.ActiveXObject || "ActiveXObject" in window;
+			if (is_IE) {
+				document.write("<div style=\"background-color: #ffff00; border: 1px solid #ffaa00; border-radius: 5px; padding: 0 10px\">");
+				document.write("<p><b style=\"color: #ffaa00\">重要警告</b></p>");
+				document.write("<p>您的浏览器版本过低，请使用最新版本的浏览器访问。</p>");
+				document.write("<p>如果您的浏览器版本过低，请使用其他浏览器访问。</p>");
+				document.write("</div>");
+			}
+
+		
+                    })();
+  </script>
+ </header>
+ <body>
+  <div id="view-mount-node">
+  </div>
   <div id="script-mount-node">
   </div>
   <nav class="navbar navbar-expand-sm" id="nav" style="position: fixed; width: 100%; z-index: 1001; backdrop-filter: blur(10px)">
@@ -193,9 +276,8 @@
 				</div>
 			</div>
 		</div> -->
- </header>
- <body style="min-height: 100vh">
-  <div style="
+  <body style="min-height: 100vh">
+   <div style="
 				position: fixed;
 				left: 50vw;
 				top: 50vh;
@@ -207,55 +289,55 @@
 				overflow: hidden;
 				z-index: -10;
 			">
-   <ul id="scene" style="height: 100%; width: 100%">
-    <li class="layer" data-depth="0.4" style="height: 100%; width: 100%">
-     <img id="bg" style="height: 100%; width: 100%; object-fit: cover"/>
-    </li>
-   </ul>
-  </div>
-  <div id="PART_outbody">
-   <!-- block outbody -->
-   <!-- endblock -->
-  </div>
-  <div id="mask" style="min-height: 100vh">
-   <div id="mainbody" style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden">
-    <div id="loading-mask" style="position: fixed; left: 50vw; top: 50vh; transform: translate(-50%, -50%); z-index: 1000; display: none">
-     <!--div class="spinner-border" style="width: 50px; height: 50px"></div-->
-    </div>
-    <div style="min-height: calc(100vh - 58px); margin: 0 10px">
-     <div id="PART_body">
-      <!-- block body -->
-      <!-- endblock -->
+    <ul id="scene" style="height: 100%; width: 100%">
+     <li class="layer" data-depth="0.4" style="height: 100%; width: 100%">
+      <img id="bg" style="height: 100%; width: 100%; object-fit: cover"/>
+     </li>
+    </ul>
+   </div>
+   <div id="PART_outbody">
+    <!-- block outbody -->
+    <!-- endblock -->
+   </div>
+   <div id="mask" style="min-height: 100vh">
+    <div id="mainbody" style="min-height: 100vh; padding: 60px 0 0 0; overflow-x: hidden">
+     <div id="loading-mask" style="position: fixed; left: 50vw; top: 50vh; transform: translate(-50%, -50%); z-index: 1000; display: none">
+      <!--div class="spinner-border" style="width: 50px; height: 50px"></div-->
+     </div>
+     <div style="min-height: calc(100vh - 58px); margin: 10px">
+      <div id="PART_body">
+       <!-- block body -->
+       <!-- endblock -->
+      </div>
+     </div>
+     <div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
+      <small>
+       如果你要提供意见，请
+       <a class="need-update-root" href="/contact.html">
+        联系我们
+       </a>
+       <i>
+        <br/>
+        电话：13270463238
+        <br/>
+        邮箱:Caixukun11451489@outlook.com
+       </i>
+       <b>
+        <br/>
+        版权所有 ©
+        <span id="yr">
+         2025
+        </span>
+        洽隐山房，保留所有权利
+       </b>
+      </small>
      </div>
     </div>
-    <div class="text-sm text-muted" id="footer" style="backdrop-filter: blur(10px)">
-     <small>
-      如果你要提供意见，请
-      <a class="need-update-root" href="/contact.html">
-       联系我们
-      </a>
-      <i>
-       <br/>
-       电话：13270463238
-       <br/>
-       邮箱:Caixukun11451489@outlook.com
-      </i>
-      <b>
-       <br/>
-       版权所有 ©
-       <span id="yr">
-        2025
-       </span>
-       洽隐山房，保留所有权利
-      </b>
-     </small>
-    </div>
    </div>
-  </div>
- </body>
- <footer>
-  <script>
-   !(function() {
+  </body>
+  <footer>
+   <script>
+    !(function() {
                         
 			if (is_electron()) {
 				$('#nav_left li:nth-child(1)').attr('href', '/home.html');
@@ -308,10 +390,10 @@
 			// search
 			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
 			// navbar fix
-			$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-			$(window).resize(function () {
+			setInterval(() => {
+				
 				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
-			});
+			}, 10);
 			// parallax
 			var scene = document.getElementById('scene');
 			var parallax = new Parallax(scene);
@@ -325,7 +407,7 @@
 				res.forEach((res) => {
 					$('#searchResult').append(
 						$('<a class="list-group-item"></a>')
-							.attr('href', root + "/" + res.url)
+							.attr('href', root + '/' + res.url)
 							.click(() => {
 								$('#offcanvasExample').offcanvas('hide');
 								$('#searchInput').val('');
@@ -346,6 +428,7 @@
 			}
 		
                     })();
-  </script>
- </footer>
+   </script>
+  </footer>
+ </body>
 </html>
