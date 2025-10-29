@@ -28,7 +28,13 @@ function navigate(url, replace = false, anim = true) {
     $('#footer').removeClass('hide_on_large hide_on_small');
 
     $("#loading-mask").show();
-    $.get(urlpath + ".json").then((data) => {
+    var target_json;
+    if (urlpath.endsWith(".html")) {
+        target_json = urlpath + ".json";
+    }else{
+        target_json = urlpath + ".html.json";
+    }
+    $.get(target_json).then((data) => {
         set_viewdata(data, url, replace, anim);
     }).fail((xhr) => {
         if (!xhr.responseText) {
