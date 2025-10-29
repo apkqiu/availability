@@ -116,7 +116,7 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
     }
     $("#loading-mask").hide();
 
-    if (data.rootdef == '.' && location.href.indexOf("home.html") != -1) {
+    if (data.rootdef == '.' && location.href.indexOf("/home") != -1) {
         $("#nav_back").hide();
         $("#nav_home").hide();
     } else {
