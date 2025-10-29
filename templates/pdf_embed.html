@@ -26,7 +26,7 @@
 	var p = getarg('p');
 	if (p) {
 		pdf_html_ver = 'news/newspaper/zhoubao' + p + '.html';
-		pdf_orig = '{{root}}/../components/pdf/web/viewer.html?file=../../../docs/res/pdf/zhoubao' + p + '.pdf';
+		pdf_orig = '{{root}}/components/pdf/web/viewer.html?file=../../res/pdf/zhoubao' + p + '.pdf';
 	}
 	$('#realpdf').attr('src', pdf_orig);
 	$('#pdf').html('<div class="spinner-border"></div>');

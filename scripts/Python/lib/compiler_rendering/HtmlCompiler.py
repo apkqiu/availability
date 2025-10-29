@@ -175,6 +175,8 @@ class HtmlCompiler(CompilerBase.CompilerBase):
         except UnicodeDecodeError:
             template_data = open(template_path, "r", encoding="gbk").read()
             open(template_path, "w", encoding="utf-8").write(template_data)
+        if template_data.upper().replace(" ","").startswith("<!--NOJINJA-->"):
+            return self.post_render(template_data)
         template = env.from_string(template_data)
         ctx = self.make_context(self.in_path)
         # 检查是否包含SPA标记

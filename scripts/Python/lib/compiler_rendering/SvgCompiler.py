@@ -13,7 +13,10 @@ class SvgCompiler(CompilerBase.CompilerBase):
             data = f.read()
         with open(self.copy_path, "wb") as f:
             f.write(data)
-        if execlib.exec_node('svgo', "-i", self.copy_path):
-            data = execlib.exec_node("compress_html.js", self.copy_path)
-            with open(self.copy_path, "w", encoding="utf-8") as f:
-                f.write(data)
+        try:
+            execlib.exec_node('svgo', "-i", self.copy_path)
+        except Exception as e:
+            pass
+        data = execlib.exec_node("compress_html.js", self.copy_path)
+        with open(self.copy_path, "w", encoding="utf-8") as f:
+            f.write(data)
