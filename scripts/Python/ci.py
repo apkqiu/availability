@@ -4,6 +4,9 @@ import sys
 local = "--local" in sys.argv
 server = "--server" in sys.argv
 if not local:
+    # checkout and pull
+    execlib.run("git", "pull")
+    execlib.run("git", "checkout", "master")
     execlib.run("pip", "install", "-r", "requirements.txt")
     execlib.run("npm", "i", "--include=dev")
 # execlib.run("python", os.path.join("scripts", "Python", "convert_pdf_2_html.py"))
