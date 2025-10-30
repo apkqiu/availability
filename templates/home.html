@@ -4,7 +4,19 @@
 		background-size: cover;
 		background-position: center;
 		height: 700px;
-		backdrop-filter: blur(20px);
+		
+	}
+	.news-plain{
+		/*横向居中*/
+		text-align: center;
+		/*垂直居中*/
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		width:100%;
+		height: 100%;
+	
 	}
 	.news-txt-box {
 		background: linear-gradient(transparent 70%, black);
@@ -26,7 +38,7 @@
 		text-decoration: none;
 	}
 </style>
-<div id="carousel" class="carousel slide w-100">
+<div id="carousel" class="carousel slide w-100" style="backdrop-filter: blur(20px);">
 	<div class="carousel-inner">
 		<div class="carousel-item active">
 			<a class="news-bg d-block w-100" style="background-image: url({{root}}/res/img/ccnews/013.1.01.jpeg);" href="embed.html?news013.1.html">
@@ -97,6 +109,102 @@
 					</div>
 				</div>
 			</a>
+		</div>
+		<div class="carousel-item">
+			<div class="news-bg d-block w-100">
+				<div class="news-plain">
+					<div>
+						<h1>DFS</h1>
+						<hr>
+						<h1>永不言弃，直至尽头。</h1>
+						<br>
+						<h3>Never say Never</h3>
+						<h3>until the very end</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="news-bg d-block w-100">
+				<div class="news-plain">
+					<div>
+						<h1>Stack 栈</h1>
+						<hr>
+						<h1>若怀凌云志，莫惧起步迟。</h1>
+						<br>
+						<h3>Don't mind being</h3>
+						<h3>the last</h3>
+						<h3>if you've got the ambition to be</h3>
+						<h3>the first</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="news-bg d-block w-100">
+				<div class="news-plain">
+					<div>
+						<h1>Dijkstra</h1>
+						<hr>
+						<h1>找到你我之间的那条最短的</h1>
+						<h1><b>爱情之路</b></h1>
+						<br>
+						<h3>Find the shortest path</h3>
+						<h3>between you and me</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="news-bg d-block w-100">
+				<div class="news-plain">
+					<div>
+						<h1>KMP</h1>
+						<hr>
+						<h1>欲论人非，先思己过。</h1>
+						<br>
+						<h3>Reflect upon yourself</h3>
+						<h3>before you judge others</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="news-bg d-block w-100">
+				<div class="news-plain">
+					<div>
+						<h1>Hash Table 哈希表</h1>
+						<hr>
+						<h1>不期而撞见，终汇聚成相逢。</h1>
+						<br>
+						<h3>Collision</h3>
+						<h3>is a lovely coincidence</h3>
+						<h3>that finally brings us together</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="news-bg d-block w-100">
+				<div class="news-plain">
+					<div class="row w-50">
+						<div class="col col-md-6">
+							<h1>#include</h1>
+							<h1>&lt;verses&gt;</h1>
+							<h1>&lt;wine&gt;</h1>
+							<h1>AND</h1>
+							<h1>&lt;all walks of life&gt;</h1>
+						</div>
+						<div class="col col-md-6">
+							<h1>诗酒趁年华</h1>
+							<h1>人生得意须尽欢</h1>
+							<h1>莫使金樽空对月</h1>
+							<h1>浮生百业皆成韵</h1>
+							<h1>诗酒长歌且同行</h1>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
