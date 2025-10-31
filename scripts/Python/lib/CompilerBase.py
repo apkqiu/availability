@@ -1,10 +1,12 @@
 import os
 import concurrent.futures
 import collections.abc
+import string
 import time
 import threading
 import traceback
 from . import stringlib
+
 class CompilerBase:
     name = "编译"
 
@@ -44,11 +46,15 @@ class CompilerPool:
         self.started = 0
         self.total = 0
         self.io_lock = threading.Lock()
+        self.counter_lock = threading.Lock()
         self.errors = {}
         self.futures = []
+        self.unstarted_futures = []
         self.require_log = True
     def print(self, *data, **kwargs):
         self.io_lock.acquire()
+        kwargs.update({"flush": True})
+
         print(*data, **kwargs)
         # To prevent the output from being mixed up
         self.io_lock.release()
@@ -58,7 +64,8 @@ class CompilerPool:
         except BaseException as e:
             self.errors[context["path"]] = e
     def warp_func(self, context, func, *args, **kwargs):
-        self.started += 1
+        with self.counter_lock:
+            self.started += 1
         start = time.time()
         error = None
         try:
@@ -67,31 +74,44 @@ class CompilerPool:
             self.errors[context["path"]] = e
             error = e
         end = time.time()
-        self.finished += 1
-        
-        sname = stringlib.ljust(context["name"], 10)
+        with self.counter_lock:
+            self.finished += 1
+
+
+        sprogress_start = stringlib.special_text("", "s")# save cursor
+        sprogress_start += stringlib.special_text("", "40000B")
+        sprogress_end = stringlib.special_text("", "u")# restore cursor
+        sprogress = f"Pending:{self.total-self.started}\tRunning:{self.started-self.finished}\tFinished:{self.finished}\tTotal:{self.total}\t{self.finished*100/self.total:.1f}%"
+        sprogress = stringlib.special_text(sprogress, "32m")
+        sprogress = sprogress_start + sprogress + sprogress_end
+
+        clean = stringlib.special_text("", "K")
+        sname = stringlib.ljust(context["name"], 15)
         sname = stringlib.special_text(sname, "34m")
-        stime = stringlib.ljust(f"{(end-start)*1000:.0f}ms", 7)
+        if end-start < 1:
+            stime = stringlib.ljust(f"{(end-start)*1000:.0f}ms", 10)
+        else:
+            stime = stringlib.ljust(f"{(end-start):.2f}s", 10)
         stime = stringlib.special_text(stime, "32m")
         spath = context["path"]
         spath = stringlib.special_text(spath, "37m")
         if error is None:
-            self.print(sname, stime, spath,sep="\t")
+            self.print(clean, sname, stime, spath,sep="")
         else:
-            self.print(sname, stringlib.special_text("ERROR", "31m"), spath, "\n", "".join(traceback.format_exception(e)), sep="\t")
-            
+            self.print(clean, sname, stringlib.special_text("ERROR", "31m"), spath, "\n", "".join(traceback.format_exception(e)),sep="")
+        self.print(sprogress,end="\r")
     def skip(self, task):
         self.add(Skip(task))
     def add(self, task):
         self.total += 1
         if isinstance(task, str):  # Use default compiler
             compiler = self.factory.get_compiler(task)
-            f = self.pool.submit(
+            f = (
                 self.warp_func,
                 {"name": compiler.name, "path": compiler.in_path},
                 compiler.compile,
             )
-            self.futures.append(f)
+            self.unstarted_futures.append(f)
             return f
         elif isinstance(task, collections.abc.Iterable):
             ret = []
@@ -99,16 +119,20 @@ class CompilerPool:
                 ret.append(self.add(t))  # Recursively add tasks
             return ret
         elif isinstance(task, CompilerBase):  # A configured compiler
-            f = self.pool.submit(
+            f = (
                 self.warp_func,
                 {"name": task.name, "path": task.in_path},
                 task.compile,
             )
-            self.futures.append(f)
+            self.unstarted_futures.append(f)
             return f
         else:
             self.total -= 1
             raise Exception("Invalid task type")
+    def start(self):
+        for i in self.unstarted_futures:
+            self.futures.append(self.pool.submit(*i))
+        self.unstarted_futures.clear()
     def print_errors(self):
         for path, error in self.errors.items():
             print(f"Error in {path}: {error.__class__.__name__} -> {error}")
@@ -122,7 +146,12 @@ class CompilerPool:
         concurrent.futures.wait(futures)
 
     def waitall(self):
+        start_time = time.time()
+        self.start() # start all futures
         self.pool.shutdown(wait=True)
+        end_time = time.time()
+        print(stringlib.special_text("","K"))
+        print(f"编译阶段结束，耗时 {end_time - start_time:.2f} 秒")
         self.pool = concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers)
         self.futures = []
 

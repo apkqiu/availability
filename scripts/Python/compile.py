@@ -39,6 +39,7 @@ if args.clean or args.recompile:
     execlib.remove_item("temp")
     execlib.remove_item("filehash.json")
 if args.recompile or args.compile:
+    recompile = args.recompile
     if os.path.exists("filehash.json"):
         filehash = json.loads(open("filehash.json").read())
     else:
@@ -49,10 +50,21 @@ if args.recompile or args.compile:
     cpool = CompilerPool(compiler_rendering.factory)
     changed = False
     should_all_change = {}
-    # 先检查所有基础架构没有修改
+    script_hash = {}
+    # 检查编译脚本是否改变
+    for dirpath, dirnames, filenames in os.walk("scripts"):
+        for filename in filenames:
+            path = os.path.join(dirpath, filename)
+            old_hash = filehash.get(path)
+            new_hash = calc_hash(open(path, "rb").read()).hexdigest()
+            if old_hash != new_hash:
+                filehash = {}
+            script_hash[path] = new_hash
+    new_filehash.update(script_hash)
+    # 检查所有基础架构没有修改
     for file, hash in filehash.items():
-        if file.startswith("parts\\"):
-            new_hash = calc_hash(open("templates/"+file, "rb").read()).hexdigest()
+        if file.startswith("templates\\parts\\"):
+            new_hash = calc_hash(open(file, "rb").read()).hexdigest()
             if hash != new_hash:
                 should_all_change[".html"] = True
     for dirpath, dirs, files in os.walk("templates"):
@@ -61,11 +73,11 @@ if args.recompile or args.compile:
             relpath = os.path.relpath(path, "templates")
             copy_path = os.path.join("docs", relpath)
             new_hash = calc_hash(open(path, "rb").read()).hexdigest()
-            if filehash.get(relpath) == new_hash and not should_all_change.get("."+relpath.split(".")[-1]):
-                new_filehash[relpath] = filehash[relpath]
+            if filehash.get(path) == new_hash and not should_all_change.get("."+path.split(".")[-1]):
+                new_filehash[path] = filehash[path]
                 continue
             else:
-                new_filehash[relpath] = new_hash
+                new_filehash[path] = new_hash
                 changed = True
             # ensure the directory exists
             execlib.ensure_item(os.path.dirname(copy_path), is_dir=True)

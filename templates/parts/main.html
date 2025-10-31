@@ -214,8 +214,8 @@
 				right: 50vw;
 				bottom: 50vh;
 				transform: translate(-50%, -50%);
-				width: 130vw;
-				height: 130vh;
+				width: 120vw;
+				height: 120vh;
 				overflow: hidden;
 				z-index: -10;
 			"
@@ -301,8 +301,44 @@
 				localforage.getItem('imgbg').then(function (value) {
 					$('#bg').attr('src', value);
 				});
+				var scene = document.getElementById('scene');
+				var parallax = new Parallax(scene);
 			} else {
-				$('#bg').attr('src', root + '/res/img/' + img);
+				// check if img has multi-layer;
+				$.get(root+"/res/img/background/"+img+"/deepth.json").then(function (data) {
+					console.log(data)
+				    // we may change the scene
+					var layers_count = data.layers;
+					var layers_deepth = data.deepth;
+					var img = data.img;
+					var layers = [];
+					for (var i = 0; i < layers_count; i++) {
+						layers.push({img:root+"/res/img/background/"+img+"/"+(i+1)+".png",deepth:data.deepth[i]});
+					}
+					$("#scene").empty();
+					for (var i = 0; i < layers_count; i++) {
+						/*
+						<li class="layer" data-depth="0.4" style="height: 100%; width: 100%">
+							<img id="bg" style="height: 100%; width: 100%; object-fit: cover" />
+						</li>
+						*/
+						console.log(layers[i].img)
+						var layer = $('<li class="layer" data-depth="'+layers[i].deepth+'" style="height: 100%; width: 100%"></li>');
+						var img = $('<img id="bg" style="height: 100%; width: 100%; object-fit: cover" />');
+						img.attr('src', layers[i].img);
+						layer.append(img);
+						$("#scene").append(layer);
+					}
+					// set deepth
+					var scene = document.getElementById('scene');
+					var parallax = new Parallax(scene);
+				}).fail(()=>{
+					// not multi-layer
+
+					$('#bg').attr('src', root + '/res/img/background/' + img);
+					var scene = document.getElementById('scene');
+					var parallax = new Parallax(scene);
+				})
 			}
 			// search
 			$('#searchResult').html("<a href='#' class='list-group-item'>开始搜索吧</a>");
@@ -312,8 +348,7 @@
 				$('#mainbody').css('padding-top', getComputedStyle(document.getElementsByTagName('nav')[0]).height);
 			}, 10);
 			// parallax
-			var scene = document.getElementById('scene');
-			var parallax = new Parallax(scene);
+			
 			function search() {
 				$('#searchResult').empty();
 				if ($('#searchInput').val() == '') {
