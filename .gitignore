@@ -1,8 +1,6 @@
 node_modules
 .vscode/
-.venv/
-avaliability.rar
-**/avaliability.rar
+.wrangler/
 __pycache__/
 **/__pycache__/
 .gitignore
