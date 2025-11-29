@@ -8,7 +8,7 @@ class PngCompiler(CompilerBase.CompilerBase):
         super().__init__(in_path)
         self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
 
-    def compile(self):
+    def run(self):
         img = PIL.Image.open(self.in_path)
         # 简略化调色盘
         img = img.convert("P", palette=PIL.Image.ADAPTIVE)

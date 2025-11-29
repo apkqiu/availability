@@ -8,7 +8,7 @@ class ResourceIndexer(CompilerBase.CompilerBase):
     name = "资源索引建立"
     def __init__(self):
         super().__init__("")
-    def compile(self):
+    def run(self):
         resource_index = {}
         for type in os.listdir("docs/res"):
             resource_index[type] = []

@@ -1,0 +1,25 @@
+       .threeLan {
+			padding:0 20px 0 20px;
+            display: flex; /* 开启Flex布局 */
+            gap: 20px; /* 设置栏之间的间距 */
+        }
+        .column {
+            padding: 20px;
+          
+        }
+        /* 可以灵活设置各栏宽度 */
+        .sidebar-left {
+            flex: 1; /* 占1份 */
+          
+        }
+        .main-content {
+            flex: 1; /* 占1份 */
+           
+        }
+        .sidebar-right {
+            flex: 1; /* 占1份 */
+          
+        }
+.sidebar-big2{
+		flex:2;
+}

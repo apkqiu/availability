@@ -5,7 +5,6 @@ local = "--local" in sys.argv
 server = "--server" in sys.argv
 if not local:
     # checkout and pull
-    execlib.run("git", "pull")
     execlib.run("git", "checkout")
     execlib.run("pip", "install", "-r", "requirements.txt")
     execlib.run("npm", "i", "--include=dev")

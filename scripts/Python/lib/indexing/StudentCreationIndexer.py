@@ -8,7 +8,7 @@ class StudentCreationIndexer(CompilerBase.CompilerBase):
     name = "创作索引建立"
     def __init__(self):
         super().__init__("")
-    def compile(self):
+    def run(self):
         index = {}
         for poem in os.listdir("templates/text/poems"):
             lines = drop_empty_item(open("templates/text/poems/"+poem, "r", encoding="utf-8").readlines())

@@ -1,6 +1,6 @@
 import os
-import lib.compiler_rendering as compiler_rendering
-import lib.compiler_indexing as compiler_indexing
+import lib.rendering as rendering
+import lib.indexing as indexing
 from lib.CompilerBase import CompilerPool, Skip
 import lib.stringlib as stringlib
 import lib.execlib as execlib
@@ -47,7 +47,7 @@ if args.recompile or args.compile:
     execlib.ensure_item("docs",is_dir=True)
     execlib.ensure_item("temp",is_dir=True)
     new_filehash = {}
-    cpool = CompilerPool(compiler_rendering.factory)
+    cpool = CompilerPool(rendering.factory)
     changed = False
     should_all_change = {}
     script_hash = {}
@@ -86,8 +86,8 @@ if args.recompile or args.compile:
     cpool.waitall()
     show_error()
     if changed:
-        cpool = CompilerPool(compiler_indexing.factory)
-        compiler_indexing.start(cpool)
+        cpool = CompilerPool(indexing.factory)
+        indexing.start(cpool)
         cpool.waitall()
         show_error()
 

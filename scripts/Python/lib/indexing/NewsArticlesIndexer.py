@@ -20,7 +20,7 @@ class NewsArticlesIndexer(CompilerBase.CompilerBase):
     name = "新闻索引建立"
     def __init__(self):
         super().__init__("")
-    def compile(self):
+    def run(self):
         resource_index = {}
         for file in os.listdir("docs/news/content"):
             resource_index[get_title("docs/news/content/" + file)] = file

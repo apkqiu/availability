@@ -26,7 +26,7 @@ class WebIndexer(CompilerBase.CompilerBase):
                 return author.text
         return "无作者"
 
-    def compile(self):
+    def run(self):
         obj_index = []
         for i in os.scandir("docs/news/content"):
             if i.is_file():

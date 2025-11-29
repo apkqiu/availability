@@ -168,7 +168,7 @@ class HtmlCompiler(CompilerBase.CompilerBase):
             **self.make_context(self.in_path)
         )
 
-    def compile(self):
+    def run(self):
         template_path = self.in_path
         try:
             template_data = open(template_path, "r", encoding="utf-8").read()

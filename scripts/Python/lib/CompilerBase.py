@@ -13,7 +13,7 @@ class CompilerBase:
     def __init__(self, in_path):
         self.in_path: str = in_path
 
-    def compile(self):
+    def run(self):
         raise NotImplementedError()
 
 
@@ -34,7 +34,7 @@ class CompilerFactory:
     def compile(self, in_path):
         compiler = self.get_compiler(in_path)
         if compiler:
-            compiler.compile()
+            compiler.run()
 
 
 class CompilerPool:
@@ -81,12 +81,12 @@ class CompilerPool:
         sprogress_start = stringlib.special_text("", "s")# save cursor
         sprogress_start += stringlib.special_text("", "40000B")
         sprogress_end = stringlib.special_text("", "u")# restore cursor
-        sprogress = f"Pending:{self.total-self.started}\tRunning:{self.started-self.finished}\tFinished:{self.finished}\tTotal:{self.total}\t{self.finished*100/self.total:.1f}%"
+        sprogress = f"Waiting:{self.total-self.started}\tRunning:{self.started-self.finished}\tFinished:{self.finished}\tTotal:{self.total}\t{self.finished*100/self.total:.1f}%"
         sprogress = stringlib.special_text(sprogress, "32m")
         sprogress = sprogress_start + sprogress + sprogress_end
 
-        clean = stringlib.special_text("", "K")
         sname = stringlib.ljust(context["name"], 15)
+        clean = stringlib.special_text("", "K")
         sname = stringlib.special_text(sname, "34m")
         if end-start < 1:
             stime = stringlib.ljust(f"{(end-start)*1000:.0f}ms", 10)
@@ -98,7 +98,7 @@ class CompilerPool:
         if error is None:
             self.print(clean, sname, stime, spath,sep="")
         else:
-            self.print(clean, sname, stringlib.special_text("ERROR", "31m"), spath, "\n", "".join(traceback.format_exception(e)),sep="")
+            self.print(clean, sname, stringlib.ljust(stringlib.special_text("ERROR", "31m"),10), spath, sep="")
         self.print(sprogress,end="\r")
     def skip(self, task):
         self.add(Skip(task))
@@ -109,7 +109,7 @@ class CompilerPool:
             f = (
                 self.warp_func,
                 {"name": compiler.name, "path": compiler.in_path},
-                compiler.compile,
+                compiler.run,
             )
             self.unstarted_futures.append(f)
             return f
@@ -122,7 +122,7 @@ class CompilerPool:
             f = (
                 self.warp_func,
                 {"name": task.name, "path": task.in_path},
-                task.compile,
+                task.run,
             )
             self.unstarted_futures.append(f)
             return f
@@ -157,5 +157,5 @@ class CompilerPool:
 
 class Skip(CompilerBase):
     name="跳过"
-    def compile(self):
+    def run(self):
         pass

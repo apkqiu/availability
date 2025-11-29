@@ -8,7 +8,7 @@ class SvgCompiler(CompilerBase.CompilerBase):
         super().__init__(in_path)
         self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
 
-    def compile(self):
+    def run(self):
         with open(self.in_path, "rb") as f:
             data = f.read()
         with open(self.copy_path, "wb") as f:
