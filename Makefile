@@ -24,4 +24,7 @@ serve run:
 # CI Build in this computer and push to github
 push:
 	$(PYTHON) scripts/Python/ci.py --local
-.PHONY: full_compile serve push all run
+
+pull:
+	git pull
+.PHONY: full_compile serve push all run pull
