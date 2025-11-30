@@ -4,6 +4,7 @@
 <script>
     // 从localstorage获取文件数据
     var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');
+    $("#files").empty();
     $('<a></a>')
         .addClass('list-group-item btn btn-success')
         .css('border-radius', '5px 5px 0px 0px ')
@@ -15,8 +16,7 @@
     files.forEach(function (file) {
         $('<div></div>')
             .addClass('list-group-item')
-            .append($('<span></span>').text(file.name))
-            .append($('<br>'))
+            .append($('<h3></h3>').text(file.name))
             .append(
                 $('<button></button>')
                     .addClass('btn btn-danger btn-sm m-1')
@@ -58,7 +58,7 @@
             )
             .append(
                 $('<button></button>')
-                    .addClass('btn btn-info btn-sm m-1')
+                    .addClass('btn btn-success btn-sm m-1')
                     .text('复制')
                     .click(function () {
                         var files = JSON.parse(localStorage.getItem('web_editor_files') || '[]');

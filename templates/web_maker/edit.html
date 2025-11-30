@@ -233,7 +233,7 @@
                 <div id="preview">
                     <h3>元素预览</h3>
                     <input type="checkbox" id="preview-checkbox" onchange="set_transparenty()" />体现透明度
-                    <script>
+                    <script global>
                         function set_transparenty() {
                             var checkbox = document.getElementById('preview-checkbox');
                             if (checkbox.checked) {
@@ -260,7 +260,7 @@
         </div>
     </div>
 </div>
-<script>
+<script global>
     var currentShow = null;
     var propText = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span'];
     var hyperLink = ['a'];
@@ -428,7 +428,7 @@
         </div>
     </div>
 </div>
-<script>
+<script global>
     var wait_to_add = null;
     function showAddModal(tagName) {
         $('#addModal').modal('show');
@@ -460,7 +460,7 @@
         <div id="sandbox" style="overflow: auto"></div>
     </div>
 </div>
-<script>
+<script global>
     function saveasf() {
         var name = prompt('取个名字呗');
         if (name == null) {

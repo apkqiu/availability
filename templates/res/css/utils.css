@@ -7,6 +7,7 @@
         overflow: hidden;
     }
 }
+
 @media screen and (min-width: 800px) and (max-width: 1000px) {
     .hide_on_small {
         display: none;
@@ -16,6 +17,7 @@
         overflow: hidden;
     }
 }
+
 @media screen and (min-width: 1000px) {
     .hide_on_large {
         display: none;
@@ -26,12 +28,11 @@
     }
 }
 
-.navbar-nav>.nav-item{
+.navbar-nav>.nav-item {
     display: inline-block !important
 }
 
-/*缁備焦顒涢幑銏ｎ攽*/
-.navbar-nav>*{
+.navbar-nav>* {
     word-break: keep-all;
 }
 
@@ -41,23 +42,28 @@
         opacity: 0;
         overflow: hidden;
     }
+
     to {
         transform: translateY(0px);
         opacity: 1;
         overflow: hidden;
     }
 }
+
 .fadeIn {
     animation: fadeIn 0.3s ease-out;
 }
+
 @keyframes fadeOut {
     from {
         opacity: 1;
     }
+
     to {
         opacity: 0;
     }
 }
+
 .fadeOut {
     opacity: 0;
     animation: fadeOut 0.3s ease-in;
@@ -70,5 +76,44 @@
     width: 0px;
     opacity: 0;
     overflow: hidden;
-    
+
+}
+
+.news-bg {
+    background-size: cover;
+    background-position: center;
+    height: 700px;
+
+}
+
+.news-plain {
+    /*横向居中*/
+    text-align: center;
+    /*垂直居中*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+}
+
+.news-txt-box {
+    background: linear-gradient(transparent 70%, black);
+    color: white;
+    height: 100%;
+}
+
+.news-txt {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 10px;
+}
+
+.list-group-flush,
+.list-group-flush .list-group-item {
+    background: transparent !important;
 }

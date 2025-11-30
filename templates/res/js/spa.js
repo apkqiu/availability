@@ -11,19 +11,16 @@ function navigate(url, replace = false, anim = true) {
     else if (querypos != -1)
         var urlpath = url.substring(0, querypos);
     else
-        var urlpath = url;
-    console.log(urlpath);
-    if (anim) {
-        $("#PART_body").removeClass("fadeIn");
-        $("#PART_body").addClass("fadeOut");
-    }
+        var urlpath = url; if (anim) {
+            $("#PART_body").removeClass("fadeIn");
+            $("#PART_body").addClass("fadeOut");
+        }
     document.title = "正在加载...";
 
     // RESET
     $("#offcanvasExample").offcanvas('hide');
 
     $('#nav_left').show(100);
-    $('#nav_control').show(100);
     $('#nav').css('backdropFilter', 'blur(10px)');
     $('#footer').removeClass('hide_on_large hide_on_small');
 
@@ -31,7 +28,7 @@ function navigate(url, replace = false, anim = true) {
     var target_json;
     if (urlpath.endsWith(".html")) {
         target_json = urlpath + ".json";
-    }else{
+    } else {
         target_json = urlpath + ".html.json";
     }
     $.get(target_json).then((data) => {
@@ -101,7 +98,6 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
         true_root = data.rootdef;
     }
     update_element($('#nav_left'));
-    update_element($('#nav_control'));
     update_element($('#nav'));
     update_element($('#footer'));
     $("#comments").hide();
@@ -154,17 +150,17 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
 
     var updates = $(".need-update-root");
     updates.each(function () {
-        console.log("old: %s", $(this).attr("href"));
         $(this).attr("href", $(this).attr("href").replace(oldroot, root));
-        console.log("new: %s", $(this).attr("href"));
     });
     NProgress.done();
     window.dispatchEvent(new Event("spa_navigate"));
 }
-var prev_page = "";
+var prev_page = location.href.split("#")[0];
 window.onpopstate = function (event) {
-    if (prev_page == location.pathname + this.location.search) return;
-    prev_page = location.pathname + this.location.search;
+    console.log(prev_page)
+    if (prev_page == location.href.split("#")[0]) return;
+    prev_page = location.href.split("#")[0];
+    console.log(prev_page)
     // browser changed the url
     if (event.state) {
         // 有eventdata
@@ -176,13 +172,24 @@ window.onpopstate = function (event) {
 // 定位所有a标签
 $(document).on("click", "a", function (e) {
     if ($(this).attr("href").startsWith("#") || $(this).attr("href").indexOf(":") != -1 || $(this).attr("no-intercept") == "true") {
-        console.log("skip: " + $(this).attr("href"));
         return;
     }
-    console.log("navigate: " + $(this).attr("href"));
     e.preventDefault();
     navigate($(this).attr("href"));
 });
+$(document).on('click', 'a[href^="#"]', function (e) {
+    const targetId = this.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
+    if(!targetElement||["fixed", "sticky", "absolute"].includes(getComputedStyle(targetElement).position)) return;
+    e.preventDefault();
+    const navbarHeight = 70; // 导航栏高度
+
+    window.scrollTo({
+        top: targetElement.offsetTop - navbarHeight,
+        behavior: 'smooth'
+    });
+});
+
 $(document).ready(function () {
     navigate(window.location.pathname + window.location.search + window.location.hash, true);
 });
