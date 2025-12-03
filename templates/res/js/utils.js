@@ -43,22 +43,15 @@ function is_http() {
     return window.location.href.indexOf("http://") != -1 || window.location.href.indexOf("https://") != -1;
 }
 
-function fetch_text(url) {
-    return new Promise((resolve, reject) => {
-        $.get(root+url).then((data) => {
-            resolve(data);
-        }).catch((err) => {
-            reject(err);
-        });
-    });
+function randbetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function fetch_compressed_text(url) {
-    return new Promise((resolve, reject) => {
-        fetch_text(root+"/../../../zipped"+url+".7z").then((data) => {
-            resolve(pako.ungzip(data, { to: 'string' }));
-        }).catch((err) => {
-            reject(err);
-        });
-    });
+function chooseRandom(arr, count) {
+    var retarr = [];
+    for (let i = 0; i < count && i < arr.length; i++) {
+        const randomIndex = randbetween(i, arr.length - 1);
+        [arr[i], arr[randomIndex]] = [arr[randomIndex], arr[i]];
+        retarr.push(arr[i]);
+    }
+    return retarr.slice(0, Math.min(count, arr.length));
 }
-

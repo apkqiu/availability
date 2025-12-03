@@ -190,6 +190,6 @@ $(document).on('click', 'a[href^="#"]', function (e) {
     });
 });
 
-$(document).ready(function () {
+$(function () {
     navigate(window.location.pathname + window.location.search + window.location.hash, true);
 });
