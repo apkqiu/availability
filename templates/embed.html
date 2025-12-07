@@ -151,7 +151,6 @@
 						var author_end = '</small>';
 						var author = key.substring(key.indexOf(author_start) + author_start.length, key.indexOf(author_end));
 						var title = key.substring(0, key.indexOf(author_start));
-						console.log("%s %s", author, title);
 						if (author == $('#content>p').first().text() && title.split(" ")[1] != $('#content>h1').text()) {
 							$('#same_author_list').append('<li class="list-group-item"><a href="embed.html?!' + url + '">' + key + '</a></li>');
 						}

@@ -1,5 +1,6 @@
 function navigate(url, replace = false, anim = true) {
     NProgress.start();
+    window.scroll(0, 0);
     document.body.scrollTo(0, 0);
     document.documentElement.scrollTo(0, 0);
     var hashpos = url.indexOf("#");
@@ -33,6 +34,10 @@ function navigate(url, replace = false, anim = true) {
     }
     $.get(target_json).then((data) => {
         set_viewdata(data, url, replace, anim);
+        window.scroll(0, 0);
+        document.body.scrollTo(0, 0);
+        document.documentElement.scrollTo(0, 0);
+
     }).fail((xhr) => {
         if (!xhr.responseText) {
             // 一般性错误
@@ -157,10 +162,8 @@ function set_viewdata(data, url = null, replace = false, anim = true) {
 }
 var prev_page = location.href.split("#")[0];
 window.onpopstate = function (event) {
-    console.log(prev_page)
     if (prev_page == location.href.split("#")[0]) return;
     prev_page = location.href.split("#")[0];
-    console.log(prev_page)
     // browser changed the url
     if (event.state) {
         // 有eventdata

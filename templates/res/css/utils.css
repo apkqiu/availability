@@ -82,8 +82,8 @@
 .news-bg {
     background-size: cover;
     background-position: center;
-    height: 700px;
-
+    height: 80vh;
+    max-height:80vw;
 }
 
 .news-plain {

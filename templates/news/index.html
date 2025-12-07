@@ -57,7 +57,6 @@
 			$.get(previewurl).then(function (data) {
 				var target = document.getElementById('preview' + url);
 				if (target) {
-					console.log(url + ':' + data);
 					target.innerHTML = data;
 					target.innerText = target.innerText
 						.replace(key, '')

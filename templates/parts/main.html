@@ -14,7 +14,7 @@
 				window.true_root = '{{root}}';
 			}
 		</script>
-		<script
+		<!-- <script
 			src="https://giscus.app/client.js"
 			data-repo="apkqiu/apkqiu.github.io"
 			data-repo-id="R_kgDOOQrolQ"
@@ -30,7 +30,7 @@
 			crossorigin="anonymous"
 			async
 			data-pjax
-		></script>
+		></script> -->
 		{% for i in listdir("res/js")%}
 		{% if i[0].startswith("0dep_")%}
 		<script src="{{root}}/res/js/{{i[0]}}.js"></script>

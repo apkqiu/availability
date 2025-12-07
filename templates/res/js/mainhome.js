@@ -49,7 +49,6 @@ $(function () {
     } else {
         // check if img has multi-layer;
         $.get(root + "/res/img/background/" + img + "/deepth.json").then(function (data) {
-            console.log(data)
             // we may change the scene
             var layers_count = data.layers;
             var layers_deepth = data.deepth;
@@ -65,7 +64,6 @@ $(function () {
                     <img id="bg" style="height: 100%; width: 100%; object-fit: cover" />
                 </li>
                 */
-                console.log(layers[i].img)
                 var layer = $('<li class="layer" data-depth="' + layers[i].deepth + '" style="height: 100%; width: 100%"></li>');
                 var img = $('<img id="bg" style="height: 100%; width: 100%; object-fit: cover" />');
                 img.attr('src', layers[i].img);
