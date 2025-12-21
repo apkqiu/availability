@@ -7,7 +7,7 @@ class JpgCompiler(CompilerBase.CompilerBase):
     header = b"\xFF\xD8\xFF\xDB"
     def __init__(self, in_path):
         super().__init__(in_path)
-        self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
+        self.copy_path = os.path.join("docs", os.path.relpath(in_path, "src"))
     def run(self):
         img = PIL.Image.open(self.in_path)
         # 获取EXIF朝向

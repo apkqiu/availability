@@ -30,7 +30,7 @@ class JsCompiler(CompilerBase.CompilerBase):
 
     def __init__(self, in_path):
         super().__init__(in_path)
-        self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
+        self.copy_path = os.path.join("docs", os.path.relpath(in_path, "src"))
 
     def run(self):
         open(self.copy_path, "w", encoding="utf-8").write(

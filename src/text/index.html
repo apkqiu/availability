@@ -1,0 +1,59 @@
+{%extends "components/web/main.html"%} {%block title%} 洽隐山房 | 学生创作 {%endblock%} {%block title_in%} 洽隐山房 | 学生创作 {%endblock%} {%block body%}
+<h1>学生创作</h1>
+<style>
+	a {
+		text-decoration: none;
+	}
+	.preview {
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		height: 3em;
+	}
+</style>
+<div id="students_text"></div>
+<div class="row">
+	<div class="col-md-6">
+		<h3>诗</h3>
+		<ul class="list-group list-group-flush" id="sp"></ul>
+	</div>
+	<div class="col-md-6">
+        <h3>词</h3>
+        <ul class="list-group list-group-flush" id="sw"></ul>
+		<h3>曲</h3>
+		<ul class="list-group list-group-flush" id="ss"></ul>
+		<h3>书法</h3>
+		<ul class="list-group list-group-flush" id="sc"></ul>
+	</div>
+</div>
+
+<script>
+	$('#students_text').html('<div class="spinner-border"></div>');
+	$.get('index.json').then(function (data) {
+		$('#students_text').html('');
+		var texts = {};
+		// key: title, value: url
+		for (var key in data) {
+			var url = data[key];
+			type = url[0];
+			texts[type] = texts[type] || [];
+			texts[type].push({ key: key, url: url });
+		}
+		for (var type in texts) {
+			var list = texts[type];
+			var html = '';
+			for (var i = 0; i < list.length; i++) {
+				var item = list[i];
+				html +=
+					'<li class="list-group-item list-group-item-action"><a href="' +
+					item.url +
+					'">' +
+					item.key.replace(/<b>[\u0000-\uffff]+<\/b> /, '') +
+					'</a></li>';
+			}
+			$('#s' + type).html(html);
+		}
+	});
+</script>
+{%endblock%}

@@ -3,6 +3,7 @@
 # it is not a part of the project
 
 PYTHON = "D:/Program Files/Python313/python3.13t.exe"
+CLASSIC_PYTHON = "D:/Program Files/Python313/python3.13.exe"
 
 # CMD: make
 # ↑ This is the most convient way to compile the files
@@ -24,7 +25,8 @@ serve run:
 # CI Build in this computer and push to github
 push:
 	$(PYTHON) scripts/Python/ci.py --local
-
+pdf:
+	$(CLASSIC_PYTHON) scripts/Python/convert_pdf_2_html.py
 pull:
 	git pull
-.PHONY: full_compile serve push all run pull
+.PHONY: full_compile serve push all run pull pdf

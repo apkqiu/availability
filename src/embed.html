@@ -1,0 +1,108 @@
+{%extends "components/web/main.html"%} {%block title%} 洽隐山房 | 新闻 {%endblock%} {%block title_in%} 洽隐山房 | 新闻 {%endblock%} {%block body%}
+<style>
+	img {
+		width: 80%;
+		display: inline-block;
+		image-orientation: from-image;
+	}
+	.list-group-item,
+	.list-group-item {
+		background: transparent;
+		
+	}
+	.list-group-item>a {
+	    text-decoration: none;
+	}
+</style>
+<div class="row">
+	<div class="col-md-8">
+		<div style="backdrop-filter: blur(10px); padding: 10px">
+			<div id="content"></div>
+			<br />
+			<br />
+			<hr />
+			<div id="comments" class="giscus"></div>
+		</div>
+	</div>
+	<div class="col-md-4" id="ads">
+		<h4>人人关注</h4>
+		<ul class="list-group list-group-flush" id="recommend"></ul>
+		<div id="same_author">
+			<h4>同作者的其他文章</h4>
+			<ul class="list-group list-group-flush" id="same_author_list"></ul>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('#content').html('<div class="spinner-border"></div>');
+	var resource = window.location.search.substring(1).replaceAll('=', '');
+	window.location.hash = "#"; // fix some problem with hash
+	if (resource.startsWith('!')) {
+		$('#same_author').show();
+		$('#same_author_list').html('<div class="spinner-border"></div>');
+	} else {
+		$('#same_author').hide();
+	}
+	if (resource !== '') {
+		var url;
+		var type_tag = resource.startsWith('!') ? '!' : '';
+		if (resource.startsWith('!')) {
+			resource = resource.substring(1);
+			type = resource[0];
+			resource = resource.substring(1).replaceAll('.md', '.html');
+			type = {
+				p: 'poems',
+				w: 'words',
+				s: 'songs',
+				c: 'writings',
+			}[type];
+			url = 'text/' + type + '/' + resource;
+		} else {
+			url = 'news/content/' + resource;
+		}
+		$.get(url).then(function (data) {
+			data = data.replace(/(.+).files/g, 'news/newspaper/$1.files');
+			$('#content').html(data);
+			attach_imview("#content");
+			$('.footnote-ref>a').attr('no-intercept', 'true');
+			$('.footnote-backref').attr('no-intercept', 'true');
+			if (type_tag == '!') {
+				$.get('text/index.json').then(function (data) {
+					$("#same_author_list").empty();
+					for (var key in data) {
+						var url = data[key];
+						var author_start = '<small>作者：';
+						var author_end = '</small>';
+						var author = key.substring(key.indexOf(author_start) + author_start.length, key.indexOf(author_end));
+						var title = key.substring(0, key.indexOf(author_start));
+						if (author == $('#content>p').first().text() && title.split(" ")[1] != $('#content>h1').text()) {
+							$('#same_author_list').append('<li class="list-group-item"><a href="embed.html?!' + url + '">' + key + '</a></li>');
+						}
+					}
+				});
+			}
+		});
+	} else {
+		$('#content').html('没有找到资源，请检查URL');
+	}
+	$('#recommend').html('<div class="spinner-border"></div>');
+	$.get('popular.json').then(function (data) {
+		$('#recommend').html('');
+		// key: title, value: url
+		for (var key in data) {
+			var url = data[key];
+			if (url.startsWith('!')) {
+				url = 'pdf_embed.html#' + url.substring(1);
+			} else {
+				url = 'embed.html?' + url;
+			}
+			$('#recommend').append("<li class='list-group-item'><a href='" + url + "'>" + key + '</a></li>');
+		}
+	});
+</script>
+
+<script>
+	$('.giscus').appendTo('#comments');
+</script>
+{%endblock%}

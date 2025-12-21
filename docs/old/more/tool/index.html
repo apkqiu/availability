@@ -1,55 +1,6 @@
-﻿
-<!DOCTYPE html>
-<html>
- <head>
-  <link href="../../res/css/All.css" rel="stylesheet"/>
-  <title>
-   洽隐山房主页|小工具
-  </title>
-  <style>
-   #wenYanWenZiDianValue{
-    		text-align:left;
-    		margin:0 20px;
-    		padding:20px;
-			height:200px;
-			border:solid 1px black;
-			white-space:pre;
-            overflow:auto;
-        }
-  </style>
- </head>
- <body>
-  <br/>
-  <h1>
-   小工具
-  </h1>
-  <p style="text-align:center;">
-   麻雀虽小，五脏不全。图片仅供参考，详情请问历史课代表。
-  </p>
-  <hr/>
-  <br/>
-  <div class="container" id="wenYanWenZiDian" style="text-align:center">
-   <h2>
-    文言文字典
-   </h2>
-   <input id="value" placeholder="搜索" type="text"/>
-   <a href="#" onclick="wenYanWenSearch()">
-    搜索
-   </a>
-   <p id="wenYanWenZiDianValue">
-   </p>
-  </div>
-  <script src="../../res/js/All.js">
-  </script>
-  <script>
-   !(function() {
-                        
-        document.getElementById('nowPlace').innerHTML=`
+<!doctypehtml>﻿<html><head><link href=../../res/css/All.css rel=stylesheet><title>洽隐山房主页|小工具</title><style>#wenYanWenZiDianValue{text-align:left;margin:0 20px;padding:20px;height:200px;border:solid 1px #000;white-space:pre;overflow:auto}</style></head><body><br><h1>小工具</h1><p style=text-align:center>麻雀虽小，五脏不全。图片仅供参考，详情请问历史课代表。</p><hr><br><div class=container id=wenYanWenZiDian style=text-align:center><h2>文言文字典</h2><input id=value placeholder=搜索> <a href=# onclick=wenYanWenSearch()>搜索</a><p id=wenYanWenZiDianValue></p></div><script src=../../res/js/All.js></script><script>(()=>{document.getElementById("nowPlace").innerHTML=`
             <a class="anone" href="../../index.html">洽隐山房主页</a>>小工具
-        `;
-        
-		//文言文字典（约150行）
-		    var shici=`1. 爱：①喜爱；②怜惜，同情；③吝啬，舍不得
+        `,`1. 爱：①喜爱；②怜惜，同情；③吝啬，舍不得
 2. 安：①安稳，安全；②安逸，安乐；③怎么，哪里（疑问代词）
 3. 被：①表示被动；②通“披”，穿在身上或披在身上
 4. 倍：①一倍，加倍；②通“背”，违背，背叛
@@ -172,7 +123,7 @@
 121. 卒：①步兵；②差役；③死亡；④终于，最终；⑤通“猝”，突然，仓促
 122. 走：①跑，逃跑；②趋向，奔向
 123. 左：①左边；②卑下，降职（如“左迁”）；③不正，邪僻
-124. 坐：①坐着；②座位；③犯罪，获罪；④因为，由于`.replace(/；/g,'<br>').split('\n');var xuci =`
+124. 坐：①坐着；②座位；③犯罪，获罪；④因为，由于`.replace(/；/g,"<br>").split("\n"),`
 1. 而   · 连词：表并列（又，并且）、表承接（就，接着）、表转折（但是，却）、表修饰（地，着）、表假设（如果）
 2. 何   · 疑问代词：什么、哪里、为什么、怎么   · 副词：多么
 3. 乎   · 语气助词：表疑问（吗）、表反问（呢）、表感叹（啊）   · 介词：相当于“于”
@@ -190,18 +141,4 @@
 15. 与    · 介词：和，跟；给，替    · 连词：和，及    · 动词：给予；结交；赞成    · 语气助词：通“欤”，表疑问或感叹
 16. 则    · 连词：就，那么；就是；如果；却    · 副词：就是，是
 17. 者    · 助词：附在词或短语后，组成“者”字结构，相当于名词性短语（…的人/事/物）；句中表提顿；句末表疑问
-18. 之    · 代词：他（她、它）；这，此    · 助词：的；用于主谓之间，取消句子独立性；宾语前置的标志；凑足音节，无实义    · 动词：到…去`.replace(/·/g,'<br>').split('\n');
-function wenYanWenSearch() {
-    var value = document.getElementById("value").value.trim();
-    var va = document.getElementById("wenYanWenZiDianValue");
-    var results = [];
-    if(value==""){va.innerHTML="输入为空。";return;}
-    /* 搜索实词 */for (var i = 0; i < shici.length; i++) {if (shici[i].includes(value)) results.push(shici[i]);}
-    /* 搜索虚词 */for (var i = 0; i < xuci.length; i++) {if (xuci[i].includes(value)) results.push(xuci[i]);}
-    va.innerHTML = results.length > 0 ? results.join('<br><hr>') : "未找到相关词条";
-}
-    
-                    })();
-  </script>
- </body>
-</html>
+18. 之    · 代词：他（她、它）；这，此    · 助词：的；用于主谓之间，取消句子独立性；宾语前置的标志；凑足音节，无实义    · 动词：到…去`.replace(/·/g,"<br>").split("\n")})()</script></body></html>

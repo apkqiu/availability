@@ -8,7 +8,10 @@ def index():
 def hello(path):
     if os.path.isdir(path):
         path = os.path.join(path, "index.html")
-    resp = flask.send_file("../../"+path,max_age=0)
+    try:
+        resp = flask.send_file("../../"+path,max_age=0)
+    except:
+        resp = flask.Response(status=404)
     if path.endswith(".mjs"):
         resp.headers["Content-Type"] = "application/javascript"
     return resp

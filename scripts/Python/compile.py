@@ -63,14 +63,14 @@ if args.recompile or args.compile:
     new_filehash.update(script_hash)
     # 检查所有基础架构没有修改
     for file, hash in filehash.items():
-        if file.startswith("templates\\parts\\"):
+        if file.startswith("src\\parts\\"):
             new_hash = calc_hash(open(file, "rb").read()).hexdigest()
             if hash != new_hash:
                 should_all_change[".html"] = True
-    for dirpath, dirs, files in os.walk("templates"):
+    for dirpath, dirs, files in os.walk("src"):
         for file in files:
             path = os.path.join(dirpath, file)
-            relpath = os.path.relpath(path, "templates")
+            relpath = os.path.relpath(path, "src")
             copy_path = os.path.join("docs", relpath)
             new_hash = calc_hash(open(path, "rb").read()).hexdigest()
             if filehash.get(path) == new_hash and not should_all_change.get("."+path.split(".")[-1]):

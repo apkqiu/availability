@@ -1,0 +1,19 @@
+<template id="TEMPLATE-giscus">
+    <style>
+        :host{
+            display: block;
+            width: 100%;
+        }
+    </style>
+    <div id="giscus"></div>
+    <script src="{{root}}/src/res/js/1lazy_giscus.js"></script>
+</template>
+<script>
+    class Giscus extends HTMLElement{
+        constructor(){
+            super();
+            this.appendChild(document.getElementById("TEMPLATE-giscus").content.cloneNode(true));
+        }
+    }
+    window.customElements.define("wc-giscus", Giscus);
+</script>

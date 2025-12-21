@@ -2,9 +2,9 @@ import tempfile
 import os
 tempfile.tempdir = "temp"
 class TemproaryFile:
-    def __init__(self,encoding="utf-8"):
+    def __init__(self,encoding="utf-8",suffix=""):
         self.encoding = encoding
-        self.file = tempfile.NamedTemporaryFile(mode="w", delete=False, encoding=self.encoding)
+        self.file = tempfile.NamedTemporaryFile(mode="w", delete=False, encoding=self.encoding, suffix=suffix)
         # 至于为什么delete=False，是因为这个文件要被编译器、npm等程序读取
 
     def __del__(self):

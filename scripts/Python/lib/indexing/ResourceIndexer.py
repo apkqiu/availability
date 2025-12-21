@@ -9,12 +9,15 @@ class ResourceIndexer(CompilerBase.CompilerBase):
     def __init__(self):
         super().__init__("")
     def run(self):
-        resource_index = {}
-        for type in os.listdir("docs/res"):
-            resource_index[type] = []
-            if not os.path.isdir("docs/res/" + type):
-                continue
-            for file in os.listdir("docs/res/" + type):
-                resource_index[type].append(file)
-        with open("docs/res/resources.json", "w") as f:
-            json.dump(resource_index, f)
+        resource_index = self.make_resource("docs/resource/objects")
+        with open("docs/resource/index.json", "w", encoding="utf-8") as f:
+            json.dump(resource_index, f, ensure_ascii=False, indent=4)
+
+    def make_resource(self, path):
+        current = {}
+        for file in os.listdir(path):
+            if os.path.isdir(path + "/" + file):
+                current[file] = self.make_resource(path + "/" + file)
+            else:
+                current[file] = path + "/" + file
+        return current

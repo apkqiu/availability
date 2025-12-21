@@ -1,0 +1,168 @@
+{%extends "components/web/main.html"%} {%block title%} 计算器 {%endblock%} {%block title_in%} 计算器 {%endblock%} {%block body%}
+
+<input type="text" id="calc_input" class="w-100 form-control" placeholder="输入表达式" />
+<p id="calc_result"></p>
+<script global></script>
+<script target="calc_input" when="input">
+	function change(exp) {
+		// 自己实现！
+		const level = {
+			'+': 1,
+			'-': 1,
+			'*': 2,
+			'/': 2,
+			'(': 0,
+			')': 0,
+			0: -1,
+			1: -1,
+			2: -1,
+			3: -1,
+			4: -1,
+			5: -1,
+			6: -1,
+			7: -1,
+			8: -1,
+			9: -1,
+			'.': -1,
+		};
+		const stack = [];
+		const output = [];
+		for (let i = 0; i < exp.length; i++) {
+			// 算式里面包含2位数以上的数字，运算优先级存在level里面，然后为“+-”特判是否为开头的符号（比如“-1”转换为“0-1”）
+			if (level[exp[i]] == 1 && (i == 0 || level[exp[i - 1]] == 0)) {
+				output.push('0');
+			}
+			if (level[exp[i]] == -1) {
+				let num = exp[i];
+				while (i + 1 < exp.length && level[exp[i + 1]] == -1) {
+					num += exp[i + 1];
+					i++;
+				}
+				output.push(num);
+			} else {
+				if (exp[i] == '(') {
+					stack.push(exp[i]);
+				} else if (exp[i] == ')') {
+					while (stack[stack.length - 1] != '(') {
+						output.push(stack.pop());
+					}
+					stack.pop();
+				} else {
+					while (stack.length != 0 && level[stack[stack.length - 1]] >= level[exp[i]]) {
+						output.push(stack.pop());
+					}
+					stack.push(exp[i]);
+				}
+			}
+
+		}
+		while (stack.length > 0) {
+			output.push(stack.pop());
+		}
+		return output;
+	}
+	const gcd = (a, b) => {
+		return b ? gcd(b, a % b) : a;
+	};
+	const add_frac = (a, b) => {
+			return [a[0] * b[1] + b[0] * a[1], a[1] * b[1]];
+		},
+		sub_frac = (a, b) => {
+			return [a[0] * b[1] - b[0] * a[1], a[1] * b[1]];
+		},
+		mul_frac = (a, b) => {
+			return [a[0] * b[0], a[1] * b[1]];
+		},
+		div_frac = (a, b) => {
+			return [a[0] * b[1], a[1] * b[0]];
+		},
+		to_frac = (a) => {
+			if (typeof a === 'object') {
+				return a;
+			}
+
+			var b = BigInt(1);
+            var pos = a.indexOf(".");
+            if(pos==-1){
+                return [BigInt((a)),BigInt(1)];
+            }
+			for (var i = 0;i < a.length-pos-1;i++) {
+				b *= BigInt(10);
+			}
+			return [BigInt((a.replace(".",""))), b];
+		},
+		min_frac = (a) => {
+            var g = gcd(a[0], a[1]);
+            if(a[0]<0&&g>0) g = -g;
+            if(a[1]>0&&g<0) g = -g;
+			return [a[0] / g, a[1] / g];
+		},
+		str_frac = (a) => {
+            a = min_frac(a);
+            if (a[1] == 1) {
+                return a[0];
+            }
+            var val_str;
+            const MAX_SAFE_INTEGER = 9007199254740991n;
+            if(a[0]<=MAX_SAFE_INTEGER &&a[1]<=MAX_SAFE_INTEGER ){
+                // 可计算范围
+                var about_value = parseInt(a[0]) / parseInt(a[1]);
+                val_str = about_value.toFixed(10);
+                // 删除多余的0
+                var lastindex = val_str.length-1;
+                for(;val_str[lastindex] == '0';lastindex--);
+                val_str = val_str.substring(0, lastindex+1)
+                // 多了小数点？去掉
+                if (val_str.indexOf('.') == val_str.length-1){
+                    val_str = val_str.substring(0, val_str.length-1)
+                } 
+            }else{
+                var about_value = a[0]/a[1];
+                val_str = "约等于 "+about_value.toString();
+            }
+            return a[0] + '/' + a[1] + " (" + val_str + ")";
+		};
+	function calc(exp) {
+		const input = change(exp); //转后缀
+		const stack = [];
+		for (let i = 0; i < input.length; i++) {
+			const token = input[i];
+			if ("+-*/".indexOf(token)!=-1) {
+				const b = stack.pop();
+				const a = stack.pop();
+				switch (token) {
+					case '+':
+						stack.push(add_frac(a,b));
+						break;
+					case '-':
+						stack.push(sub_frac(a,b));
+						break;
+					case '*':
+						stack.push(mul_frac(a,b));
+						break;
+					case '/':
+						stack.push(div_frac(a,b));
+						break;
+				}
+                stack.push(min_frac(stack.pop()))
+			} else {
+				stack.push(to_frac(token));
+			}
+        }
+        var res = stack.pop();
+		if (typeof res === 'object') return str_frac(min_frac(res));
+		return res;
+	}
+	var input = this.value;
+    if(!input){
+        $('#calc_result').text("");
+        return;
+    }
+    try{
+        var result = calc(input);
+        $('#calc_result').text("="+result);
+    }catch{
+        $('#calc_result').text("计算出错")
+    }
+</script>
+{%endblock%}

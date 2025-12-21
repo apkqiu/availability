@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from . import JsCompiler
 env = jinja2.Environment(
     loader=jinja2.loaders.FileSystemLoader(
-        "templates", encoding="utf-8", followlinks=False
+        ".", encoding="utf-8", followlinks=False
     ),
 )
 
@@ -19,14 +19,14 @@ class HtmlCompiler(CompilerBase.CompilerBase):
 
     def __init__(self, in_path):
         super().__init__(in_path)
-        self.copy_path = os.path.join("docs", os.path.relpath(in_path, "templates"))
+        self.copy_path = os.path.join("docs", os.path.relpath(in_path, "src"))
 
     def make_context(self, path, **ex):
         ret = {}
-        ret["path"] = path
+        ret["path"] = self.in_path +","+path
         ret["filename"] = os.path.basename(path)
         ret["dirname"] = os.path.dirname(path)
-        ret["relpath"] = os.path.relpath(path, "templates").replace("\\", "/")
+        ret["relpath"] = os.path.relpath(path, "src").replace("\\", "/")
         # calculate the relative path to the root of the docs directory
         ret["root"] = "../" * (ret["relpath"].count("/"))
         ret["root"] = ret["root"][:-1] if ret["root"] else "."
@@ -42,7 +42,7 @@ class HtmlCompiler(CompilerBase.CompilerBase):
 
         # add functions
         def listdir(dir):
-            absdir = os.path.join("templates", dir)
+            absdir = os.path.join("src", dir)
             for i in os.listdir(absdir):
                 yield [i[: i.rfind(".")], os.path.join(absdir, i)]
 
@@ -50,7 +50,7 @@ class HtmlCompiler(CompilerBase.CompilerBase):
 
         def list_newspaper():
             ret = []
-            for i in os.listdir("templates/res/pdf"):
+            for i in os.listdir("src/res/pdf"):
                 if i.endswith(".pdf"):
                     # extract the id (zhoubao1.pdf)
                     ret.append(i[7:-4])
@@ -145,10 +145,10 @@ class HtmlCompiler(CompilerBase.CompilerBase):
             #i.string = JsCompiler.compile_js(i.string)
         data = soup.prettify()
         if compress:
-            temp = templib.TemproaryFile()
+            temp = templib.TemproaryFile(suffix=".html")
             temp.write(data)
             temp.close()
-            #data = execlib.exec_node("compress_html.js", temp.name)
+            data = execlib.exec_node("compress_html.js", temp.name)
         return data
 
     def is_spa(self, file):
@@ -158,13 +158,13 @@ class HtmlCompiler(CompilerBase.CompilerBase):
                 f.readline()
                 .replace(" ", "")
                 .replace("'", '"')
-                .startswith('{%extends"parts/main.html"%}')
+                .startswith('{%extends"components/web/main.html"%}')
             ):
                 SPA = True
         return SPA
 
     def load_basic(self):
-        return env.get_template("parts/main.html").render(
+        return env.get_template("components/web/main.html").render(
             **self.make_context(self.in_path)
         )
 
