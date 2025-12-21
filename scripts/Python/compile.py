@@ -61,12 +61,17 @@ if args.recompile or args.compile:
                 filehash = {}
             script_hash[path] = new_hash
     new_filehash.update(script_hash)
-    # 检查所有基础架构没有修改
-    for file, hash in filehash.items():
-        if file.startswith("src\\parts\\"):
-            new_hash = calc_hash(open(file, "rb").read()).hexdigest()
-            if hash != new_hash:
+    script_hash = {}
+    # 检查编译脚本是否改变
+    for dirpath, dirnames, filenames in os.walk("components\\web"):
+        for filename in filenames:
+            path = os.path.join(dirpath, filename)
+            old_hash = filehash.get(path)
+            new_hash = calc_hash(open(path, "rb").read()).hexdigest()
+            if old_hash != new_hash:
                 should_all_change[".html"] = True
+            script_hash[path] = new_hash
+    new_filehash.update(script_hash)
     for dirpath, dirs, files in os.walk("src"):
         for file in files:
             path = os.path.join(dirpath, file)
@@ -85,11 +90,10 @@ if args.recompile or args.compile:
             cpool.add(path)
     cpool.waitall()
     show_error()
-    if changed:
-        cpool = CompilerPool(indexing.factory)
-        indexing.start(cpool)
-        cpool.waitall()
-        show_error()
+    cpool = CompilerPool(indexing.factory)
+    indexing.start(cpool)
+    cpool.waitall()
+    show_error()
 
     json.dump(new_filehash, open("filehash.json", "w"), indent=4)
     execlib.remove_item("temp")

@@ -2,8 +2,11 @@
 <h1 id="title"></h1>
 <hr>
 <a id="parent">上级目录</a>
-<div id="list" class="list-group">
-    <div class="spinner-border" id="loading-mask"></div>
+<div class="spinner-border" id="loading-mask"></div>
+<div id="folders" class="list-group">
+</div>
+<div id="files" class="list-group">
+
 </div>
 <script>
     attach_imview("#list");
@@ -20,7 +23,8 @@
                 $("#parent").hide();
             }
             $("#title").text(path+" 的索引");
-            $("#list").empty();
+            $("#folders").empty();
+            $("#files").empty();
             var list = dirdata;
             if(path != "/")
             for (var parts of path.substr(1,path.length-2).split("/")) {
@@ -29,23 +33,23 @@
             if(list) {
                 for(var i in list) {
                     let name = i;
-                    var item = list[i];
+                    let item = list[i];
                     if(typeof item == "object") {
-                        $("#list").append("<a href='#path="+btoa(encodeURIComponent(path+i+"/"))+"' class='list-group-item link' style='color:yellow'>"+i+"</a>");
+                        $("#folders").append("<div class=list-group-item ><a href='#path="+btoa(encodeURIComponent(path+i+"/"))+"' class='link'>"+i+"</a></div>");
                     } else {
                         var ext = name.substr(name.lastIndexOf('.')+1);
-                        if("png jpg gif".split(" ").includes(ext)){
-                            $("#list").append($("<a class='list-group-item'>"+i+"</a>").click(
+                        if("png jpg gif jpeg".split(" ").includes(ext.toLocaleLowerCase())){
+                            $("#files").append($("<a class='list-group-item'>"+i+"</a>").click(
                                 function(){
-                                    show_im("objects/"+path+name);
+                                    show_im(item);
                                 }
                             ));
                         }else{
-                            $("#list").append($("<a class='list-group-item'>"+i+"</a>").click(
+                            $("#files").append($("<a class='list-group-item'>"+i+"</a>").click(
                                 function(){
                                     yn = confirm("下载"+name+"?")
                                     if(!yn) return;
-                                    $("<a></a>").attr("href","objects/"+path+name).attr("download",true).click()
+                                    $("<a></a>").attr("href",item).attr("download",name)[0].click();
                                 }
                             ));
                         }
