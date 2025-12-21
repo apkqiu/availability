@@ -11,6 +11,7 @@ class ResourceIndexer(CompilerBase.CompilerBase):
     def run(self):
         resource_index = {}
         resource_index.update(self.make_resource("docs/resource/objects"))
+        resource_index.update(self.make_resource(path="drive/"))
         resource_index["网站资源"] = {
             "PDF": self.make_resource("docs/res/pdf"),
             "图片": self.make_resource("docs/res/img"),
