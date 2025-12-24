@@ -359,6 +359,16 @@
                 "bg.jpg": "../res/img/background/bg.jpg",
                 "SchoolGate.jpg": "../res/img/background/SchoolGate.jpg"
             },
+            "Blog_image": {
+                "1.png": "../res/img/Blog_image/1.png",
+                "2.png": "../res/img/Blog_image/2.png",
+                "3.png": "../res/img/Blog_image/3.png",
+                "4.png": "../res/img/Blog_image/4.png",
+                "5.png": "../res/img/Blog_image/5.png",
+                "6.png": "../res/img/Blog_image/6.png",
+                "7.png": "../res/img/Blog_image/7.png",
+                "8.png": "../res/img/Blog_image/8.png"
+            },
             "ccnews": {
                 "009.1.01.jpg": "../res/img/ccnews/009.1.01.jpg",
                 "009.1.02.jpg": "../res/img/ccnews/009.1.02.jpg",
@@ -938,6 +948,16 @@
                     "bg-7.jpg": "../res/img/background/bg-7.jpg",
                     "bg.jpg": "../res/img/background/bg.jpg",
                     "SchoolGate.jpg": "../res/img/background/SchoolGate.jpg"
+                },
+                "Blog_image": {
+                    "1.png": "../res/img/Blog_image/1.png",
+                    "2.png": "../res/img/Blog_image/2.png",
+                    "3.png": "../res/img/Blog_image/3.png",
+                    "4.png": "../res/img/Blog_image/4.png",
+                    "5.png": "../res/img/Blog_image/5.png",
+                    "6.png": "../res/img/Blog_image/6.png",
+                    "7.png": "../res/img/Blog_image/7.png",
+                    "8.png": "../res/img/Blog_image/8.png"
                 },
                 "ccnews": {
                     "009.1.01.jpg": "../res/img/ccnews/009.1.01.jpg",
