@@ -1,1 +1,0 @@
-function search_document(s){for(var e=[],r=0;r<documents.length;r++){var n=1-Math.abs(levenshetin(s,documents[r].title))/documents[r].title.length,o=documents[r];o.score=n,n>0&&e.push(documents[r])}return e.length==0?[]:(e.sort((t,a)=>a.score-t.score),e[0].score>.2&&(e=e.filter(t=>t.score>.2)),e)}var documents=[];
