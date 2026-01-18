@@ -34,13 +34,13 @@
         "vue-router": "^4.6.4"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.28.5",
+        "@babel/preset-env": "^7.28.6",
         "@rollup/plugin-babel": "^6.1.0",
         "@rollup/plugin-terser": "^0.4.4",
         "@vitejs/plugin-vue": "^6.0.3",
-        "postcss-preset-env": "^10.6.0",
+        "postcss-preset-env": "^10.6.1",
         "sass-embedded": "^1.97.2",
-        "terser": "^5.44.1",
+        "terser": "^5.46.0",
         "typescript": "^5.9.3",
         "unplugin-vue-router": "^0.19.2",
         "vite": "^7.3.1"
