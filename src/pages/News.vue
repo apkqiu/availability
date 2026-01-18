@@ -1,14 +1,8 @@
 <script setup>
-import { WebDocument } from '../lib/utils';
 import vfs_articles from 'vfs:src/articles';
 import vidr_pdf from 'vdir:src/static/pdf';
-const items = [];
 definePage({ meta: { title: "新闻" } })
-if(items.length==0){
-    for (let item in vfs_articles.news) {
-        items.push({name:item,title:new WebDocument(vfs_articles.news[item].content, true).getTitle()});
-    }
-}
+
 </script>
 <style scoped>
 a {
@@ -29,16 +23,17 @@ a {
         <div class="col-md-8">
             <h2>最新文章</h2>
             <ul class="list-group list-group-flush w-100">
-                <li class="list-group-item" v-for="item in items">
-                    <RouterLink :to="'/view?name=news/'+item.name">{{ item.title }}</RouterLink>
+                <li class="list-group-item" v-for="item in Object.keys(vfs_articles.news)">
+                    <RouterLink :to="'/view?name=news/' + item">{{ vfs_articles.news[item].content.split(/[\r\n]+/g)[0].replaceAll("#", "").trim() }}</RouterLink>
                 </li>
             </ul>
         </div>
         <div class="col-md" style="position:sticky">
             <h2>周报出版</h2>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" v-for="id in Object.keys(vidr_pdf).map((s)=>parseFloat(s.substring(7, s.length-4))).sort((a,b)=>b-a)">
-                    <RouterLink :to="`/view?pdf=${id}`">周恩来周报 第{{ id }}期</RouterLink>
+                <li class="list-group-item"
+                    v-for="id in Object.keys(vidr_pdf).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a)">
+                    <RouterLink :to="`/view?name=pdf/${id}`">周恩来周报 第{{ id }}期</RouterLink>
                 </li>
             </ul>
         </div>

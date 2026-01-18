@@ -1,6 +1,6 @@
 <script setup lang="js">
 import { onMounted, ref, useTemplateRef } from 'vue';
-import { Url, WebDocument } from '../lib/utils';
+import { MarkdownRenderer } from '../lib/utils';
 import vfs_articles from "vfs:src/articles";
 import Comments from '../components/Comments.vue';
 import { popular } from '../lib/web_data.js';
@@ -12,25 +12,25 @@ const preview = useTemplateRef("preview");
 const pdf_src = ref('');
 definePage({ meta: { title: "文章详情" } })
 onMounted(async () => {
-    let { name, pdf } = Url.args();
+    const name = new URLSearchParams(window.location.search).get("name");
 
-    // normal document ## from articles/news
     if (name) {
-        name = name.split("/");
-        doccontent.value.innerHTML = new WebDocument(vfs_articles[name[0]][name[1]].content,true).render();
+        const [type, doc] = name.split("/");
+        if(type=="pdf"){
+            pdf_src.value = (await import(`@/static/pdf/zhoubao${doc}.pdf`)).default;
+        }else{
+            doccontent.value.innerHTML = MarkdownRenderer.render(vfs_articles[type][doc].content);
+        }
     }
-    // pdf document ## from ref/pdf
-    if (pdf)
-        pdf_src.value = (await import(`@/static/pdf/zhoubao${pdf}.pdf`)).default;
     const preview_modal = new Modal(preview.value);
     let x;
     new MutationObserver(x = () => {
         let imgs = doccontent.value.querySelectorAll("img");
         imgs.forEach((img) => {
-            img.addEventListener("click", () => {
+            img.onclick = () => {
                 lg_img_src.value = img.src;
                 preview_modal.show();
-            })
+            };
         })
     }).observe(doccontent.value, { childList: true, subtree: true });
     x();

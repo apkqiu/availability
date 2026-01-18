@@ -1,7 +1,7 @@
 
 import { createApp } from 'vue'
 import App from './App.vue'
-
+import "bootstrap"
 // Import all of Bootstrap’s JS
 import { routes } from 'vue-router/auto-routes'
 import { createRouter, createWebHistory} from 'vue-router'

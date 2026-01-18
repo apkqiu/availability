@@ -3,17 +3,14 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import VueRouter from "unplugin-vue-router/vite"
 import terser from '@rollup/plugin-terser'
-import PostCssPresetEnv from 'postcss-preset-env'
 import virtualArticle from './src/plugins/vfs'
-import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
-const BIG_BUNDLE = 1;
+const BIG_BUNDLE = 0;
 export default defineConfig({
   plugins: [
     VueRouter(),
     vue(),
     virtualArticle(),
-    tailwindcss()
   ],
   base: "/availability/",
   build: {
@@ -62,9 +59,6 @@ export default defineConfig({
           'if-function'
         ],
       },
-    },
-    postcss: {
-      plugins: [PostCssPresetEnv()]
     }
   },
   resolve: {

@@ -1,5 +1,5 @@
 <script setup>
-    definePage({meta:{title:"404"}, alias:["/:pathMatch(.*)*"]})
+definePage({ meta: { title: "404" }, alias: ["/:pathMatch(.*)*"] })
 </script>
 
 <template>

@@ -14,7 +14,7 @@ onMounted(() => {
     bgbrightness.value = load("bgbrightness", "50");
     coloropacity.value = load("coloropacity", "0.5");
 });
-function save(name, value, reload = true) {
+function save(name, value) {
     current_valueset.value[name] = localStorage.setItem(name, value);
 
 }
@@ -22,9 +22,8 @@ function upload(input) {
     return new Promise((resolve) => {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function (e) {
-                localforage.setItem("imgbg", e.target.result);
-                resolve();
+            reader.onload = (e)=> {
+                localforage.setItem("imgbg", e.target.result).then(resolve);
             };
             reader.readAsDataURL(input.files[0]);
         }
@@ -79,7 +78,7 @@ function upload(input) {
         <div class="mb-3 row">
             <label class="col-form-label col-sm-2" for="bgbrightness">背景亮度</label>
             <div class="col-sm-8">
-                <input type="range" class="form-range" min="0" max="200" step="1" :value="bgbrightness" @input="bgbrightness = $event.target.value; save('bgbrightness', $event.target.value, false);
+                <input type="range" class="form-range" min="0" max="200" step="1" :value="bgbrightness" @input="bgbrightness = $event.target.value; save('bgbrightness', $event.target.value);
                 save('dark', $event.target.value < 100);
                 " />
             </div>

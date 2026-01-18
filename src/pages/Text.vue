@@ -1,5 +1,4 @@
 <script setup>
-import { WebDocument } from '../lib/utils';
 import vfs_articles from 'vfs:src/articles';
 definePage({ meta: { title: "学生创作" } })
 const items = {};
@@ -7,7 +6,7 @@ for (let type of ["poems", "songs", "words", "writings"]) {
     items[type] = [];
     for (let name in vfs_articles[type]) {
         const file = vfs_articles[type][name];
-        const [title, author] = new WebDocument(file.content, true).getTitle(1);
+        const [title, author] = file.content.split(/[\r\n]+/g).slice(0, 2).map(line => line.replaceAll("#","").trim());
         items[type].push({title:`${title} <small>作者：${author}</small>`, name});
     }
 }

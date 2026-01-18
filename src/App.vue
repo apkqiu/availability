@@ -46,28 +46,17 @@ router.afterEach((to, from, failure) => {
 <template>
   <RouterView v-slot="{ Component, route }">
     <MainViewNavbar title="洽隐山房" :route="route" />
-    <Suspense>
-      <MainView :title="route.meta.title || route.name">
-        <Transition mode="out-in">
-          <Suspense>
-            <template #default>
-              <div :key="route.fullPath" v-if="!spinner">
-
-                <component :is="Component"/>
-              </div>
-              <div :key="route.fullPath + 'spinner'" v-else>
-                <div class="spinner-border"></div>
-                <div v-html="errors"></div>
-              </div>
-
-            </template>
-            <template #fallback>
-              <div class="spinner-border"></div>
-            </template>
-          </Suspense>
-        </Transition>
-      </MainView>
-    </Suspense>
+    <MainView :title="route.meta.title || route.name">
+      <Transition mode="out-in">
+        <div :key="route.fullPath" v-if="!spinner">
+          <component :is="Component" />
+        </div>
+        <div :key="route.fullPath + 'spinner'" v-else>
+          <div class="spinner-border"></div>
+          <div v-html="errors"></div>
+        </div>
+      </Transition>
+    </MainView>
   </RouterView>
 
 </template>

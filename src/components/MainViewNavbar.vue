@@ -19,6 +19,7 @@ function make_flat_docindex(tree) {
         }
     }
 }
+make_flat_docindex(vfs_articles);
 function make_flat_webindex(tree) {
     for (let i of Object.keys(tree)) {
         if (Object.keys(tree[i]).includes("children")) {
@@ -63,9 +64,6 @@ watchEffect(() => {
         }
     })
 })
-console.log(webindex);
-make_flat_docindex(vfs_articles);
-console.log(docindex);
 
 const props = defineProps(["title", "route"])
 
@@ -75,14 +73,9 @@ onMounted(async () => {
     search_modal = new Modal('#SearchModal');
 })
 let lastscroll = 0;
+const nav_visibility = ref(true)
 window.addEventListener("scroll", () => {
-    if (window.scrollY < 100 || lastscroll > window.scrollY) {
-        document.getElementById("navbar").classList.remove("navbar-show");
-        document.getElementById("navbar").classList.add("navbar-show");
-    } else {
-        document.getElementById("navbar").classList.remove("navbar-show");
-        document.getElementById("navbar").classList.add("navbar-hide");
-    }
+    nav_visibility.value = window.scrollY < 100 || lastscroll > window.scrollY;
     lastscroll = window.scrollY;
 })
 </script>
@@ -142,33 +135,40 @@ window.addEventListener("scroll", () => {
     background-color: rgba(255, 255, 255, 0.8) !important;
     box-shadow: #000000 0px 0px 10px;
 }
+
 .nav-link.router-link-exact-active:hover {
     color: #0d6efd !important;
     background-color: rgba(255, 255, 255, 1) !important;
     box-shadow: #000000 0px 0px 10px;
 }
+
 .nav-link.router-link-exact-active:active {
     color: #0d6efd !important;
     background-color: rgba(255, 255, 255, 0.9) !important;
     box-shadow: #000000 0px 0px 10px;
 }
+
 .nav-link:hover {
     background-color: rgba(255, 255, 255, 0.2) !important;
 }
+
 .nav-link:active {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
+
 .nav-link {
     border-radius: 1000px !important;
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
-body .navbar-blur{
+
+body .navbar-blur {
     padding: 5px;
     border-radius: 1000px !important;
     backdrop-filter: blur(10px);
-    background-color: rgba(255,255,255, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
+
 body[data-bs-theme="dark"] .navbar-blur {
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -183,6 +183,10 @@ body[data-bs-theme="dark"] .navbar-blur {
                     <button type="button" class="btn-close show-on-mobile ms-2" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" style="padding:0">
+                    <span class="ps-3">快速搜索</span>
+                    <button class="btn btn-link" @click="query='<video'">包含视频</button>
+                    <button class="btn btn-link" @click="query='<audio'">包含音频</button>
+                    <button class="btn btn-link" @click="query='!['">包含图片</button>
                     <div class="list-group list-group-flush">
                         <RouterLink @click="search_modal.hide()" :to="i.url" v-html="i.ctx" class="list-group-item"
                             style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" v-for="i in result">
@@ -192,34 +196,29 @@ body[data-bs-theme="dark"] .navbar-blur {
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand-sm" style="
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      z-index: 1001;
-      
-    ">
+    <nav class="navbar navbar-expand-sm" style="position: fixed;top: 10px;left: 10px;right: 10px;z-index: 1001;">
         <div class="container-fluid">
-            <div class="navbar-blur navbar-show"  id="navbar" style="display:flex; justify-content: center;">
+            <div class="navbar-blur" :class="{ 'navbar-show': nav_visibility, 'navbar-hide': !nav_visibility }"
+                style="display:flex; justify-content: center;">
                 <span class="navbar-brand ms-3">{{ props.title }}</span>
-                <button class="btn v-center nav-link" data-bs-toggle="modal" data-bs-target="#SearchModal" style="display:inline">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-                        viewBox="0 0 16 16">
+                <button class="btn v-center nav-link" data-bs-toggle="modal" data-bs-target="#SearchModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
                         <path
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                    </svg>&nbsp;搜索文档
+                    </svg>&nbsp;搜索
                 </button>
             </div>
             <div class="d-flex">
-                <ul class="navbar-nav navbar-blur  hide_on_mobile me-2" :class="{'navbar-show':!Object.values(nav).includes(props.route.path), 'navbar-hide':Object.values(nav).includes(props.route.path)}">
+                <ul class="navbar-nav navbar-blur hide_on_mobile me-2"
+                    :class="{ 'navbar-show': !Object.values(nav).includes(props.route.path), 'navbar-hide': Object.values(nav).includes(props.route.path) }">
                     <li class="nav-item">
                         <span class="nav-link router-link-exact-active">{{ props.route.meta.title }}</span>
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-blur  navbar-show">
-                    
-                    <li class="nav-item hide_on_mobile" v-for="name in Object.keys(nav)" :class="{'me-2':Object.keys(nav).at(-1)!=name}">
+                    <li class="nav-item hide_on_mobile" v-for="name in Object.keys(nav)"
+                        :class="{ 'me-2': Object.keys(nav).at(-1) != name }">
                         <RouterLink class="nav-link" :to="nav[name]">{{ name }}</RouterLink>
                     </li>
                     <li>
@@ -233,18 +232,15 @@ body[data-bs-theme="dark"] .navbar-blur {
     </nav>
     <div class="offcanvas offcanvas-end " id="offcanvas" tabindex="-1">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">搜索</h5>
+            <h5 class="offcanvas-title">导航</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-            <h3>导航</h3>
             <div class="list-group">
                 <RouterLink class="list-group-item" v-for="name in Object.keys(nav)" :to="nav[name]"
                     @vue:before-update="offcanvas.hide()">{{ name }}
                 </RouterLink>
             </div>
-            <br />
-
         </div>
     </div>
 </template>

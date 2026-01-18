@@ -3,16 +3,13 @@ on:
   push:
     branches: ['main']
   workflow_dispatch:
-
 permissions:
   contents: read
   pages: write
   id-token: write
-
 concurrency:
   group: 'pages'
   cancel-in-progress: true
-
 jobs:
   deploy:
     environment:
@@ -28,12 +25,12 @@ jobs:
           version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
           cache: 'pnpm'
-      - uses: actions/setup-python@v4
       - run: pnpm install
       - run: pnpm run build
-      - run: python post_build.py
+      - run: cp ./dist/index.html ./dist/404.html
+      - run: touch ./dist/.nojekyll
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:

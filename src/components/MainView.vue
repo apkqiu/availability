@@ -3,7 +3,7 @@ import { onMounted, ref, nextTick, watchEffect } from "vue";
 import { Variable } from "../lib/utils";
 import localforage from "localforage";
 import Parallax from "parallax-js";
-import { rgba } from "../lib/csshelper";
+import { rgba, hsla } from "../lib/csshelper";
 import { background } from "../lib/web_data";
 const props = defineProps(["title"]);
 function hex2rgb(hex) {
@@ -22,7 +22,7 @@ function hex2rgb(hex) {
         g = parseInt(hex[3] + hex[4], 16);
         b = parseInt(hex[5] + hex[6], 16);
     }
-    return [r, g, b];
+    return `${r},${g},${b}`;
 }
 function load(name, fallback) {
     if (typeof localStorage !== 'undefined')
@@ -38,8 +38,8 @@ const get_setting = () => {
         adv_bg: load("adv_bg", "true") === 'true',
         mode: load("dark", "true") === 'true' ? "dark" : 'light',
         imgbg: load("imgbg", "bg-1.jpg"),
-        bgbrightness: parseInt(load("bgbrightness", "50")),
-        coloropacity: parseInt(load("coloropacity", "0")),
+        bgbrightness: (parseInt(load("bgbrightness", "50")) - 100) / 100,
+        coloropacity: parseInt(load("coloropacity", "0")) / 100,
     }
 }
 watchEffect(() => {
@@ -83,52 +83,28 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div style="
-      position: fixed;
-      left: 50vw;
-      top: 50vh;
-      right: 50vw;
-      bottom: 50vh;
-      transform: translate(-50%, -50%);
-      width: 120vw;
-      height: 120vh;
-      overflow: hidden;
-      z-index: -10;
-    " v-show="settings.adv_bg">
+    <div style="position: fixed;left: -10vw;top: -10vh;right: -10vw;bottom: -10vh;z-index: -1;" v-if="settings.adv_bg">
         <ul id="scene">
             <li class="layer" :data-depth="deepth" v-for="{ deepth, img } in bglayers">
                 <img style="height: 120vh; width: 120vw; object-fit: cover" :src="img" />
             </li>
         </ul>
     </div>
-    <div ref="mask" style="min-height: 100vh;" :style="{
-        background: rgba(
-            (settings.bgbrightness >= 100 ? ',255' : ',0').repeat(3).substring(1),
-            Math.abs(settings.bgbrightness - 100) / 100
-        )
-    }">
-        <div ref="mainbody" style="min-height: 100vh; padding: 70px 0 0 0; overflow-x: hidden;" :style="{
-            background: rgba(
-                hex2rgb(settings.color || '#000').join(','),
-                settings.adv_bg ? settings.coloropacity / 100 : 1)
-        }">
-            <div style="min-height: calc(100vh - 58px); margin: 10px">
-                <div style="padding-top: 70px; margin-top: -70px">
-                    <slot />
-                </div>
+    <div
+        :style="{ background: hsla(0, '0%', (settings.bgbrightness >= 0 ? '100%' : '0%'), Math.abs(settings.bgbrightness)) }">
+        <div :style="{ background: rgba(hex2rgb(settings.color || '#000'), settings.adv_bg ? settings.coloropacity : 1) }">
+            <div style="min-height: 100vh;padding:85px 10px 10px 10px">
+                <slot />
             </div>
-
-            <div class="text-sm text-muted" style="backdrop-filter: blur(10px)">
+            <div style="backdrop-filter: blur(10px)">
                 <small>
                     如果你要提供意见，请
                     <RouterLink to="/contact">联系我们</RouterLink>
-                    <i>
-                        <br />电话：13270463238 <br />邮箱:Caixukun11451489@outlook.com
-                    </i>
+                    <br />电话：13270463238 <br />邮箱:Caixukun11451489@outlook.com
                     <b> <br />版权所有 ©2025-{{ new Date().getFullYear() }} 洽隐山房，保留所有权利</b>
                 </small>
             </div>
         </div>
     </div>
+
 </template>
-<script></script>

@@ -4,23 +4,25 @@ a {
 }
 </style>
 <script setup>
-import { WebDocument } from "../lib/utils.js";
 import vdir_pdf from "vdir:src/static/pdf";
 import vfs_articles from "vfs:src/articles";
 import { url } from "../lib/csshelper.js"
-import { popular } from "../lib/web_data.js";
-import { get_carousel } from "../lib/web_data.js"
+import { popular, get_carousel } from "../lib/web_data.js";
+import { onMounted, ref } from "vue";
 
 const items = [];
-const carousel_items = await get_carousel();
-carousel_items[0].active = true;
+const carousel_items = ref([]);
+onMounted(async () => {
+    carousel_items.value = await get_carousel();
+    carousel_items.value[0].active = true;
+})
 
 const dir_items = vfs_articles.news;
 for (let key in dir_items) {
-    items.push({ name: key, title: new WebDocument(dir_items[key].content, true).getTitle() });
+    items.push({ name: key, title: dir_items[key].content.split("\n")[0].replaceAll("#","").trim() });
 }
 
-definePage({ alias: ['/'], meta: { title: "首页" } })
+definePage({ meta: { title: "首页" } })
 
 </script>
 <style scoped>
@@ -105,8 +107,7 @@ definePage({ alias: ['/'], meta: { title: "首页" } })
             </ul>
         </div>
     </div>
-    <div style="clear: both; height: 25px"></div>
-    <div class="container min-vw-100">
+    <div class="containe">
         <div class="row">
             <div class="col-md-6 mb-3">
                 <span class="h3">最新周报</span>
@@ -116,7 +117,7 @@ definePage({ alias: ['/'], meta: { title: "首页" } })
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"
                         v-for="id in Object.keys(vdir_pdf).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a).slice(0, 5)">
-                        <RouterLink :to="`/view?pdf=${id}`">周恩来周报 第{{ id }}期</RouterLink>
+                        <RouterLink :to="`/view?name=pdf/${id}`">周恩来周报 第{{ id }}期</RouterLink>
                     </li>
                 </ul>
                 <span class="h3">随机作品</span><small>
@@ -146,7 +147,7 @@ definePage({ alias: ['/'], meta: { title: "首页" } })
                     <a class="btn" href="old/index.html">旧版网站</a>
                     <a class="btn" href="https://github.com/apkqiu/availability/releases/latest"
                         no-intercept="true">下载电脑客户端</a>
-                    
+
                 </div>
             </div>
         </div>
