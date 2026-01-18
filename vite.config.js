@@ -7,13 +7,13 @@ import PostCssPresetEnv from 'postcss-preset-env'
 import virtualArticle from './src/plugins/vfs'
 import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
-const BIG_BUNDLE = 0;
+const BIG_BUNDLE = 1;
 export default defineConfig({
   plugins: [
     VueRouter(),
     vue(),
     virtualArticle(),
-    tailwindcss(),
+    tailwindcss()
   ],
   base: "/availability/",
   build: {
@@ -46,6 +46,7 @@ export default defineConfig({
       ],
       output: {
         compact: true,
+        format: BIG_BUNDLE?'iife':"es",
       }
     },
     assetsInlineLimit: BIG_BUNDLE ? 25000000 : 0 //<- Browser supports 2.5MB

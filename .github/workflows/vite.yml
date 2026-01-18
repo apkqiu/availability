@@ -28,7 +28,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      # 启用lfs
       - uses: actions/checkout@v4
+        with:
+          lfs: true
       - uses: pnpm/action-setup@v2
         with:
           version: 10

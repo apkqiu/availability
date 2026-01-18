@@ -36,7 +36,6 @@ onMounted(async () => {
     x();
 })
 </script>
-
 <style scoped>
 #a :deep(img) {
     width: 100%;
@@ -57,7 +56,6 @@ onMounted(async () => {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-
                     <img :src="lg_img_src"></img>
                 </div>
             </div>

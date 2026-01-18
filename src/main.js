@@ -1,11 +1,7 @@
-//import 'core-js/stable';
-//import 'regenerator-runtime/runtime';
 
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// Import our custom CSS
-import './style/bootstrap.scss'
 // Import all of Bootstrap’s JS
 import { routes } from 'vue-router/auto-routes'
 import { createRouter, createWebHistory} from 'vue-router'

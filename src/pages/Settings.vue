@@ -57,7 +57,7 @@ function upload(input) {
                     <option disabled>学校</option>
                     <option value="SchoolGate.jpg">校门口</option>
                     <option value="bg.jpg">后花园</option>
-                    <option value="bg-1.jpg">惠荫园</option>
+                    <option value="bg-1.jpeg">惠荫园</option>
                     <hr />
                     <option disabled>城市</option>
                     <option value="bg-2.png">

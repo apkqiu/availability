@@ -38,11 +38,7 @@ export const get_carousel = async () => [
 ]
 
 export const background = {
-    "bg-1.jpg": [
-        [() => import("@/static/img/background/bg-1.jpg/1.png"), 0.6],
-        [() => import("@/static/img/background/bg-1.jpg/2.png"), 0.5],
-        [() => import("@/static/img/background/bg-1.jpg/3.png"), 0.4],
-    ],
+    "bg-1.jpeg": () => import("@/static/img/background/bg-1.jpeg"),
     "bg.jpg": () => import("@/static/img/background/bg.jpg"),
     "SchoolGate.jpg": () => import("@/static/img/background/SchoolGate.jpg"),
     "bg-2.png": () => import("@/static/img/background/bg-2.png"),

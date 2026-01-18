@@ -114,33 +114,27 @@ window.addEventListener("scroll", () => {
 @keyframes hide-nav {
     0% {
         transform: translate(0, 0);
+        opacity: 1;
     }
-
-    100% {
-        transform: translate(0, -200%);
-    }
-
 }
 
 .navbar-hide {
-    animation: hide-nav 0.2s;
-    transform: translate(0, -200%);
+    animation: hide-nav 0.3s;
+    transform: translate(0, -100%);
+    opacity: 0;
 }
 
 @keyframes show-nav {
     0% {
-        transform: translate(0, -200%);
+        transform: translate(0, -100%);
+        opacity: 0;
     }
-
-    100% {
-        transform: translate(0, 0);
-    }
-
 }
 
 .navbar-show {
-    animation: show-nav 0.2s;
+    animation: show-nav 0.3s;
     transform: translate(0, 0);
+    opacity: 1;
 }
 
 .nav-link.router-link-exact-active {
@@ -153,8 +147,16 @@ window.addEventListener("scroll", () => {
     background-color: rgba(255, 255, 255, 1) !important;
     box-shadow: #000000 0px 0px 10px;
 }
+.nav-link.router-link-exact-active:active {
+    color: #0d6efd !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: #000000 0px 0px 10px;
+}
 .nav-link:hover {
     background-color: rgba(255, 255, 255, 0.2) !important;
+}
+.nav-link:active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }
 .nav-link {
     border-radius: 1000px !important;
@@ -215,7 +217,7 @@ body[data-bs-theme="dark"] .navbar-blur {
                         <span class="nav-link router-link-exact-active">{{ props.route.meta.title }}</span>
                     </li>
                 </ul>
-                <ul class="navbar-nav navbar-blur">
+                <ul class="navbar-nav navbar-blur  navbar-show">
                     
                     <li class="nav-item hide_on_mobile" v-for="name in Object.keys(nav)" :class="{'me-2':Object.keys(nav).at(-1)!=name}">
                         <RouterLink class="nav-link" :to="nav[name]">{{ name }}</RouterLink>

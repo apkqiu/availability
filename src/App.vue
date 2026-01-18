@@ -30,7 +30,19 @@ router.afterEach((to, from, failure) => {
   spinner.value = false;
 })
 </script>
+<style lang="scss">
+@import "bootstrap/scss/bootstrap";
 
+.list-group,
+.list-group-item {
+  background: transparent;
+
+}
+
+.list-group-item>a {
+  text-decoration: none;
+}
+</style>
 <template>
   <RouterView v-slot="{ Component, route }">
     <MainViewNavbar title="洽隐山房" :route="route" />
@@ -40,7 +52,8 @@ router.afterEach((to, from, failure) => {
           <Suspense>
             <template #default>
               <div :key="route.fullPath" v-if="!spinner">
-                <component :is="Component" />
+
+                <component :is="Component"/>
               </div>
               <div :key="route.fullPath + 'spinner'" v-else>
                 <div class="spinner-border"></div>
@@ -98,4 +111,3 @@ router.afterEach((to, from, failure) => {
   animation: fadeOut 0.1s ease-out;
 }
 </style>
-

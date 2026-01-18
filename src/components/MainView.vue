@@ -82,7 +82,6 @@ onMounted(() => {
     Variable.watch(get_setting, update_style, {})
 })
 </script>
-
 <template>
     <div style="
       position: fixed;
