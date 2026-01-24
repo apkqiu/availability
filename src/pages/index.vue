@@ -116,7 +116,7 @@ definePage({ meta: { title: "首页" } })
                 </small>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"
-                        v-for="id in Object.keys(vdir_pdf).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a).slice(0, 5)">
+                        v-for="id in Object.keys(import.meta.glob('@/static/pdf/*.pdf')).map((path) => path.split('/').pop()).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a)">
                         <RouterLink :to="`/view?name=pdf/${id}`">周恩来周报 第{{ id }}期</RouterLink>
                     </li>
                 </ul>
