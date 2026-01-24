@@ -7,7 +7,7 @@ a {
 import { url } from "../lib/csshelper.js"
 import { popular, get_carousel } from "../lib/web_data.js";
 import { onMounted, ref } from "vue";
-const vdir_pdf = import.meta.glob('@/static/pdf/*.pdf');
+const pdf = Object.keys(import.meta.glob('@/static/pdf/*.pdf')).map((path) => path.split('/').pop()).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a);
 const items = [];
 const carousel_items = ref([]);
 onMounted(async () => {
@@ -116,7 +116,7 @@ definePage({ meta: { title: "首页" } })
                 </small>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"
-                        v-for="id in Object.keys(import.meta.glob('@/static/pdf/*.pdf')).map((path) => path.split('/').pop()).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a)">
+                        v-for="id in pdf">
                         <RouterLink :to="`/view?name=pdf/${id}`">周恩来周报 第{{ id }}期</RouterLink>
                     </li>
                 </ul>
