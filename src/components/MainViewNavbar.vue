@@ -9,58 +9,61 @@ const result = ref([]);
 const query = ref();
 
 // make_flat_docindex;
-const docs = import.meta.glob('@/articles/*/*.md');
-const docsraw = import.meta.glob('@/articles/*/*.md',{query:"?raw", import:'default'});
-for (let i of Object.keys(docs)) {
-    docindex.push({
-        name: i.split('/').slice(-2).join('/').split('.').splice(0, -1).join('.'),
-        content: (await docsraw[i]()),
-        ...(await docs[i]()).frontmatter
-    });
-}
-function make_flat_webindex(tree) {
-    for (let i of Object.keys(tree)) {
-        if (Object.keys(tree[i]).includes("children")) {
-            make_flat_webindex(tree[i].children);
-        } else {
-            webindex.push(tree[i]);
-        }
+onMounted(async () => {
+    const docs = import.meta.glob('@/articles/*/*.md');
+    const docsraw = import.meta.glob('@/articles/*/*.md', { query: "?raw", import: 'default' });
+    for (let i of Object.keys(docs)) {
+        docindex.push({
+            name: i.split('/').slice(-2).join('/').split('.').splice(0, -1).join('.'),
+            content: (await docsraw[i]()),
+            ...(await docs[i]()).frontmatter
+        });
     }
-}
-make_flat_webindex(autoroute);
-watchEffect(() => {
-    result.value.splice(0, result.value.length);
-    if (!query.value) {
-        result.value.push({ url: "", ctx: "开始搜索吧" })
-        return
-    }
-    docindex.forEach((item) => {
-        const start = item.content.indexOf(query.value);
-        if (start != -1) {
-            let firstline = item.title;
-            // if firstline matches
-            if (firstline.toLowerCase().includes(query.value.toLowerCase())) {
-                firstline = firstline.replace(query.value, `<span class="text-primary">${query.value}</span>`);
+    function make_flat_webindex(tree) {
+        for (let i of Object.keys(tree)) {
+            if (Object.keys(tree[i]).includes("children")) {
+                make_flat_webindex(tree[i].children);
+            } else {
+                webindex.push(tree[i]);
             }
-            const beforepart = item.content.substring(0, start);
-            const afterpart = item.content.substring(start + query.value.length);
-            const before10char = beforepart.substring(Math.max(beforepart.length - 15, 0)).replaceAll("\r", "").replaceAll("\n", " ").replaceAll("<", "&lt;");;
-            const after10char = afterpart.replaceAll("\r", "").replaceAll("\n", " ").replaceAll("<", "&lt;");
-            result.value.push({ url: "/view?name=" + item.name, ctx: `<b>${firstline}</b><br>${before10char}<span class="text-primary">${query.value}</span>${after10char}` })
         }
-    })
-    webindex.forEach((item) => {
-        try {
-            item.meta.title
-        } catch (e) { return }
-        const pos = item.meta.title.indexOf(query.value);
-        if (pos != -1) {
-            const before = item.meta.title.substring(0, pos);
-            const after = item.meta.title.substring(pos + query.value.length);
+    }
+    make_flat_webindex(autoroute);
+    watchEffect(() => {
+        result.value.splice(0, result.value.length);
+        if (!query.value) {
+            result.value.push({ url: "", ctx: "开始搜索吧" })
+            return
+        }
+        docindex.forEach((item) => {
+            const start = item.content.indexOf(query.value);
+            if (start != -1) {
+                let firstline = item.title;
+                // if firstline matches
+                if (firstline.toLowerCase().includes(query.value.toLowerCase())) {
+                    firstline = firstline.replace(query.value, `<span class="text-primary">${query.value}</span>`);
+                }
+                const beforepart = item.content.substring(0, start);
+                const afterpart = item.content.substring(start + query.value.length);
+                const before10char = beforepart.substring(Math.max(beforepart.length - 15, 0)).replaceAll("\r", "").replaceAll("\n", " ").replaceAll("<", "&lt;");;
+                const after10char = afterpart.replaceAll("\r", "").replaceAll("\n", " ").replaceAll("<", "&lt;");
+                result.value.push({ url: "/view?name=" + item.name, ctx: `<b>${firstline}</b><br>${before10char}<span class="text-primary">${query.value}</span>${after10char}` })
+            }
+        })
+        webindex.forEach((item) => {
+            try {
+                item.meta.title
+            } catch (e) { return }
+            const pos = item.meta.title.indexOf(query.value);
+            if (pos != -1) {
+                const before = item.meta.title.substring(0, pos);
+                const after = item.meta.title.substring(pos + query.value.length);
 
-            result.value.push({ url: item.name, ctx: `<b>${before}<span class="text-primary">${query.value}</span>${after}</b><br>转到 ${item.name}` })
-        }
+                result.value.push({ url: item.name, ctx: `<b>${before}<span class="text-primary">${query.value}</span>${after}</b><br>转到 ${item.name}` })
+            }
+        })
     })
+
 })
 
 const props = defineProps(["title", "route"])

@@ -19,6 +19,7 @@
         "@yankeeinlondon/meta-builder": "^1.4.0",
         "bootstrap": "^5.3.8",
         "canvas": "^3.2.1",
+        "html-minifier": "^4.0.0",
         "localforage": "^1.10.0",
         "markdown-it": "^14.1.0",
         "markdown-it-quote": "^1.0.4",
