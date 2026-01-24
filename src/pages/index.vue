@@ -7,7 +7,7 @@ a {
 import { url } from "../lib/csshelper.js"
 import { popular, get_carousel } from "../lib/web_data.js";
 import { onMounted, ref } from "vue";
-const pdf = Object.keys(import.meta.glob('@/static/pdf/*.pdf')).map((path) => path.split('/').pop()).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a);
+const pdf = Object.keys(import.meta.glob('@/static/pdf/*.pdf')).map((path) => path.split('/').pop()).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a).slice(0, 5);
 const items = [];
 const carousel_items = ref([]);
 onMounted(async () => {
@@ -17,9 +17,10 @@ onMounted(async () => {
 
 const dir_items = import.meta.glob("@/articles/news/*.md");
 for (let key in dir_items) {
-    items.push({ name: key.split('/').pop().split(".").slice(0, -1).join("."),
-        title:(await dir_items[key]()).frontmatter.title
-     });
+    items.push({
+        name: key.split('/').pop().split(".").slice(0, -1).join("."),
+        title: (await dir_items[key]()).frontmatter.title
+    });
 }
 
 definePage({ meta: { title: "首页" } })
@@ -115,16 +116,9 @@ definePage({ meta: { title: "首页" } })
                     <RouterLink to="news">所有周报>></RouterLink>
                 </small>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"
-                        v-for="id in pdf">
+                    <li class="list-group-item" v-for="id in pdf">
                         <RouterLink :to="`/view?name=pdf/${id}`">周恩来周报 第{{ id }}期</RouterLink>
                     </li>
-                </ul>
-                <span class="h3">随机作品</span><small>
-                    <RouterLink to="text">查看更多>></RouterLink>
-                </small>
-                <ul class="list-group list-group-flush" id="students_text">
-                    <p>没有配置。</p>
                 </ul>
             </div>
             <div class="col-md-6 mb-3">
