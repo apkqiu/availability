@@ -44,12 +44,23 @@ router.afterEach((to, from, failure) => {
 }
 </style>
 <template>
-  <RouterView v-slot="{ Component, route }">
-    <MainViewNavbar title="洽隐山房" :route="route" />
+  <RouterView v-slot="{ Component, route}">
+    <Suspense>
+      <MainViewNavbar title="洽隐山房" :route="route" />
+    </Suspense>
     <MainView :title="route.meta.title || route.name">
       <Transition mode="out-in">
         <div :key="route.fullPath" v-if="!spinner">
-          <component :is="Component" />
+          <Suspense>
+            <template #default>
+              <div>
+                <component :is="Component" />
+              </div>
+            </template>
+            <template #fallback>
+              <div class="spinner-border"></div>
+            </template>
+          </Suspense>
         </div>
         <div :key="route.fullPath + 'spinner'" v-else>
           <div class="spinner-border"></div>

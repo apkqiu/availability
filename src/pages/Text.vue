@@ -1,15 +1,22 @@
 <script setup>
-import vfs_articles from 'vfs:src/articles';
 definePage({ meta: { title: "学生创作" } })
 const items = {};
-for (let type of ["poems", "songs", "words", "writings"]) {
-    items[type] = [];
-    for (let name in vfs_articles[type]) {
-        const file = vfs_articles[type][name];
-        const [title, author] = file.content.split(/[\r\n]+/g).slice(0, 2).map(line => line.replaceAll("#","").trim());
-        items[type].push({title:`${title} <small>作者：${author}</small>`, name});
-    }
+
+function push_item(type, name, meta) {
+    if(!items[type]) items[type] = {};
+    items[type][name] = meta
 }
+const docitems = import.meta.glob("@/articles/*/*.md");
+console.log(docitems);
+for(let key in docitems) {
+    const type = key.split("/").at(-2);
+    const name = key.split("/").at(-1).split(".").slice(0, -1).join(".");
+    const doc = await docitems[key]();
+    const frontmatter = doc.frontmatter;
+    frontmatter.name = name;
+    push_item(type, name, frontmatter);
+}
+console.log(items);
 </script>
 <style scoped>
 a {
@@ -31,7 +38,7 @@ a {
             <h3>诗</h3>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="item in items.poems">
-                    <RouterLink :to="'/view?name=poems/' + item.name" v-html="item.title"></RouterLink>
+                    <RouterLink :to="'/view?name=poems/' + item.name">{{ item.title }} <small>作者：{{ item.author }}</small></RouterLink>
                 </li>
             </ul>
         </div>
@@ -39,19 +46,19 @@ a {
             <h3>词</h3>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="item in items.words">
-                    <RouterLink :to="'/view?name=words/' + item.name" v-html="item.title"></RouterLink>
+                    <RouterLink :to="'/view?name=words/' + item.name">{{ item.title }} <small>作者：{{ item.author }}</small></RouterLink>
                 </li>
             </ul>
             <h3>曲</h3>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="item in items.songs">
-                    <RouterLink :to="'/view?name=songs/' + item.name" v-html="item.title"></RouterLink>
+                    <RouterLink :to="'/view?name=songs/' + item.name">{{ item.title }} <small>作者：{{ item.author }}</small></RouterLink>
                 </li>
             </ul>
             <h3>书法</h3>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="item in items.writings">
-                    <RouterLink :to="'/view?name=writings/' + item.name" v-html="item.title"></RouterLink>
+                    <RouterLink :to="'/view?name=writings/' + item.name">{{ item.title }} <small>作者：{{ item.author }}</small></RouterLink>
                 </li>
             </ul>
         </div>

@@ -1,8 +1,14 @@
 <script setup>
-import vfs_articles from 'vfs:src/articles';
-import vidr_pdf from 'vdir:src/static/pdf';
 definePage({ meta: { title: "新闻" } })
-
+const articles = import.meta.glob('@/articles/news/*.md');
+const pdf = Object.keys(import.meta.glob('@/static/pdf/*.pdf')).map((path) => path.split('/').pop()).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a);
+const list_of_articles = []
+for (let key in articles) {
+    const article = await articles[key]()
+    const frontmatter = article.frontmatter
+    frontmatter.name = key.split('/').pop().split('.').slice(0, -1).join('.')
+    list_of_articles.push(frontmatter)
+}
 </script>
 <style scoped>
 a {
@@ -23,8 +29,8 @@ a {
         <div class="col-md-8">
             <h2>最新文章</h2>
             <ul class="list-group list-group-flush w-100">
-                <li class="list-group-item" v-for="item in Object.keys(vfs_articles.news)">
-                    <RouterLink :to="'/view?name=news/' + item">{{ vfs_articles.news[item].content.split(/[\r\n]+/g)[0].replaceAll("#", "").trim() }}</RouterLink>
+                <li class="list-group-item" v-for="item in list_of_articles">
+                    <RouterLink :to="'/view?name=news/' + item.name">{{ item.title }}</RouterLink>
                 </li>
             </ul>
         </div>
@@ -32,7 +38,7 @@ a {
             <h2>周报出版</h2>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"
-                    v-for="id in Object.keys(vidr_pdf).map((s) => parseFloat(s.substring(7, s.length - 4))).sort((a, b) => b - a)">
+                    v-for="id in pdf">
                     <RouterLink :to="`/view?name=pdf/${id}`">周恩来周报 第{{ id }}期</RouterLink>
                 </li>
             </ul>

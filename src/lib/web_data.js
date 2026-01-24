@@ -1,7 +1,7 @@
 export const popular = {
-    '<b class="badge text-bg-danger">最新报导</b> 运动会快讯': 'news/news013.1.md',
-    '<b class="badge text-bg-danger">最近热门</b> 我的一小步，暑假的一大步 ——我学生胜利完成本周暑假作业': 'news/2025.09.27.md',
-    '<b class="badge text-bg-danger">站长推荐</b> 学校攻防2025.9.1': 'news/2025.09.01.md'
+    '<b class="badge text-bg-danger">最新报导</b> 运动会快讯': 'news/news013.1',
+    '<b class="badge text-bg-danger">最近热门</b> 我的一小步，暑假的一大步 ——我学生胜利完成本周暑假作业': 'news/2025.09.27',
+    '<b class="badge text-bg-danger">站长推荐</b> 学校攻防2025.9.1': 'news/2025.09.01'
 }
 export const nav = {
     "首页": "/",
@@ -13,7 +13,7 @@ export const nav = {
 export const get_carousel = async () => [
     {
         image: await import("@/static/img/ccnews/013.1.01.jpeg"),
-        link: "/view?name=news/news013.1.md",
+        link: "/view?name=news/news013.1",
         title: "传承中华体育魂",
         source: "运动会快讯",
     },
@@ -30,7 +30,7 @@ export const get_carousel = async () => [
     },
     {
         image: await import("@/static/img/wechat.png"),
-        link: "/view?name=news/0000.00.01.md",
+        link: "/view?name=news/0000.00.01",
         title: "“一班报”",
         source: "微信公众号"
 
@@ -38,7 +38,7 @@ export const get_carousel = async () => [
 ]
 
 export const background = {
-    "bg-1.jpeg": () => import("@/static/img/background/bg-1.jpeg"),
+    "bg-1.jpeg": () => import("@/static/img/background/bg-1.jpg"),
     "bg.jpg": () => import("@/static/img/background/bg.jpg"),
     "SchoolGate.jpg": () => import("@/static/img/background/SchoolGate.jpg"),
     "bg-2.png": () => import("@/static/img/background/bg-2.png"),

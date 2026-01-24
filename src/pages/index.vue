@@ -4,12 +4,10 @@ a {
 }
 </style>
 <script setup>
-import vdir_pdf from "vdir:src/static/pdf";
-import vfs_articles from "vfs:src/articles";
 import { url } from "../lib/csshelper.js"
 import { popular, get_carousel } from "../lib/web_data.js";
 import { onMounted, ref } from "vue";
-
+const vdir_pdf = import.meta.glob('@/static/pdf/*.pdf');
 const items = [];
 const carousel_items = ref([]);
 onMounted(async () => {
@@ -17,9 +15,11 @@ onMounted(async () => {
     carousel_items.value[0].active = true;
 })
 
-const dir_items = vfs_articles.news;
+const dir_items = import.meta.glob("@/articles/news/*.md");
 for (let key in dir_items) {
-    items.push({ name: key, title: dir_items[key].content.split("\n")[0].replaceAll("#","").trim() });
+    items.push({ name: key.split('/').pop().split(".").slice(0, -1).join("."),
+        title:(await dir_items[key]()).frontmatter.title
+     });
 }
 
 definePage({ meta: { title: "首页" } })

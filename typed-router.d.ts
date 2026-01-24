@@ -30,11 +30,11 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/[404]': RouteRecordInfo<
-      '/[404]',
-      '/:404',
-      { 404: ParamValue<true> },
-      { 404: ParamValue<false> },
+    '/404': RouteRecordInfo<
+      '/404',
+      '/404',
+      Record<never, never>,
+      Record<never, never>,
       | never
     >,
     '/apps/ClassSleep': RouteRecordInfo<
@@ -68,6 +68,13 @@ declare module 'vue-router/auto-routes' {
     '/News': RouteRecordInfo<
       '/News',
       '/News',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/quick_home': RouteRecordInfo<
+      '/quick_home',
+      '/quick_home',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -112,9 +119,9 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/pages/[404].vue': {
+    'src/pages/404.vue': {
       routes:
-        | '/[404]'
+        | '/404'
       views:
         | never
     }
@@ -145,6 +152,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/News.vue': {
       routes:
         | '/News'
+      views:
+        | never
+    }
+    'src/pages/quick_home.vue': {
+      routes:
+        | '/quick_home'
       views:
         | never
     }

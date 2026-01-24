@@ -1,9 +1,5 @@
 import MarkdownIt from "markdown-it";
-import { footnote } from "@mdit/plugin-footnote";
-import { align } from "@mdit/plugin-align";
-import { attrs } from "@mdit/plugin-attrs";
-import { ins } from "@mdit/plugin-ins";
-import markdownQuote from 'markdown-it-quote';
+
 
 //#endregion
 //#region variable tools
@@ -23,18 +19,5 @@ export const Variable = {
             }
         }, 10);
     }
-}
-//#endregion
-//#region document tools
-export const MarkdownRenderer = new MarkdownIt({ html: true });
-const plugin_to_use = [
-    footnote,
-    align,
-    markdownQuote,
-    attrs,
-    ins,
-]
-for (const plugin of plugin_to_use) {
-    MarkdownRenderer.use(plugin);
 }
 //#endregion

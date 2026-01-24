@@ -3,14 +3,32 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import VueRouter from "unplugin-vue-router/vite"
 import terser from '@rollup/plugin-terser'
-import virtualArticle from './src/plugins/vfs'
+import Markdown from 'vite-plugin-md'
+import meta from '@yankeeinlondon/meta-builder'
+import { footnote } from "@mdit/plugin-footnote";
+import { align } from "@mdit/plugin-align";
+import { attrs } from "@mdit/plugin-attrs";
+import { ins } from "@mdit/plugin-ins";
+import markdownQuote from 'markdown-it-quote';
 // https://vite.dev/config/
 const BIG_BUNDLE = 0;
 export default defineConfig({
   plugins: [
     VueRouter(),
-    vue(),
-    virtualArticle(),
+    vue({
+      include: [/\.vue$/, /\.md$/], // 支持 .md 文件
+    }),
+    Markdown({
+      markdownItOptions: {
+        html: true,
+      },
+      markdownItUses: [footnote,
+        align,
+        markdownQuote,
+        attrs,
+        ins,],
+      builders:[meta()]
+    }), // 添加 Markdown 插件
   ],
   base: "/availability/",
   build: {
@@ -42,8 +60,11 @@ export default defineConfig({
         terser()
       ],
       output: {
+        entryFileNames: '[hash:16].js',
+        chunkFileNames: '[hash:16].js',
+        assetFileNames: '[hash:16].[ext]',
         compact: true,
-        format: BIG_BUNDLE?'iife':"es",
+        format: BIG_BUNDLE ? 'iife' : "es",
       }
     },
     assetsInlineLimit: BIG_BUNDLE ? 25000000 : 0 //<- Browser supports 2.5MB

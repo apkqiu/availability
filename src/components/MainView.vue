@@ -93,7 +93,7 @@ onMounted(() => {
     <div
         :style="{ background: hsla(0, '0%', (settings.bgbrightness >= 0 ? '100%' : '0%'), Math.abs(settings.bgbrightness)) }">
         <div :style="{ background: rgba(hex2rgb(settings.color || '#000'), settings.adv_bg ? settings.coloropacity : 1) }">
-            <div style="min-height: 100vh;padding:85px 10px 10px 10px">
+            <div style="min-height: 100vh;padding:85px 10px 10px 10px;overflow-x: hidden;">
                 <slot />
             </div>
             <div style="backdrop-filter: blur(10px)">

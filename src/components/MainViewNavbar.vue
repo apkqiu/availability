@@ -2,24 +2,22 @@
 import { onMounted, ref, watchEffect } from 'vue';
 import { nav } from '../lib/web_data';
 import { Modal, Offcanvas } from 'bootstrap';
-import vfs_articles from 'vfs:src/articles';
 import { routes as autoroute } from "vue-router/auto-routes";
 const docindex = [];
 const webindex = []
 const result = ref([]);
 const query = ref();
 
-function make_flat_docindex(tree) {
-    for (let i of Object.keys(tree)) {
-        if (Object.keys(tree[i]).includes("!isFile")) {
-            const item = tree[i];
-            docindex.push({ name: item.path.substring(13), content: item.content });
-        } else {
-            make_flat_docindex(tree[i]);
-        }
-    }
+// make_flat_docindex;
+const docs = import.meta.glob('@/articles/*/*.md');
+const docsraw = import.meta.glob('@/articles/*/*.md',{query:"?raw", import:'default'});
+for (let i of Object.keys(docs)) {
+    docindex.push({
+        name: i.split('/').slice(-2).join('/').split('.').splice(0, -1).join('.'),
+        content: (await docsraw[i]()),
+        ...(await docs[i]()).frontmatter
+    });
 }
-make_flat_docindex(vfs_articles);
 function make_flat_webindex(tree) {
     for (let i of Object.keys(tree)) {
         if (Object.keys(tree[i]).includes("children")) {
@@ -39,7 +37,7 @@ watchEffect(() => {
     docindex.forEach((item) => {
         const start = item.content.indexOf(query.value);
         if (start != -1) {
-            let firstline = item.content.split("\n")[0].replaceAll("#", "").trim();
+            let firstline = item.title;
             // if firstline matches
             if (firstline.toLowerCase().includes(query.value.toLowerCase())) {
                 firstline = firstline.replace(query.value, `<span class="text-primary">${query.value}</span>`);
@@ -184,9 +182,9 @@ body[data-bs-theme="dark"] .navbar-blur {
                 </div>
                 <div class="modal-body" style="padding:0">
                     <span class="ps-3">快速搜索</span>
-                    <button class="btn btn-link" @click="query='<video'">包含视频</button>
-                    <button class="btn btn-link" @click="query='<audio'">包含音频</button>
-                    <button class="btn btn-link" @click="query='!['">包含图片</button>
+                    <button class="btn btn-link" @click="query = '<video'">包含视频</button>
+                    <button class="btn btn-link" @click="query = '<audio'">包含音频</button>
+                    <button class="btn btn-link" @click="query = '!['">包含图片</button>
                     <div class="list-group list-group-flush">
                         <RouterLink @click="search_modal.hide()" :to="i.url" v-html="i.ctx" class="list-group-item"
                             style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" v-for="i in result">

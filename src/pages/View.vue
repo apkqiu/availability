@@ -1,13 +1,12 @@
 <script setup lang="js">
 import { onMounted, ref, useTemplateRef } from 'vue';
-import { MarkdownRenderer } from '../lib/utils';
-import vfs_articles from "vfs:src/articles";
 import Comments from '../components/Comments.vue';
 import { popular } from '../lib/web_data.js';
 import PdfViewer from '../components/PdfViewer.vue';
 import { Modal } from "bootstrap";
-const doccontent = useTemplateRef("content");
-const lg_img_src = ref('');
+const doccontent = ref();
+const frontmatter = ref();
+const lg_img_src = ref("");
 const preview = useTemplateRef("preview");
 const pdf_src = ref('');
 definePage({ meta: { title: "文章详情" } })
@@ -15,24 +14,26 @@ onMounted(async () => {
     const name = new URLSearchParams(window.location.search).get("name");
 
     if (name) {
-        const [type, doc] = name.split("/");
-        if(type=="pdf"){
-            pdf_src.value = (await import(`@/static/pdf/zhoubao${doc}.pdf`)).default;
-        }else{
-            doccontent.value.innerHTML = MarkdownRenderer.render(vfs_articles[type][doc].content);
+        const [type, docname] = name.split("/");
+        if (type == "pdf") {
+            pdf_src.value = (await import(`@/static/pdf/zhoubao${docname}.pdf`)).default;
+        } else {
+            const doc = await import(`@/articles/${type}/${docname}.md`);
+            doccontent.value = doc.default;
+            frontmatter.value = doc.frontmatter;
         }
     }
     const preview_modal = new Modal(preview.value);
     let x;
     new MutationObserver(x = () => {
-        let imgs = doccontent.value.querySelectorAll("img");
+        let imgs = document.getElementById("a").querySelectorAll("img");
         imgs.forEach((img) => {
             img.onclick = () => {
                 lg_img_src.value = img.src;
                 preview_modal.show();
             };
         })
-    }).observe(doccontent.value, { childList: true, subtree: true });
+    }).observe(document.getElementById("a"), { childList: true, subtree: true });
     x();
 })
 </script>
@@ -42,8 +43,6 @@ onMounted(async () => {
     display: inline-block;
     image-orientation: from-image;
 }
-
-
 </style>
 <template>
     <div class="modal fade" ref="preview" tabindex="-1">
@@ -64,9 +63,15 @@ onMounted(async () => {
     <div class="row">
         <div class="col-md-8">
             <div style="backdrop-filter: blur(10px); padding: 10px" id=a>
-                <div ref="content">
-                    <PdfViewer :src="pdf_src" v-if="pdf_src" style="width:100%" :options="{ 'scale': 4 }" />
+                <div v-if="doccontent">
+                    <h3 v-if="frontmatter.supertitle">{{ frontmatter.supertitle }}</h3>
+                    <h1 v-if="frontmatter.title">{{ frontmatter.title }}</h1>
+                    <h2 v-if="frontmatter.subtitle">{{ frontmatter.subtitle }}</h2>
+                    <p v-if="frontmatter.author">作者：{{ frontmatter.author }}</p>
+                    <hr v-if="frontmatter.title">
+                    <component :is="doccontent"/>
                 </div>
+                <PdfViewer :src="pdf_src" v-if="pdf_src" style="width:100%" :options="{ 'scale': 4 }" />
                 <hr />
                 <Comments />
             </div>
