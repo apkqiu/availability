@@ -42,44 +42,42 @@ const get_setting = () => {
         coloropacity: parseInt(load("coloropacity", "0")) / 100,
     }
 }
-watchEffect(() => {
-    document.title = props.title + " | 洽隐山房";
-})
 const settings = ref({});
-let parallax = null;
-const update_style = (async (old_settings, new_settings) => {
-    settings.value = new_settings;
-    document.body.setAttribute("data-bs-theme", new_settings.mode);
-    if (new_settings.adv_bg) {
-        if (old_settings.imgbg !== new_settings.imgbg) {
-            bglayers.value.splice(0, bglayers.value.length);
-            if (new_settings.imgbg.startsWith('custom')) {
-                // 自定义背景：图像存在localforage中
-                bglayers.value.push({ img: await localforage.getItem('imgbg'), depth: 0.4 });
-            } else if (typeof background[new_settings.imgbg] === "function") {
-                // 如果背景是单张图片，则直接添加
-                bglayers.value.push({ img: (await background[new_settings.imgbg]()).default, deepth: 0.4 })
-            } else {
-                // 如果背景是多个图片，则加载deepth.json文件，根据深度添加图片
-                let data = background[new_settings.imgbg];
-                for (var i of data) {
-                    bglayers.value.push({ img: (await i[0]()).default, deepth: i[1] });
-                }
+watchEffect(async() => {
+    document.title = props.title + " | 洽隐山房";
+    document.body.setAttribute("data-bs-theme", settings.value.mode);
+    if (settings.value.adv_bg) {
+        bglayers.value.splice(0, bglayers.value.length);
+        if (settings.value.imgbg.startsWith('custom')) {
+            // 自定义背景：图像存在localforage中
+            bglayers.value.push({ img: await localforage.getItem('imgbg'), depth: 0.4 });
+        } else if (typeof background[settings.value.imgbg] === "function") {
+            // 如果背景是单张图片，则直接添加
+            bglayers.value.push({ img: (await background[settings.value.imgbg]()).default, deepth: 0.4 })
+        } else {
+            // 如果背景是多个图片，则加载deepth.json文件，根据深度添加图片
+            let data = background[settings.value.imgbg];
+            for (var i of data) {
+                bglayers.value.push({ img: (await i[0]()).default, deepth: i[1] });
             }
-
-            nextTick(() => {
-                if (parallax) parallax.destroy();
-                parallax = new Parallax(document.getElementById("scene"))
-            })
         }
+
+        nextTick(() => {
+            if (parallax) parallax.destroy();
+            parallax = new Parallax(document.getElementById("scene"))
+        })
     } else {
         // 关闭了高级背景
         if (parallax) parallax.destroy();
         parallax = null;
     }
+})
+let parallax = null;
+const update_style = ((old_settings, new_settings) => {
+    settings.value = new_settings;
 });
-onMounted(() => {
-    Variable.watch(get_setting, update_style, {})
+onMounted(async () => {
+    Variable.watch(get_setting, update_style, {});
 })
 </script>
 <template>
@@ -92,11 +90,13 @@ onMounted(() => {
     </div>
     <div
         :style="{ background: hsla(0, '0%', (settings.bgbrightness >= 0 ? '100%' : '0%'), Math.abs(settings.bgbrightness)) }">
-        <div :style="{ background: rgba(hex2rgb(settings.color || '#000'), settings.adv_bg ? settings.coloropacity : 1) }">
+        <div
+            :style="{ background: rgba(hex2rgb(settings.color), settings.adv_bg ? settings.coloropacity : 1) }">
             <div style="min-height: 100vh;padding:85px 10px 10px 10px;overflow-x: hidden;">
                 <slot />
             </div>
-            <div style="backdrop-filter: blur(10px)">
+            <div style="backdrop-filter: blur(10px);">
+                <img src="@/static/img/sunset.png" />
                 <small>
                     如果你要提供意见，请
                     <RouterLink to="/contact">联系我们</RouterLink>
