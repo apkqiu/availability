@@ -32,7 +32,8 @@ a {
 }
 </style>
 <template>
-    <div id="students_text"></div>
+    <h1>文学创作 <RouterLink class="btn btn-primary btn-sm" to="/text/create">我也要创作</RouterLink></h1>
+    
     <div class="row">
         <div class="col-md-6">
             <h3>诗</h3>

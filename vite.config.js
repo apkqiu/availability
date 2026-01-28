@@ -15,6 +15,7 @@ import { minify } from 'html-minifier';
 import * as fs from 'fs/promises'
 // https://vite.dev/config/
 const BIG_BUNDLE = 0;
+const DEBUG_BUNDLE = 0;
 
 const transformIndexHtml = () => {
   return {
@@ -22,6 +23,7 @@ const transformIndexHtml = () => {
     apply: 'build',
     name: "post-process-html",
     async closeBundle() {
+      if(DEBUG_BUNDLE) return;
       console.log("Post-processing index.html...")
       const p = exec("python3 ./post_html.py")
       p.stdout.on("data", (data) => console.log(data))
@@ -99,9 +101,9 @@ export default defineConfig({
         terser()
       ],
       output: {
-        entryFileNames: 'assets/[hash:16].js',
-        chunkFileNames: 'assets/[hash:16].js',
-        assetFileNames: 'assets/[hash:16].[ext]',
+        entryFileNames: DEBUG_BUNDLE?undefined/* keep orignal */:'assets/[hash:16].js',
+        chunkFileNames: DEBUG_BUNDLE?undefined/* keep orignal */:'assets/[hash:16].js',
+        assetFileNames: DEBUG_BUNDLE?undefined/* keep orignal */:'assets/[hash:16].[ext]',
         compact: true,
         format: BIG_BUNDLE ? 'iife' : "es",
       }
