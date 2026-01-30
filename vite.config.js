@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import VueRouter from "unplugin-vue-router/vite"
-import terser from '@rollup/plugin-terser'
 import Markdown from 'vite-plugin-md'
 import meta from '@yankeeinlondon/meta-builder'
 import { footnote } from "@mdit/plugin-footnote";
@@ -73,32 +72,7 @@ export default defineConfig({
   ],
   base: "/availability/",
   build: {
-    minify: "terser",
-    terserOptions: {
-      compress: {
-        arguments: true,
-        arrows: true,
-        drop_console: true,
-        drop_debugger: true,
-        inline: true,
-        passes: 3,
-        unused: true,
-        dead_code: true,
-      },
-      mangle: {
-        keep_classnames: false,
-        keep_fnames: false,
-        eval: true
-      },
-      format: {
-        ascii_only: true,
-        comments: false,
-      }
-    },
     rollupOptions: {
-      plugins: [
-        terser()
-      ],
       output: {
         entryFileNames: DEBUG_BUNDLE?undefined/* keep orignal */:'assets/[hash:16].js',
         chunkFileNames: DEBUG_BUNDLE?undefined/* keep orignal */:'assets/[hash:16].js',
