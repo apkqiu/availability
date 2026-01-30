@@ -93,8 +93,7 @@ export default defineConfig({
       format: {
         ascii_only: true,
         comments: false,
-      },
-      maxWorkers: 128
+      }
     },
     rollupOptions: {
       plugins: [
